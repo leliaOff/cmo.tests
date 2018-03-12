@@ -1,0 +1,48 @@
+
+// Fonts
+@import "fonts.scss";
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//Mixin
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+}
+
+@mixin box-sizing($option) {
+    -webkit-box-sizing: $option;
+       -moz-box-sizing: $option;
+        -ms-box-sizing: $option;
+            box-sizing: $option;
+}
+
+@mixin transition($transitions...) {
+  -webkit-transition: $transitions;
+     -moz-transition: $transitions;
+       -o-transition: $transitions;
+          transition: $transitions;
+}
+
+@mixin box-shadow($shadows...) {
+    -webkit-box-shadow: $shadows;
+       -moz-box-shadow: $shadows;
+        -ms-box-shadow: $shadows;
+            box-shadow: $shadows;
+}
+
+@mixin user-select($option) {
+    -webkit-user-select: $option;
+    -moz-user-select: $option;
+    -ms-user-select: $option;
+    user-select: $option;
+}
+
+// Style
+@import "style.scss";
