@@ -173,7 +173,7 @@ class ElementsController extends Controller
                 ], [
                     'cols' => 'array',
                     'rows' => 'array',
-                    'count' => 'required|integer|min:1|max:' . count($cols),
+                    'count' => 'required|integer|min:1',
                 ]);
 
                 if($validator->fails()) {                    
@@ -199,7 +199,7 @@ class ElementsController extends Controller
                     'count' => $data['count'],
                 ], [
                     'rows' => 'required|array|min:1',
-                    'count' => 'required|integer|min:1|max:' . count($rows),
+                    'count' => 'required|integer|min:1',
                 ]);
 
                 if($validator->fails()) {                    
