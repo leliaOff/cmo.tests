@@ -77,13 +77,11 @@ class ElementsController extends Controller
             'title' => $request['data']['title'],
             'is_required' => $request['data']['is_required'],
             'type' => $request['data']['type'],
-            'in_matrix' => $request['data']['in_matrix'],
         ], [
             'sort' => 'required|integer',
             'title' => 'required|string|max:255',
             'is_required' => 'boolean',
             'type' => 'required|string|in:table,checkbox,radio,title,directory',
-            'in_matrix' => 'string|in:value,matrix',
         ]);
 
         if($validator->fails()) {
@@ -113,11 +111,9 @@ class ElementsController extends Controller
         $validator = Validator::make([
             'title' => $request['data']['title'],
             'is_required' => $request['data']['is_required'],
-            'in_matrix' => $request['data']['in_matrix'],
         ], [
             'title' => 'required|string|max:255',
             'is_required' => 'boolean',
-            'in_matrix' => 'string|in:value,matrix',
         ]);
 
         if($validator->fails()) {
