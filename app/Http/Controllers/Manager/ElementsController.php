@@ -9,18 +9,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Repositories\ElementsRepository;
+
 class ElementsController extends Controller
 {
        
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        
-    }
+    private $elementsRepository;
+
+	public function __construct(ElementsRepository $elementsRepository)
+	{ 
+		$this->elementsRepository = $elementsRepository;
+	}
 
     /**
      * Получить список
@@ -30,10 +29,10 @@ class ElementsController extends Controller
     {
         if(!Auth::check()) return ['status' => 'relogin'];
         
-        ini_set('max_execution_time', 3600);
-        ini_set('memory_limit', '512M');
-        
-        $elements = DB::table('elements')->where('test_id', $request['id'])->orderBy('sort')->get();
+        $elements = $this->elementsRepository->all($request['id'])
+            ->orderBy('sort')
+            ->get();
+            
         return ['status' => 'success', 'result' => $elements];
     }
 
@@ -44,13 +43,12 @@ class ElementsController extends Controller
     public function get(Request $request)
     {
         if(!Auth::check()) return ['status' => 'relogin'];
-        $id = $request['id'];
-        $element = DB::table('elements')->where('id', $id)->first();
-        $elementsData = DB::table('elements_data')->where('element_id', $id)->get();
+
+        $element = $this->elementsRepository->find($request['id']);      
 
         //Разбираем данные
         $result = [];
-        foreach($elementsData as $ed) {
+        foreach($element->data as $ed) {
             if($ed->key == 'cols' || $ed->key == 'rows') {
                 $items = json_decode($ed->value);
                 foreach($items  as $item) {
@@ -93,11 +91,9 @@ class ElementsController extends Controller
 
         }
 
-        $id = DB::table('elements')->insertGetId(
-            $request['data']
-        );
-        //$setting = $this->setting($request['setting'], $request['data']['type'], $id);
-        return ['status' => 'success', 'result' => $id];
+        $element = $this->elementsRepository->create($request['data']);
+
+        return ['status' => 'success', 'result' => $element->id];
     }
 
     /**
@@ -125,9 +121,10 @@ class ElementsController extends Controller
 
         }
 
-        $result = DB::table('elements')->where('id', $request['id'])->update($request['data']);
         $setting = $this->setting($request['setting'], $request['type'], $request['id']);
-        return ['status' => 'success', 'result' => $result, 'setting' => $setting];
+        $element = $this->elementsRepository->update($request['id'], $request['data'], $setting);
+        
+        return ['status' => 'success', 'result' => $element, 'setting' => $setting];
     }
 
     /**
@@ -136,17 +133,7 @@ class ElementsController extends Controller
     */
     public function sort(Request $request)
     {
-        $a_sort = $request['sort'];
-        $b_sort = $request['type'] == 'down' ? $a_sort + 1 : $a_sort - 1;
-
-        $a_result = DB::table('elements')->where([
-            ['test_id', $request['test_id']],
-            ['sort', $b_sort]
-        ])->update(['sort' => $a_sort]);
-
-        $b_result = DB::table('elements')->where('id', $request['id'])->update(['sort' => $b_sort]);
-
-        return ['status' => 'success', 'a_result' => $a_result, 'b_result' => $b_result];
+        return ['status' => 'success', 'sort' => $request['sort'], 'result' => $this->elementsRepository->sort($request['id'], $request['sort'])];
     }
 
     /**
@@ -275,9 +262,9 @@ class ElementsController extends Controller
                 break;
         }
 
-        DB::table('elements_data')->where('element_id', $id)->delete();
-        DB::table('elements_data')->insert($setting);
-        return ['status' => 'success', 'result'  => $setting];
+        // DB::table('elements_data')->where('element_id', $id)->delete();
+        // DB::table('elements_data')->insert($setting);
+        return $setting;
 
     }
 
@@ -288,28 +275,8 @@ class ElementsController extends Controller
     public function delete(Request $request)
     {
         if(!Auth::check()) return ['status' => 'relogin'];
-        
-        DB::table('elements_data')->where('element_id', $request['id'])->delete();
-        DB::table('elements')->where('id', $request['id'])->delete();
-        
-        $element = DB::table('elements')->where('id', $request['id'])->first();
-        $elementsData = DB::table('elements_data')->where('element_id', $request['id'])->get();
-
-        $this->resort($request['test_id']);
-
-        return ['status' => 'success', 'result' => $element, 'setting' => $elementsData];
-    }
-
-    /**
-    * Пересорт
-    *
-    */
-    public function resort($test_id)
-    {
-        $results = DB::table('elements')->where('test_id', $test_id)->orderBy('sort')->get();
-        foreach($results as $i => $value) {
-            DB::table('elements')->where('id', $value->id)->update(['sort' => $i]);
-        }
+        $this->elementsRepository->delete($request['id']);
+        return ['status' => 'success'];
     }
 
 }

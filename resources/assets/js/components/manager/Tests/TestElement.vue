@@ -1,55 +1,56 @@
 <template>
     <div class="container manager">
         <manager-menu></manager-menu>
-        <h1 v-if="$route.params.id == 'create'">Создание новой анкеты</h1>
-        <h1 v-else>Редактор анкеты "{{ data.name }}"</h1>
-        <nav class="tab"><ul>
-            <li><button class="btn btn-tab" v-bind:class="{ active: tab == 'data' }" @click="setTab('data')">Параметры анкеты</button></li><!--
-            --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'elements' }" @click="setTab('elements')" v-if="data.id != 0">Элементы анкеты</button></li><!--
-            --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'results' }" @click="setTab('results')" v-if="data.id != 0">Результаты анкетирования</button></li>
-        </ul></nav>
-        
-        <!-- Параметры анкеты -->
-        <div class="tab-item" v-if="tab == 'data'">
-            <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Наименование: *</label></div>
-                <div class="col-sm-10 clearfix"><input type="text" placeholder="наименование" v-model="current.name"/>
-                    <span class="input-validator name" v-if="validation.name != undefined">{{ validation.name[0] }}</span></div>
+        <div class="content">
+            <h1 v-if="$route.params.id == 'create'">Создание новой анкеты</h1>
+            <h1 v-else>Редактор анкеты "{{ data.name }}"</h1>
+            <nav class="tab"><ul>
+                <li><button class="btn btn-tab" v-bind:class="{ active: tab == 'data' }" @click="setTab('data')">Параметры анкеты</button></li><!--
+                --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'elements' }" @click="setTab('elements')" v-if="data.id != 0">Элементы анкеты</button></li><!--
+                --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'results' }" @click="setTab('results')" v-if="data.id != 0">Результаты анкетирования</button></li>
+            </ul></nav>
+            
+            <!-- Параметры анкеты -->
+            <div class="tab-item" v-if="tab == 'data'">
+                <div class="row">
+                    <div class="col-sm-2 clearfix"><label class="input-title">Наименование: *</label></div>
+                    <div class="col-sm-10 clearfix"><input type="text" placeholder="наименование" v-model="current.name"/>
+                        <span class="input-validator name" v-if="validation.name != undefined">{{ validation.name[0] }}</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 clearfix"><label class="input-title">Описание:</label></div>
+                    <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
+                                                        v-model="current.description"></textarea></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 clearfix"><label class="input-title">Благодарность после прохождения теста:</label></div>
+                    <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
+                                                        v-model="current.after"></textarea></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 clearfix"><label class="input-title">Состояние: *</label></div>
+                    <div class="col-sm-10 clearfix"><select v-model="current.state">
+                            <option value="draft" selected>Черновик</option>
+                            <option value="published">Опубликован</option>
+                        </select></div>
+                </div>
+                <div class="btn-group btn-group-right">
+                    <button type="button" class="btn btn-success" @click="updateDialog">Сохранить</button>
+                    <button type="button" class="btn btn-primary" @click="cansel">Отменить</button>
+                    <button type="button" class="btn btn-warning" @click="exit">Список анкет</button>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Описание:</label></div>
-                <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
-                                                    v-model="current.description"></textarea></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Благодарность после прохождения теста:</label></div>
-                <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
-                                                    v-model="current.after"></textarea></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Состояние: *</label></div>
-                <div class="col-sm-10 clearfix"><select v-model="current.state">
-                        <option value="draft" selected>Черновик</option>
-                        <option value="published">Опубликован</option>
-                    </select></div>
-            </div>
-            <div class="btn-group btn-group-right">
-                <button type="button" class="btn btn-success" @click="updateDialog">Сохранить</button>
-                <button type="button" class="btn btn-primary" @click="cansel">Отменить</button>
-                <button type="button" class="btn btn-warning" @click="exit">Список анкет</button>
-            </div>
-        </div>
 
-        <!-- Элементы анкеты -->
-        <div class="tab-item" v-if="tab == 'elements'">
-            <elements :testId="data.id"></elements>
-        </div>
+            <!-- Элементы анкеты -->
+            <div class="tab-item" v-if="tab == 'elements'">
+                <elements :testId="data.id"></elements>
+            </div>
 
-        <!-- Результаты анкеты -->
-        <div class="tab-item" v-if="tab == 'results'">
-            <results :testId="data.id"></results>
+            <!-- Результаты анкеты -->
+            <div class="tab-item" v-if="tab == 'results'">
+                <results :testId="data.id"></results>
+            </div>
         </div>
-        
     </div>
 </template>
 

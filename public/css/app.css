@@ -8184,6 +8184,11 @@ p.justify {
   padding: 0px;
 }
 
+.manager.container .content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 .manager .manager-menu .logo {
   display: inline-block;
   vertical-align: top;
@@ -8355,10 +8360,11 @@ p.justify {
 .manager .elements .element-item {
   margin: 0 auto 40px;
   background: #eeeeee;
+  border: 1px solid #333333;
 }
 
 .manager .elements .element-item hr {
-  border-color: #333;
+  border-color: #333333;
   margin: 20px 80px 40px;
 }
 

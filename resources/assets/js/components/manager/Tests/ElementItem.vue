@@ -9,18 +9,18 @@
         <!-- данные элемента -->
         <div class="element-data">
             <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Наименование: *</label></div>
-                <div class="col-sm-10 clearfix"><input type="text" placeholder="наименование" v-model="current.title"/>
+                <div class="col-sm-3 clearfix"><label class="input-title">Наименование: *</label></div>
+                <div class="col-sm-9 clearfix"><input type="text" placeholder="наименование" v-model="current.title"/>
                     <span class="input-validator title" v-if="validation.title != undefined">{{ validation.title[0] }}</span></div>
             </div>
             <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Описание:</label></div>
-                <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
+                <div class="col-sm-3 clearfix"><label class="input-title">Описание:</label></div>
+                <div class="col-sm-9 clearfix"><textarea type="text" placeholder="описание"
                                                     v-model="current.description"></textarea></div>
             </div>
             <div class="row">
-                <div class="col-sm-2 clearfix"><label class="input-title">Обязательный?</label></div>
-                <div class="col-sm-10 clearfix"><label class="checkbox"><input type="checkbox" v-model="current.is_required"/>
+                <div class="col-sm-3 clearfix"><label class="input-title">Обязательный?</label></div>
+                <div class="col-sm-9 clearfix"><label class="checkbox"><input type="checkbox" v-model="current.is_required"/>
                     <span class="alert alert-info">отметьте этот пункт, если ответ на вопрос обязателен</span></label></div>
             </div>
         </div>
@@ -256,7 +256,7 @@
                 self.$store.state.loader = true;
 
                 axios.post(window.baseurl + 'elementSort', {                    
-                    id: self.item.id, test_id: self.item.test_id, sort: self.item.sort, type: type
+                    id: self.item.id, sort: type
                 }).then(function(response) {
                     self.$store.state.loader = false;                    
                     if(response.data.status == 'relogin') self.$router.push('/');                    

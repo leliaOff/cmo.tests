@@ -493,6 +493,11 @@ p {
     &.container {
         width: 100%;
         padding: 0px;
+
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
     }
 
     .manager-menu {
@@ -694,10 +699,11 @@ p {
 
             margin: 0 auto 40px;
             background: $grey;
+            border: 1px solid $black;
 
             hr {
                 
-                border-color: #333;
+                border-color: $black;
                 margin: 20px 80px 40px;
                 
             }

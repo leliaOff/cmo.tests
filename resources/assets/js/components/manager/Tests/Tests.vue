@@ -1,11 +1,13 @@
 <template>
     <div class="container manager">
         <manager-menu></manager-menu>
-        <h1>Анкеты и тесты</h1>
-        <div class="datatable">
-            <datatable :columns="columns" :data="rows" filterable paginate></datatable>
+        <div class="content">
+            <h1>Анкеты и тесты</h1>
+            <div class="datatable">
+                <datatable :columns="columns" :data="rows" filterable paginate></datatable>
+            </div>
+            <button class="btn btn-primary btn-add" @click="create">Добавить</button>
         </div>
-        <button class="btn btn-primary btn-add" @click="create">Добавить</button>
     </div>
 </template>
 

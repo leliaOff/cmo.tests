@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Elements extends Model
+{
+    
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'id',
+        'test_id',
+        'sort',
+        'title',
+        'description',
+        'is_requiered',
+        'type',
+    ];
+
+    /* Данные элемента */
+    public function data()
+    {
+        return $this->hasMany('App\Models\ElementsData', 'element_id');
+    }
+
+    /* Файлы элемента */
+    public function files()
+    {
+        return $this->hasMany('App\Models\ElementsFiles', 'element_id');
+    }
+
+}

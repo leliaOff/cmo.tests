@@ -1,12 +1,14 @@
 <template>
     <div class="container manager">
         <manager-menu></manager-menu>
-        <h1>Образовательные организации</h1>
-        <div class="datatable">
-            <datatable :columns="columns" :data="rows" filterable paginate></datatable>
+        <div class="content">
+            <h1>Образовательные организации</h1>
+            <div class="datatable">
+                <datatable :columns="columns" :data="rows" filterable paginate></datatable>
+            </div>
+            <button class="btn btn-primary btn-add" @click="create" data-toggle="modal" data-target="#elementsModal">Добавить</button>
+            <school-element v-on:update="list"></school-element>
         </div>
-        <button class="btn btn-primary btn-add" @click="create" data-toggle="modal" data-target="#elementsModal">Добавить</button>
-        <school-element v-on:update="list"></school-element>
     </div>
 </template>
 

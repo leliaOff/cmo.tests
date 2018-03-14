@@ -1,6 +1,7 @@
 <template>
     <div class="container manager">
         <manager-menu></manager-menu>
+        <div class="content"></div>
     </div>
 </template>
 

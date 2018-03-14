@@ -13764,7 +13764,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(166);
+module.exports = __webpack_require__(170);
 
 
 /***/ }),
@@ -13790,7 +13790,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_ontrols_Radio_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_ontrols_Radio_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(168);
 
 
 
@@ -46301,6 +46301,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -46317,7 +46318,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu')], 1)
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46373,6 +46376,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -46468,7 +46473,9 @@ Vue.component('actionsTest', {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), _c('h1', [_vm._v("Анкеты и тесты")]), _vm._v(" "), _c('div', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Анкеты и тесты")]), _vm._v(" "), _c('div', {
     staticClass: "datatable"
   }, [_c('datatable', {
     attrs: {
@@ -46482,7 +46489,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.create
     }
-  }, [_vm._v("Добавить")])], 1)
+  }, [_vm._v("Добавить")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46542,6 +46549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Elements_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Elements_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Results_vue__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Results_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Results_vue__);
+//
 //
 //
 //
@@ -47255,7 +47263,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.$store.state.loader = true;
 
             axios.post(window.baseurl + 'elementSort', {
-                id: self.item.id, test_id: self.item.test_id, sort: self.item.sort, type: type
+                id: self.item.id, sort: type
             }).then(function (response) {
                 self.$store.state.loader = false;
                 if (response.data.status == 'relogin') self.$router.push('/');
@@ -48005,7 +48013,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-10 clearfix"
+    staticClass: "col-sm-9 clearfix"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -48031,7 +48039,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.validation.title[0]))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-10 clearfix"
+    staticClass: "col-sm-9 clearfix"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -48055,7 +48063,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-10 clearfix"
+    staticClass: "col-sm-9 clearfix"
   }, [_c('label', {
     staticClass: "checkbox"
   }, [_c('input', {
@@ -48156,19 +48164,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Удалить")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-2 clearfix"
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Наименование: *")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-2 clearfix"
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Описание:")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-2 clearfix"
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Обязательный?")])])
@@ -49575,7 +49583,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), (_vm.$route.params.id == 'create') ? _c('h1', [_vm._v("Создание новой анкеты")]) : _c('h1', [_vm._v("Редактор анкеты \"" + _vm._s(_vm.data.name) + "\"")]), _vm._v(" "), _c('nav', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [(_vm.$route.params.id == 'create') ? _c('h1', [_vm._v("Создание новой анкеты")]) : _c('h1', [_vm._v("Редактор анкеты \"" + _vm._s(_vm.data.name) + "\"")]), _vm._v(" "), _c('nav', {
     staticClass: "tab"
   }, [_c('ul', [_c('li', [_c('button', {
     staticClass: "btn btn-tab",
@@ -49752,7 +49762,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "testId": _vm.data.id
     }
-  })], 1) : _vm._e()], 1)
+  })], 1) : _vm._e()])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-2 clearfix"
@@ -49834,6 +49844,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DirectoryElement_vue__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DirectoryElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DirectoryElement_vue__);
+//
+//
 //
 //
 //
@@ -50261,7 +50273,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), _c('h1', [_vm._v("Менеджер справочников")]), _vm._v(" "), _c('div', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Менеджер справочников")]), _vm._v(" "), _c('div', {
     staticClass: "datatable"
   }, [_c('datatable', {
     attrs: {
@@ -50283,7 +50297,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "update": _vm.list
     }
-  })], 1)
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -50341,6 +50355,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MunicipalityElement_vue__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MunicipalityElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MunicipalityElement_vue__);
+//
+//
 //
 //
 //
@@ -50732,7 +50748,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), _c('h1', [_vm._v("Муниципалитеты")]), _vm._v(" "), _c('div', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Муниципалитеты")]), _vm._v(" "), _c('div', {
     staticClass: "datatable"
   }, [_c('datatable', {
     attrs: {
@@ -50754,7 +50772,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "update": _vm.list
     }
-  })], 1)
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -50812,6 +50830,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SchoolElement_vue__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SchoolElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__SchoolElement_vue__);
+//
+//
 //
 //
 //
@@ -51420,7 +51440,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), _c('h1', [_vm._v("Образовательные организации")]), _vm._v(" "), _c('div', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Образовательные организации")]), _vm._v(" "), _c('div', {
     staticClass: "datatable"
   }, [_c('datatable', {
     attrs: {
@@ -51442,7 +51464,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "update": _vm.list
     }
-  })], 1)
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -51500,6 +51522,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserElement_vue__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__UserElement_vue__);
+//
+//
 //
 //
 //
@@ -51974,7 +51998,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container manager"
-  }, [_c('manager-menu'), _vm._v(" "), _c('h1', [_vm._v("Пользователи")]), _vm._v(" "), _c('div', {
+  }, [_c('manager-menu'), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Пользователи")]), _vm._v(" "), _c('div', {
     staticClass: "datatable"
   }, [_c('datatable', {
     attrs: {
@@ -51996,7 +52022,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "update": _vm.list
     }
-  })], 1)
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -52091,7 +52117,7 @@ if(false) {
 /* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(137)(undefined);
+exports = module.exports = __webpack_require__(177)(undefined);
 // imports
 
 
@@ -52102,88 +52128,7 @@ exports.push([module.i, "\ntable th .sort[data-v-7ae6b86e] {\n\tcursor: pointer;
 
 
 /***/ }),
-/* 137 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
+/* 137 */,
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54052,12 +53997,16 @@ if (false) {
 }
 
 /***/ }),
-/* 164 */
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(169);
 
 
 var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
@@ -54090,7 +54039,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 });
 
 /***/ }),
-/* 165 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54903,10 +54852,98 @@ var index_esm = {
 
 
 /***/ }),
-/* 166 */
+/* 170 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ })
 /******/ ]);
