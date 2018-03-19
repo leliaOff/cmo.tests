@@ -455,15 +455,14 @@ p {
         .table-container {
             
             overflow-x: auto;
-            margin: 20px 0;
 
             table {
                 
                 width: 100%;
 
                 td {
-                    padding: 10px;
-                    border: 1px solid $black;
+                    //padding: 10px;
+                    //border: 1px solid $black;
                     position: relative;
 
                     &.row-item {
@@ -484,6 +483,93 @@ p {
             padding: 5px 10px;
         }
 
+    }
+
+    .image-item {
+        display: inline-block;
+        padding: 0 10px 10px 0;
+        width: 25%;
+        @include box-sizing(border-box);
+
+        img {
+            width: 100%;
+        }
+
+        &.col-2 { width: 25%; }
+        &.col-3 { width: 25%; }
+        &.col-4 { width: 25%; }
+        &.col-5 { width: 20%; }
+        &.col-6 { width: 25%; }
+        &.col-7 { width: 25%; }
+        &.col-8 { width: 25%; }
+        &.col-9 { width: 25%; }
+        &.col-10 { width: 20%; }
+
+        button {
+            border: none;
+        }
+    }
+}
+
+#imageGalleryModal {
+
+    .modal-dialog {
+        width: calc(100vw - 100px);
+    }
+
+    .modal-body {
+        padding: 0;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 32px;
+    }
+
+    .prev {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100%;
+        background: rgba(255,255,255,1);
+        background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,0) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,0)));
+        background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,0) 100%);
+        background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,0) 100%);
+        background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,0) 100%);
+        background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+        border: none;
+        opacity: 0;
+
+        &:hover {
+            opacity: .25;
+        }
+    }
+
+    .next {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100%;
+        background: rgba(255,255,255,0);
+        background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+        background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 100%);
+        background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 100%);
+        background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+        border: none;
+        opacity: 0;
+
+        &:hover {
+            opacity: .25;
+        }
     }
 }
 
@@ -646,6 +732,7 @@ p {
             padding: 2px 10px;
             width: 100%;
             @include box-sizing(border-box);
+            border: 1px solid $gray;
         }
 
         input[type="checkbox"] {
@@ -659,9 +746,10 @@ p {
     
         textarea {
             width: 100%;
-            height: 84px;
+            height: 60px;
             padding: 5px 10px;
             resize: none;
+            border: 1px solid $gray;
         }
     
         select {
@@ -812,39 +900,44 @@ p {
                 .table-container {
 
                     overflow-x: auto;
-                    margin: 20px 0;
 
                     table {
                         
                         width: 100%;
 
                         td {
-                            min-width: 150px;
-                            padding: 10px;
-                            border: 1px solid $black;
+                            min-width: 100px;
                             position: relative;
 
                             &.row-item {
                                 min-width: 400px;
                             }
 
-                            button {
-                                
+                            button {                                
                                 position: absolute;
-                                top: 11px;
-                                right: 11px;
+                                top: 1px;
+                                right: 1px;
                                 padding: 6px 7px 1px;
                                 border: none;
-                                opacity: 0;
-        
+                                opacity: 0;        
                             }
 
-                            &:hover {
-                                
-                                button {
-                                    
-                                    opacity: 1;
-            
+                            &:hover {                                
+                                button {                                    
+                                    opacity: .75;            
+                                }
+                            }
+
+                            &.element-table {
+
+                                border: 1px solid $black;
+
+                                input {
+                                    border: none;
+                                }
+
+                                textarea {
+                                    border: none;
                                 }
                             }
                         }
@@ -852,12 +945,70 @@ p {
                     }
 
                     input {
-
                         border: none;
                         padding: 4px 42px 4px 10px !important;
-
                     }
 
+                }
+
+                .file-item {
+                    width: 100px;
+                    height: 100px;
+                    display: inline-block;
+                    margin: 0 5px 5px 0;
+                    border: 1px solid $gray;
+                    position: relative;
+
+                    img {
+                        width: 100%;
+                        height: auto;
+                    }
+
+                    button {
+                        background: none;
+                        border: none;
+                        color: $white;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        font-size: 18px;
+                        padding: 0;
+                        width: 24px;
+                        height: 24px;
+                        line-height: 1;
+                        text-align: center;
+                        margin: -12px 0 0 -12px;
+                        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+                        opacity: 0;
+                    }
+
+                    &.delete {
+                        
+                        img {
+                            opacity: .1;
+                        }
+
+                        button {
+                            opacity: 1;
+                        }
+                    }
+
+                    &:hover {
+                        button {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                .add-file {
+                    width: 100px;
+                    height: 100px;
+                    background: none;
+                    border: 1px solid $gray;
+                }
+
+                .files {
+                    display: none;
                 }
             }
         }
@@ -898,18 +1049,15 @@ p {
             padding: 20px 0;
         }
 
-        .table-container {
-            
+        .table-container {            
             overflow-x: auto;
-            margin: 20px 0;
 
-            table {
-                
+            table {                
                 width: 100%;
 
                 td {
-                    padding: 10px;
-                    border: 1px solid $black;
+                    //padding: 10px;
+                    //border: 1px solid $black;
                     position: relative;
 
                     &.row-item {

@@ -8153,7 +8153,6 @@ p.justify {
 
 .welcome .elements-content .table-container {
   overflow-x: auto;
-  margin: 20px 0;
 }
 
 .welcome .elements-content .table-container table {
@@ -8161,8 +8160,6 @@ p.justify {
 }
 
 .welcome .elements-content .table-container table td {
-  padding: 10px;
-  border: 1px solid #333333;
   position: relative;
 }
 
@@ -8177,6 +8174,112 @@ p.justify {
 .welcome .elements-content select {
   width: 100%;
   padding: 5px 10px;
+}
+
+.welcome .image-item {
+  display: inline-block;
+  padding: 0 10px 10px 0;
+  width: 25%;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.welcome .image-item img {
+  width: 100%;
+}
+
+.welcome .image-item.col-2 {
+  width: 25%;
+}
+
+.welcome .image-item.col-3 {
+  width: 25%;
+}
+
+.welcome .image-item.col-4 {
+  width: 25%;
+}
+
+.welcome .image-item.col-5 {
+  width: 20%;
+}
+
+.welcome .image-item.col-6 {
+  width: 25%;
+}
+
+.welcome .image-item.col-7 {
+  width: 25%;
+}
+
+.welcome .image-item.col-8 {
+  width: 25%;
+}
+
+.welcome .image-item.col-9 {
+  width: 25%;
+}
+
+.welcome .image-item.col-10 {
+  width: 20%;
+}
+
+.welcome .image-item button {
+  border: none;
+}
+
+#imageGalleryModal .modal-dialog {
+  width: calc(100vw - 100px);
+}
+
+#imageGalleryModal .modal-body {
+  padding: 0;
+}
+
+#imageGalleryModal .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 32px;
+}
+
+#imageGalleryModal .prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: white;
+  background: -webkit-gradient(left top, right top, color-stop(0%, white), color-stop(49%, white), color-stop(100%, rgba(255, 255, 255, 0)));
+  background: -webkit-gradient(linear, left top, right top, from(white), color-stop(49%, white), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to right, white 0%, white 49%, rgba(255, 255, 255, 0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+  border: none;
+  opacity: 0;
+}
+
+#imageGalleryModal .prev:hover {
+  opacity: .25;
+}
+
+#imageGalleryModal .next {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(49%, white), color-stop(100%, white));
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(49%, white), to(white));
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, white 49%, white 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+  border: none;
+  opacity: 0;
+}
+
+#imageGalleryModal .next:hover {
+  opacity: .25;
 }
 
 .manager.container {
@@ -8315,6 +8418,7 @@ p.justify {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  border: 1px solid #555555;
 }
 
 .manager .tab-item input[type="checkbox"] {
@@ -8328,9 +8432,10 @@ p.justify {
 
 .manager .tab-item textarea {
   width: 100%;
-  height: 84px;
+  height: 60px;
   padding: 5px 10px;
   resize: none;
+  border: 1px solid #555555;
 }
 
 .manager .tab-item select {
@@ -8462,7 +8567,6 @@ p.justify {
 
 .manager .elements .element-item .element-setting .table-container {
   overflow-x: auto;
-  margin: 20px 0;
 }
 
 .manager .elements .element-item .element-setting .table-container table {
@@ -8470,9 +8574,7 @@ p.justify {
 }
 
 .manager .elements .element-item .element-setting .table-container table td {
-  min-width: 150px;
-  padding: 10px;
-  border: 1px solid #333333;
+  min-width: 100px;
   position: relative;
 }
 
@@ -8482,20 +8584,87 @@ p.justify {
 
 .manager .elements .element-item .element-setting .table-container table td button {
   position: absolute;
-  top: 11px;
-  right: 11px;
+  top: 1px;
+  right: 1px;
   padding: 6px 7px 1px;
   border: none;
   opacity: 0;
 }
 
 .manager .elements .element-item .element-setting .table-container table td:hover button {
-  opacity: 1;
+  opacity: .75;
+}
+
+.manager .elements .element-item .element-setting .table-container table td.element-table {
+  border: 1px solid #333333;
+}
+
+.manager .elements .element-item .element-setting .table-container table td.element-table input {
+  border: none;
+}
+
+.manager .elements .element-item .element-setting .table-container table td.element-table textarea {
+  border: none;
 }
 
 .manager .elements .element-item .element-setting .table-container input {
   border: none;
   padding: 4px 42px 4px 10px !important;
+}
+
+.manager .elements .element-item .element-setting .file-item {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  border: 1px solid #555555;
+  position: relative;
+}
+
+.manager .elements .element-item .element-setting .file-item img {
+  width: 100%;
+  height: auto;
+}
+
+.manager .elements .element-item .element-setting .file-item button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 18px;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  text-align: center;
+  margin: -12px 0 0 -12px;
+  text-shadow: 1px 1px 1px black;
+  opacity: 0;
+}
+
+.manager .elements .element-item .element-setting .file-item.delete img {
+  opacity: .1;
+}
+
+.manager .elements .element-item .element-setting .file-item.delete button {
+  opacity: 1;
+}
+
+.manager .elements .element-item .element-setting .file-item:hover button {
+  opacity: 1;
+}
+
+.manager .elements .element-item .element-setting .add-file {
+  width: 100px;
+  height: 100px;
+  background: none;
+  border: 1px solid #555555;
+}
+
+.manager .elements .element-item .element-setting .files {
+  display: none;
 }
 
 .manager .results .row {
@@ -8531,7 +8700,6 @@ p.justify {
 
 .manager .results .table-container {
   overflow-x: auto;
-  margin: 20px 0;
 }
 
 .manager .results .table-container table {
@@ -8539,8 +8707,6 @@ p.justify {
 }
 
 .manager .results .table-container table td {
-  padding: 10px;
-  border: 1px solid #333333;
   position: relative;
 }
 

@@ -15,6 +15,7 @@
                 <!-- Деловая часть элемента -->
                 <h2>{{ element.title }}</h2>
                 <div class="alert alert-info" v-if="element.description" v-html="element.description"></div>
+                <image-gallery v-model="element.files"></image-gallery>
                 
                 <!-- Структура элемента в зависимости от типа -->
                 <div class="element-item-setting">
@@ -270,6 +271,14 @@
                 }
 
                 return false;
+            },
+
+            fancyboxInit() {
+                $(".image-item a").fancybox({
+                    'transitionIn'		: 'none',
+                    'transitionOut'		: 'none',
+                    'titlePosition' 	: 'over',
+                });
             }
 
         },

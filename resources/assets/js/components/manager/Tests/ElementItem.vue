@@ -30,10 +30,10 @@
         </div>
         <!-- настройки элемента -->
         <div class="element-setting" v-show="visibility === 1">
-            <element-setting-table v-if="item.type == 'table'" :setting="current.setting" ></element-setting-table>
-            <element-setting-checkbox v-if="item.type == 'checkbox'" :setting="current.setting" ></element-setting-checkbox>
-            <element-setting-radio v-if="item.type == 'radio'" :setting="current.setting" ></element-setting-radio>
-            <element-setting-directory v-if="item.type == 'directory'" :setting="current.setting" ></element-setting-directory>
+            <element-setting-table v-if="item.type == 'table'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-table>
+            <element-setting-checkbox v-if="item.type == 'checkbox'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-checkbox>
+            <element-setting-radio v-if="item.type == 'radio'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-radio>
+            <element-setting-directory v-if="item.type == 'directory'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-directory>
         </div>
         <!-- кнопки элемента -->
         <div class="element-footer btn-group">
@@ -119,6 +119,7 @@
                     is_required: this.item.is_required,              
                     sort: this.item.sort,
                     setting: setting,
+                    files: this.item.files
                 },
                 /* Отобразить/скрыть настройки элемента */
                 visibility: localStorage[this.item.id] == undefined ? 1 : parseInt(localStorage[this.item.id], 10)
@@ -182,53 +183,58 @@
 
             },
 
+            onChangeFiles(files) {
+                this.current.files = files;
+            },
+
             update() {
 
-                let self = this;
-                self.validation = {};
-                self.$store.state.loader = true;
+                this.validation = {};
+                this.$store.state.loader = true;
 
                 //data
                 
                 let data = {
                     
-                    title: self.current.title,
-                    description: self.current.description,
-                    is_required: self.current.is_required,
+                    title:          this.current.title,
+                    description:    this.current.description,
+                    is_required:    this.current.is_required,
 
                 };
 
                 //settings
-                if(self.current.setting.cols != undefined) self.current.setting.cols.splice((self.current.setting.cols.length - 1), 1);
-                if(self.current.setting.rows != undefined) self.current.setting.rows.splice((self.current.setting.rows.length - 1), 1);
+                if(this.current.setting.cols != undefined) this.current.setting.cols.splice((this.current.setting.cols.length - 1), 1);
+                if(this.current.setting.rows != undefined) this.current.setting.rows.splice((this.current.setting.rows.length - 1), 1);
 
                 axios.post(window.baseurl + 'elementUpdate', {
                     
-                    data: data, id: self.item.id, setting: self.current.setting, type: self.item.type
+                    data: data, id: this.item.id, setting: this.current.setting, type: this.item.type, files: this.current.files
 
-                }).then(function(response) {
+                }).then(response => {
 
-                    self.$store.state.loader = false;                    
-                    if(response.data.status == 'relogin') self.$router.push('/');
+                    this.$store.state.loader = false;                    
+                    if(response.data.status == 'relogin') this.$router.push('/');
                     
                     if(response.data.status == 'fail') {
                         
-                        self.validation = response.data.error;
+                        this.validation = response.data.error;
 
                     } else if(response.data.status == 'success') {
 
-                        if(self.current.setting.cols != undefined) self.current.setting.cols.push({value: ''});
-                        if(self.current.setting.rows != undefined) self.current.setting.rows.push({value: ''});
+                        if(this.current.setting.cols != undefined) this.current.setting.cols.push({value: ''});
+                        if(this.current.setting.rows != undefined) this.current.setting.rows.push({value: ''});
                       
-                        self.item.setting = Object.assign({}, self.current.setting);
-                        self.item.title = self.current.title;
-                        self.item.description = self.current.description;
-                        self.item.is_required = self.current.is_required;
+                        this.item.setting       = Object.assign({}, this.current.setting);
+                        this.item.title         = this.current.title;
+                        this.item.description   = this.current.description;
+                        this.item.is_required   = this.current.is_required;
+                        this.item.files         = response.data.result.files;
+                        this.current.files      = response.data.result.files;
 
                     }
 
-                }).catch(function (error) {
-                    self.$store.state.loader = false;
+                }).catch(error => {
+                    this.$store.state.loader = false;
                     console.log(error);
                 });
 

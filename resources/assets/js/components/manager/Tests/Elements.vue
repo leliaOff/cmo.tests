@@ -140,28 +140,28 @@
 
             exit() {
 
-                // let self = this;
+                let self = this;
                 
-                // let isChange = false;
-                // $.each(this.data, function(key, value) {
+                let isChange = false;
+                $.each(this.data, function(key, value) {
 
-                //     if(self.current[key] != value) {
-                //         isChange = true;
-                //         return -1;
-                //     }
+                    if(self.current[key] != value) {
+                        isChange = true;
+                        return -1;
+                    }
 
-                // });
-                // if(!isChange) {
-                //     this.$router.push('/manager/tests');
-                // } else {
+                });
+                if(!isChange) {
+                    this.$router.push('/manager/tests');
+                } else {
 
-                //     self.$store.state.sureModal.text = 'Вы уверены, что хотите выйти, не сохранив анкету "' + self.data.name + '"?';
-                //     self.$store.state.sureModal.action = function() {
-                //         self.$router.push('/manager/tests');
-                //     }
-                //     $('#sureWindow').modal('show');
+                    self.$store.state.sureModal.text = 'Вы уверены, что хотите выйти, не сохранив анкету "' + self.data.name + '"?';
+                    self.$store.state.sureModal.action = function() {
+                        self.$router.push('/manager/tests');
+                    }
+                    $('#sureWindow').modal('show');
 
-                // }
+                }
             },       
             
         },

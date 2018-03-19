@@ -36,6 +36,7 @@ Route::post('/elementInsert', 'Manager\ElementsController@insert');
 Route::post('/elementUpdate', 'Manager\ElementsController@update');
 Route::post('/elementDelete', 'Manager\ElementsController@delete');
 Route::post('/elementSort', 'Manager\ElementsController@sort');
+Route::post('/elementsFileUpload', 'Manager\ElementsController@uploadFile');
 
 /* Results */ 
 Route::post('/resultsList', 'Manager\ResultsController@select');

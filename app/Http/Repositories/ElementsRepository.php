@@ -3,18 +3,21 @@
 namespace App\Http\Repositories;
 use App\Models\Elements;
 use App\Http\Repositories\ElementsDataRepository;
+use App\Http\Repositories\ElementsFilesRepository;
 use App\Http\Repositories\ResultsRepository;
 
 class ElementsRepository extends BaseRepository 
 {
     
     private $data;
+    private $files;
     private $results;
     
-    public function __construct(Elements $model, ElementsDataRepository $data, ResultsRepository $results) 
+    public function __construct(Elements $model, ElementsDataRepository $data, ElementsFilesRepository $files, ResultsRepository $results) 
     {
         $this->model = $model;
         $this->data = $data;
+        $this->files = $files;
         $this->results = $results;
     }
 
@@ -40,7 +43,7 @@ class ElementsRepository extends BaseRepository
     }
 
     /* Обновить */
-    public function update($id, $data, $setting)
+    public function update($id, $data, $setting, $files)
     {
         $item = $this->model->find($id);
         $item->fill($data);
@@ -50,7 +53,26 @@ class ElementsRepository extends BaseRepository
         //setting
         $this->data->create($setting);
 
-        return $item;
+        //files
+        $filesData = [];
+
+        foreach($files as $i => $file) {
+            if(isset($file['is_delete']) && $file['is_delete'] === true) {
+                if(isset($file['id'])) {
+                    $this->files->delete($file['id']);
+                }                
+            } else {
+                $filesData[] = [
+                    'element_id'    => $item->id,
+                    'sort'          => $i,
+                    'title'         => $item->title,
+                    'path'          => $file['path']
+                ];
+            }
+        }
+        $this->files->create($filesData);
+
+        return $this->model->with('files')->with('data')->find($id);
     }
 
     /* Удалить */

@@ -13764,7 +13764,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(170);
+module.exports = __webpack_require__(166);
 
 
 /***/ }),
@@ -13790,7 +13790,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_ontrols_Radio_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_ontrols_Radio_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_controls_ImageGallery_vue__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_controls_ImageGallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_controls_ImageGallery_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__store__ = __webpack_require__(164);
 
 
 
@@ -13815,12 +13817,14 @@ Vue.component('easy-radio', __WEBPACK_IMPORTED_MODULE_8__components_ontrols_Radi
 
 Vue.component('input-select', __WEBPACK_IMPORTED_MODULE_9__components_ontrols_InputSelect_vue___default.a);
 
+Vue.component('ImageGallery', __WEBPACK_IMPORTED_MODULE_10__components_controls_ImageGallery_vue___default.a);
+
 
 
 var app = new Vue({
     el: '#app',
     router: __WEBPACK_IMPORTED_MODULE_1__routes__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_10__store__["a" /* store */]
+    store: __WEBPACK_IMPORTED_MODULE_11__store__["a" /* store */]
 });
 
 /***/ }),
@@ -45384,6 +45388,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -45591,6 +45596,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             return false;
+        },
+        fancyboxInit: function fancyboxInit() {
+            $(".image-item a").fancybox({
+                'transitionIn': 'none',
+                'transitionOut': 'none',
+                'titlePosition': 'over'
+            });
         }
     },
 
@@ -46163,7 +46175,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(element.description)
       }
-    }) : _vm._e(), _vm._v(" "), _c('div', {
+    }) : _vm._e(), _vm._v(" "), _c('image-gallery', {
+      model: {
+        value: (element.files),
+        callback: function($$v) {
+          element.files = $$v
+        },
+        expression: "element.files"
+      }
+    }), _vm._v(" "), _c('div', {
       staticClass: "element-item-setting"
     }, [(element.type == 'table') ? _c('element-setting-table', {
       attrs: {
@@ -46198,7 +46218,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "update": _vm.setResult
       }
-    }) : _vm._e()], 1)]) : _vm._e()
+    }) : _vm._e()], 1)], 1) : _vm._e()
   }), _vm._v(" "), _c('button', {
     staticClass: "btn btn-default btn-turn",
     class: (_vm.current == 0 ? 'disabled' : ''),
@@ -46931,28 +46951,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         exit: function exit() {
 
-            // let self = this;
+            var self = this;
 
-            // let isChange = false;
-            // $.each(this.data, function(key, value) {
+            var isChange = false;
+            $.each(this.data, function (key, value) {
 
-            //     if(self.current[key] != value) {
-            //         isChange = true;
-            //         return -1;
-            //     }
+                if (self.current[key] != value) {
+                    isChange = true;
+                    return -1;
+                }
+            });
+            if (!isChange) {
+                this.$router.push('/manager/tests');
+            } else {
 
-            // });
-            // if(!isChange) {
-            //     this.$router.push('/manager/tests');
-            // } else {
-
-            //     self.$store.state.sureModal.text = 'Вы уверены, что хотите выйти, не сохранив анкету "' + self.data.name + '"?';
-            //     self.$store.state.sureModal.action = function() {
-            //         self.$router.push('/manager/tests');
-            //     }
-            //     $('#sureWindow').modal('show');
-
-            // }
+                self.$store.state.sureModal.text = 'Вы уверены, что хотите выйти, не сохранив анкету "' + self.data.name + '"?';
+                self.$store.state.sureModal.action = function () {
+                    self.$router.push('/manager/tests');
+                };
+                $('#sureWindow').modal('show');
+            }
         }
     },
 
@@ -47135,7 +47153,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 description: this.item.description,
                 is_required: this.item.is_required,
                 sort: this.item.sort,
-                setting: setting
+                setting: setting,
+                files: this.item.files
             },
             /* Отобразить/скрыть настройки элемента */
             visibility: localStorage[this.item.id] == undefined ? 1 : parseInt(localStorage[this.item.id], 10)
@@ -47196,50 +47215,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
+        onChangeFiles: function onChangeFiles(files) {
+            this.current.files = files;
+        },
         update: function update() {
+            var _this = this;
 
-            var self = this;
-            self.validation = {};
-            self.$store.state.loader = true;
+            this.validation = {};
+            this.$store.state.loader = true;
 
             //data
 
             var data = {
 
-                title: self.current.title,
-                description: self.current.description,
-                is_required: self.current.is_required
+                title: this.current.title,
+                description: this.current.description,
+                is_required: this.current.is_required
 
             };
 
             //settings
-            if (self.current.setting.cols != undefined) self.current.setting.cols.splice(self.current.setting.cols.length - 1, 1);
-            if (self.current.setting.rows != undefined) self.current.setting.rows.splice(self.current.setting.rows.length - 1, 1);
+            if (this.current.setting.cols != undefined) this.current.setting.cols.splice(this.current.setting.cols.length - 1, 1);
+            if (this.current.setting.rows != undefined) this.current.setting.rows.splice(this.current.setting.rows.length - 1, 1);
 
             axios.post(window.baseurl + 'elementUpdate', {
 
-                data: data, id: self.item.id, setting: self.current.setting, type: self.item.type
+                data: data, id: this.item.id, setting: this.current.setting, type: this.item.type, files: this.current.files
 
             }).then(function (response) {
 
-                self.$store.state.loader = false;
-                if (response.data.status == 'relogin') self.$router.push('/');
+                _this.$store.state.loader = false;
+                if (response.data.status == 'relogin') _this.$router.push('/');
 
                 if (response.data.status == 'fail') {
 
-                    self.validation = response.data.error;
+                    _this.validation = response.data.error;
                 } else if (response.data.status == 'success') {
 
-                    if (self.current.setting.cols != undefined) self.current.setting.cols.push({ value: '' });
-                    if (self.current.setting.rows != undefined) self.current.setting.rows.push({ value: '' });
+                    if (_this.current.setting.cols != undefined) _this.current.setting.cols.push({ value: '' });
+                    if (_this.current.setting.rows != undefined) _this.current.setting.rows.push({ value: '' });
 
-                    self.item.setting = Object.assign({}, self.current.setting);
-                    self.item.title = self.current.title;
-                    self.item.description = self.current.description;
-                    self.item.is_required = self.current.is_required;
+                    _this.item.setting = Object.assign({}, _this.current.setting);
+                    _this.item.title = _this.current.title;
+                    _this.item.description = _this.current.description;
+                    _this.item.is_required = _this.current.is_required;
+                    _this.item.files = response.data.result.files;
+                    _this.current.files = response.data.result.files;
                 }
             }).catch(function (error) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 console.log(error);
             });
         },
@@ -47377,10 +47401,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting'],
+    props: ['setting', 'files'],
 
     methods: {
         columnUpdate: function columnUpdate() {
@@ -47402,6 +47445,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         rowRemove: function rowRemove(index) {
 
             this.setting.rows.splice(index, 1);
+        },
+        selectFiles: function selectFiles() {
+            this.$el.querySelector('input.files').click();
+        },
+        uploadFiles: function uploadFiles() {
+            var _this = this;
+
+            var files = this.$el.querySelector('input.files').files;
+
+            var url = window.baseurl + 'elementsFileUpload';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('files[]', files[i]);
+            }
+
+            axios.post(url, data, config).then(function (response) {
+
+                $.each(response.data, function (i, value) {
+                    _this.files.push({
+                        path: value
+                    });
+                });
+                _this.$emit('onChangeFiles', _this.files);
+            }).catch(function (error) {
+                // ...
+            });
+        },
+        deleteFile: function deleteFile(i) {
+            var list = this.files;
+            list[i].is_delete = list[i].is_delete ? false : true;
+            this.files = Object.assign({}, list);
         }
     }
 });
@@ -47436,11 +47512,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_c('div', {
     staticClass: "table-container"
   }, [_c('table', [_c('tr', [_c('td', {
     staticClass: "row-item"
   }), _vm._v(" "), _vm._l((_vm.setting.cols), function(col, i) {
-    return _c('td', [_c('input', {
+    return _c('td', {
+      staticClass: "element-table"
+    }, [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -47476,7 +47558,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })]) : _vm._e()])
   })], 2), _vm._v(" "), _vm._l((_vm.setting.rows), function(row, i) {
     return _c('tr', [_c('td', {
-      staticClass: "row-item"
+      staticClass: "row-item element-table"
     }, [_c('textarea', {
       directives: [{
         name: "model",
@@ -47512,6 +47594,57 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })]) : _vm._e()]), _vm._v(" "), _vm._l((_vm.setting.cols), function(col) {
       return _c('td')
     })], 2)
+  })], 2)])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_vm._l((_vm.files), function(file, i) {
+    return _c('div', {
+      class: {
+        'file-item': true, 'delete': file.is_delete
+      },
+      attrs: {
+        "title": file.title
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": file.path
+      }
+    }), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [(_vm.files[i].is_delete == true) ? _c('span', {
+      staticClass: "glyphicon glyphicon-repeat"
+    }) : _c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    })])])
+  }), _c('button', {
+    staticClass: "add-file",
+    attrs: {
+      "title": "Добавить изображения"
+    },
+    on: {
+      "click": _vm.selectFiles
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-plus"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "files",
+    attrs: {
+      "type": "file",
+      "multiple": "true",
+      "accept": "image/jpeg,image/png,image/gif"
+    },
+    on: {
+      "change": _vm.uploadFiles
+    }
   })], 2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
@@ -47519,6 +47652,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Максимум можно выбрать:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Варианты ответов:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Изображения:")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -47593,10 +47738,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting'],
+    props: ['setting', 'files'],
 
     methods: {
         rowUpdate: function rowUpdate() {
@@ -47608,6 +47772,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         rowRemove: function rowRemove(index) {
 
             this.setting.rows.splice(index, 1);
+        },
+        selectFiles: function selectFiles() {
+            this.$el.querySelector('input.files').click();
+        },
+        uploadFiles: function uploadFiles() {
+            var _this = this;
+
+            var files = this.$el.querySelector('input.files').files;
+
+            var url = window.baseurl + 'elementsFileUpload';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('files[]', files[i]);
+            }
+
+            axios.post(url, data, config).then(function (response) {
+
+                $.each(response.data, function (i, value) {
+                    _this.files.push({
+                        path: value
+                    });
+                });
+                _this.$emit('onChangeFiles', _this.files);
+            }).catch(function (error) {
+                // ...
+            });
+        },
+        deleteFile: function deleteFile(i) {
+            var list = this.files;
+            list[i].is_delete = list[i].is_delete ? false : true;
+            this.files = Object.assign({}, list);
         }
     }
 });
@@ -47642,6 +47839,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_c('div', {
     staticClass: "table-container"
   }, [_c('table', _vm._l((_vm.setting.rows), function(row, i) {
     return _c('tr', [_c('td', {
@@ -47677,15 +47878,78 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_c('span', {
-      staticClass: "glyphicon glyphicon glyphicon-trash"
+      staticClass: "glyphicon glyphicon-trash"
     })]) : _vm._e()])])
-  }))])])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_vm._l((_vm.files), function(file, i) {
+    return _c('div', {
+      class: {
+        'file-item': true, 'delete': file.is_delete
+      },
+      attrs: {
+        "title": file.title
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": file.path
+      }
+    }), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [(_vm.files[i].is_delete == true) ? _c('span', {
+      staticClass: "glyphicon glyphicon-repeat"
+    }) : _c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    })])])
+  }), _c('button', {
+    staticClass: "add-file",
+    attrs: {
+      "title": "Добавить изображения"
+    },
+    on: {
+      "click": _vm.selectFiles
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-plus"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "files",
+    attrs: {
+      "type": "file",
+      "multiple": "true",
+      "accept": "image/jpeg,image/png,image/gif"
+    },
+    on: {
+      "change": _vm.uploadFiles
+    }
+  })], 2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Максимум можно выбрать:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Варианты ответов:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Изображения:")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -47756,10 +48020,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting'],
+    props: ['setting', 'files'],
 
     methods: {
         rowUpdate: function rowUpdate() {
@@ -47771,6 +48054,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         rowRemove: function rowRemove(index) {
 
             this.setting.rows.splice(index, 1);
+        },
+        selectFiles: function selectFiles() {
+            this.$el.querySelector('input.files').click();
+        },
+        uploadFiles: function uploadFiles() {
+            var _this = this;
+
+            var files = this.$el.querySelector('input.files').files;
+
+            var url = window.baseurl + 'elementsFileUpload';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('files[]', files[i]);
+            }
+
+            axios.post(url, data, config).then(function (response) {
+
+                $.each(response.data, function (i, value) {
+                    _this.files.push({
+                        path: value
+                    });
+                });
+                _this.$emit('onChangeFiles', _this.files);
+            }).catch(function (error) {
+                // ...
+            });
+        },
+        deleteFile: function deleteFile(i) {
+            var list = this.files;
+            list[i].is_delete = list[i].is_delete ? false : true;
+            this.files = Object.assign({}, list);
         }
     }
 });
@@ -47781,6 +48097,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
+    staticClass: "row"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_c('div', {
     staticClass: "table-container"
   }, [_c('table', _vm._l((_vm.setting.rows), function(row, i) {
     return _c('tr', [_c('td', {
@@ -47818,8 +48138,71 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('span', {
       staticClass: "glyphicon glyphicon glyphicon-trash"
     })]) : _vm._e()])])
-  }))])])
-},staticRenderFns: []}
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_vm._l((_vm.files), function(file, i) {
+    return _c('div', {
+      class: {
+        'file-item': true, 'delete': file.is_delete
+      },
+      attrs: {
+        "title": file.title
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": file.path
+      }
+    }), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [(_vm.files[i].is_delete == true) ? _c('span', {
+      staticClass: "glyphicon glyphicon-repeat"
+    }) : _c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    })])])
+  }), _c('button', {
+    staticClass: "add-file",
+    attrs: {
+      "title": "Добавить изображения"
+    },
+    on: {
+      "click": _vm.selectFiles
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-plus"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "files",
+    attrs: {
+      "type": "file",
+      "multiple": "true",
+      "accept": "image/jpeg,image/png,image/gif"
+    },
+    on: {
+      "change": _vm.uploadFiles
+    }
+  })], 2)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Варианты ответов:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Изображения:")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -47887,10 +48270,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting'],
+    props: ['setting', 'files'],
 
     data: function data() {
         return {
@@ -47915,6 +48312,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.$store.state.loader = false;
                 console.log(error);
             });
+        },
+        selectFiles: function selectFiles() {
+            this.$el.querySelector('input.files').click();
+        },
+        uploadFiles: function uploadFiles() {
+            var _this = this;
+
+            var files = this.$el.querySelector('input.files').files;
+
+            var url = window.baseurl + 'elementsFileUpload';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('files[]', files[i]);
+            }
+
+            axios.post(url, data, config).then(function (response) {
+
+                $.each(response.data, function (i, value) {
+                    _this.files.push({
+                        path: value
+                    });
+                });
+                _this.$emit('onChangeFiles', _this.files);
+            }).catch(function (error) {
+                // ...
+            });
+        },
+        deleteFile: function deleteFile(i) {
+            var list = this.files;
+            list[i].is_delete = list[i].is_delete ? false : true;
+            this.files = Object.assign({}, list);
         }
     },
 
@@ -47956,13 +48386,70 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": directory.alias
       }
     }, [_vm._v(_vm._s(directory.title))])
-  }))])])])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9 clearfix"
+  }, [_vm._l((_vm.files), function(file, i) {
+    return _c('div', {
+      class: {
+        'file-item': true, 'delete': file.is_delete
+      },
+      attrs: {
+        "title": file.title
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": file.path
+      }
+    }), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [(_vm.files[i].is_delete == true) ? _c('span', {
+      staticClass: "glyphicon glyphicon-repeat"
+    }) : _c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    })])])
+  }), _c('button', {
+    staticClass: "add-file",
+    attrs: {
+      "title": "Добавить изображения"
+    },
+    on: {
+      "click": _vm.selectFiles
+    }
+  }, [_c('i', {
+    staticClass: "glyphicon glyphicon-plus"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "files",
+    attrs: {
+      "type": "file",
+      "multiple": "true",
+      "accept": "image/jpeg,image/png,image/gif"
+    },
+    on: {
+      "change": _vm.uploadFiles
+    }
+  })], 2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Выберите справочник:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Изображения:")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -48121,19 +48608,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "element-setting"
   }, [(_vm.item.type == 'table') ? _c('element-setting-table', {
     attrs: {
-      "setting": _vm.current.setting
+      "setting": _vm.current.setting,
+      "files": _vm.current.files
+    },
+    on: {
+      "onChangeFiles": _vm.onChangeFiles
     }
   }) : _vm._e(), _vm._v(" "), (_vm.item.type == 'checkbox') ? _c('element-setting-checkbox', {
     attrs: {
-      "setting": _vm.current.setting
+      "setting": _vm.current.setting,
+      "files": _vm.current.files
+    },
+    on: {
+      "onChangeFiles": _vm.onChangeFiles
     }
   }) : _vm._e(), _vm._v(" "), (_vm.item.type == 'radio') ? _c('element-setting-radio', {
     attrs: {
-      "setting": _vm.current.setting
+      "setting": _vm.current.setting,
+      "files": _vm.current.files
+    },
+    on: {
+      "onChangeFiles": _vm.onChangeFiles
     }
   }) : _vm._e(), _vm._v(" "), (_vm.item.type == 'directory') ? _c('element-setting-directory', {
     attrs: {
-      "setting": _vm.current.setting
+      "setting": _vm.current.setting,
+      "files": _vm.current.files
+    },
+    on: {
+      "onChangeFiles": _vm.onChangeFiles
     }
   }) : _vm._e()], 1), _vm._v(" "), _c('div', {
     staticClass: "element-footer btn-group"
@@ -52117,7 +52620,7 @@ if(false) {
 /* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(177)(undefined);
+exports = module.exports = __webpack_require__(210)(undefined);
 // imports
 
 
@@ -53997,16 +54500,12 @@ if (false) {
 }
 
 /***/ }),
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(165);
 
 
 var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
@@ -54039,7 +54538,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 });
 
 /***/ }),
-/* 169 */
+/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54852,19 +55351,242 @@ var index_esm = {
 
 
 /***/ }),
-/* 170 */
+/* 166 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
 /* 171 */,
 /* 172 */,
 /* 173 */,
 /* 174 */,
 /* 175 */,
 /* 176 */,
-/* 177 */
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(198),
+  /* template */
+  __webpack_require__(199),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\ImageGallery.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ImageGallery.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-198f9580", Component.options)
+  } else {
+    hotAPI.reload("data-v-198f9580", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 198 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['value'],
+
+    data: function data() {
+        return {
+            images: this.value,
+            current: 0
+        };
+    },
+
+
+    methods: {
+        show: function show(index) {
+            this.current = index;
+        },
+        next: function next() {
+            var i = this.current + 1;
+            if (i == this.images.length) i = 0;
+            this.current = i;
+        },
+        prev: function prev() {
+            var i = this.current - 1;
+            if (i == -1) i = this.images.length - 1;
+            this.current = i;
+        }
+    }
+
+});
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "image-gallery"
+  }, [_vm._l((_vm.images), function(image, i) {
+    return _c('div', {
+      class: 'image-item ' + 'col-' + _vm.images.length
+    }, [_c('button', {
+      on: {
+        "click": function($event) {
+          _vm.show(i)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": image.path,
+        "data-toggle": "modal",
+        "data-target": "#imageGalleryModal"
+      }
+    })])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "modal fade bd-example-modal-lg",
+    attrs: {
+      "id": "imageGalleryModal",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-hidden": "true"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "modal-body"
+  }, [_c('button', {
+    staticClass: "prev",
+    on: {
+      "click": function($event) {
+        _vm.prev()
+      }
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-chevron-left"
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "next",
+    on: {
+      "click": function($event) {
+        _vm.next()
+      }
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-chevron-right"
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('img', {
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "src": _vm.images[_vm.current].path
+    }
+  })])])])])], 2)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-198f9580", module.exports)
+  }
+}
+
+/***/ }),
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */
 /***/ (function(module, exports) {
 
 /*

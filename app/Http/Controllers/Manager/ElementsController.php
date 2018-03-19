@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 use App\Http\Repositories\ElementsRepository;
 
 class ElementsController extends Controller
@@ -44,7 +47,7 @@ class ElementsController extends Controller
     {
         if(!Auth::check()) return ['status' => 'relogin'];
 
-        $element = $this->elementsRepository->find($request['id']);      
+        $element = $this->elementsRepository->find($request['id']);
 
         //Разбираем данные
         $result = [];
@@ -71,15 +74,15 @@ class ElementsController extends Controller
         if(!Auth::check()) return ['status' => 'relogin'];
 
         $validator = Validator::make([
-            'sort' => $request['data']['sort'],
-            'title' => $request['data']['title'],
-            'is_required' => $request['data']['is_required'],
-            'type' => $request['data']['type'],
+            'sort'          => $request['data']['sort'],
+            'title'         => $request['data']['title'],
+            'is_required'   => $request['data']['is_required'],
+            'type'          => $request['data']['type'],
         ], [
-            'sort' => 'required|integer',
-            'title' => 'required|string|max:255',
-            'is_required' => 'boolean',
-            'type' => 'required|string|in:table,checkbox,radio,title,directory',
+            'sort'          => 'required|integer',
+            'title'         => 'required|string|max:255',
+            'is_required'   => 'boolean',
+            'type'          => 'required|string|in:table,checkbox,radio,title,directory',
         ]);
 
         if($validator->fails()) {
@@ -122,7 +125,16 @@ class ElementsController extends Controller
         }
 
         $setting = $this->setting($request['setting'], $request['type'], $request['id']);
-        $element = $this->elementsRepository->update($request['id'], $request['data'], $setting);
+        $element = $this->elementsRepository->update($request['id'], $request['data'], $setting, $request['files']);
+
+        //Удаляем файлы 
+        $deleteFilesList = [];
+        foreach($request['files'] as $file) {
+            if(isset($file['is_delete']) && $file['is_delete'] === true) {
+                $deleteFilesList[] = $file['path'];
+            }
+        }
+        $this->deleteFile($deleteFilesList);
         
         return ['status' => 'success', 'result' => $element, 'setting' => $setting];
     }
@@ -277,6 +289,36 @@ class ElementsController extends Controller
         if(!Auth::check()) return ['status' => 'relogin'];
         $this->elementsRepository->delete($request['id']);
         return ['status' => 'success'];
+    }
+
+    /**
+	 * Загрузить картинку
+	 * 
+	 * @return json
+	 */
+    public function uploadFile(Request $request)
+    {
+		$result = [];
+        foreach($request['files'] as $file) {
+            $file 		= $file->store('public/images');
+            $filename 	= 'public' . Storage::url($file);
+			$img 		= Image::make($filename);
+			$img->fit(900);
+            $img->save($filename);
+            $result[] = $filename;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * Удалить картинки
+     */
+    private function deleteFile($files)
+    {
+        foreach($files as $file) {
+            Storage::delete($file);
+        }
     }
 
 }

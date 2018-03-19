@@ -21,6 +21,8 @@ import Radio from './components/сontrols/Radio.vue';
 Vue.component('easy-radio', Radio);
 import InputSelect from './components/сontrols/InputSelect.vue';
 Vue.component('input-select', InputSelect);
+import ImageGallery from './components/controls/ImageGallery.vue';
+Vue.component('ImageGallery', ImageGallery);
 
 import { store } from './store';
 

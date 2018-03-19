@@ -10,19 +10,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Cache;
+use App\Http\Repositories\TestsRepository;
+use App\Http\Repositories\ElementsRepository;
 
 class TestsController extends Controller
 {
        
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        
-    }
+    private $elementsRepository;
+    private $testsRepository;
+
+	public function __construct(ElementsRepository $elementsRepository, TestsRepository $testsRepository)
+	{ 
+		$this->elementsRepository   = $elementsRepository;
+		$this->testsRepository      = $testsRepository;
+	}
 
     /**
      * Show the application dashboard.
@@ -41,12 +42,13 @@ class TestsController extends Controller
     public function select()
     {
         
-        $tests = Cache::remember('front_tests', 2880, function() {
-            return DB::table('tests')->where('state', 'published')->select([
+        $tests = $this->testsRepository->allState('published')
+            ->select([
                 'id', 'name', 'description',
                 DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
-            ])->get();
-        });
+            ])
+            ->get();
+
         return ['status' => 'success', 'result' => $tests];
     }
 
@@ -61,74 +63,46 @@ class TestsController extends Controller
         if($user == 0) $user = time();
 
         //Информация по самому тесту
-        $tests = Cache::remember('front_test_' . $id, 2880, function() use($id) {
-            return DB::table('tests')
-                ->where([
-                    ['id', $id],
-                    ['state', 'published']
-                ])
-                ->select([
-                    'id', 'name', 'description', 'after',
-                    DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
-                ])
-                ->first();
-        });
+        $tests = $this->testsRepository->findState($id, 'published');
         
         //Список элементов
-        $elements = Cache::remember('front_elements_' . $id, 2880, function() use($id) {
-            return DB::table('elements')
-                ->where('test_id', $id)
-                ->select([
-                    'id', 'test_id', 'sort', 'title', 'is_required', 'type',
-                    DB::raw('REPLACE(description, "\n", "<br/>") as description'),
-                ])
-                ->orderBy('sort')->get();
-        });
+        $elements = $this->elementsRepository->all($id)
+            ->select([
+                'id', 'test_id', 'sort', 'title', 'is_required', 'type',
+                DB::raw('REPLACE(description, "\n", "<br/>") as description'),
+            ])
+            ->orderBy('sort')
+            ->get();
 
         //Данные для элементов и результаты
-
-        foreach($elements as $i => $element) {
-
-            $element_id = $element->id;
-            $elements[$i]->data = Cache::remember('elements_data_' . $element_id, 2880, function() use($element_id) {
-                
-                $result = DB::table('elements_data')->where('element_id', $element_id)->get();
-
-                //Разбираем данные
-                $data = [];
-                foreach($result as $value) {
-                    if($value->key == 'cols' || $value->key == 'rows') {
-                        $items = json_decode($value->value);
-                        foreach($items  as $item) {
-                            $data[$value->key][] = ['value' => $item];
-                        }
-                    } else {
-                        $data[$value->key] = $value->value;
-                    }
-                }
-
-                return $data;
-
-            });
-
-            // //Результаты
-            // $result = DB::table('results')->where([
-                // ['element_id', $element->id],
-                // ['user_key', $user],
-            // ])->first();
-
-            // //Разбираем данные
-            // if(!empty($result)) {
-                // $result = $result->result;
-                // if($element->type == 'table' || $element->type == 'checkbox') {
-                    // $result = json_decode($result);
-                // }
-                // $elements[$i]->result = $result;
-            // }
-
+        foreach($elements as $i => &$element) {
+            $data = $this->parseElementsData($element->data);
+            unset($element->data);
+            $element->data = $data;
         }     
         
         return ['status' => 'success', 'result' => $tests, 'elements' => $elements, 'user' => $user];
+    }
+
+    /**
+     * Разбираем данные вопроса
+     */
+    private function parseElementsData($data)
+    {
+        //Разбираем данные
+        $result = [];
+        foreach($data as $value) {
+            if($value->key == 'cols' || $value->key == 'rows') {
+                $items = json_decode($value->value);
+                foreach($items  as $item) {
+                    $result[$value->key][] = ['value' => $item];
+                }
+            } else {
+                $result[$value->key] = $value->value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -143,11 +117,6 @@ class TestsController extends Controller
 
         if($user < (time() - 14400)) return ['status' => 'fail', 'error' => 'time error'];
         if(count($results) == 0) return ['status' => 'fail', 'error' => 'results is null'];
-        
-        // //Удаляем предыдущие ответы этого пользователя
-        // DB::table('results')->where([
-            // 'user_key' => $user
-        // ])->delete();
         
         $ids = [];
         $insertList = [];
