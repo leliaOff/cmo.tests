@@ -8,20 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Services\ParseJsonService;
+use App\Http\Repositories\ElementsRepository;
 
 use Illuminate\Support\Facades\Storage;
 use Image;
-
-use App\Http\Repositories\ElementsRepository;
 
 class ElementsController extends Controller
 {
        
     private $elementsRepository;
+    private $parseJsonService;
 
-	public function __construct(ElementsRepository $elementsRepository)
+	public function __construct(ElementsRepository $elementsRepository, ParseJsonService $parseJsonService)
 	{ 
-		$this->elementsRepository = $elementsRepository;
+        $this->elementsRepository   = $elementsRepository;
+        $this->parseJsonService     = $parseJsonService;
 	}
 
     /**
@@ -124,8 +126,13 @@ class ElementsController extends Controller
 
         }
 
+        //Настройки элемента
         $setting = $this->setting($request['setting'], $request['type'], $request['id']);
-        $element = $this->elementsRepository->update($request['id'], $request['data'], $setting, $request['files']);
+        
+        //Условия отображения элемента
+        $conditions = $this->conditions($request['conditions'], $request['id']);
+
+        $element = $this->elementsRepository->update($request['id'], $request['data'], $setting, $request['files'], $conditions);
 
         //Удаляем файлы 
         $deleteFilesList = [];
@@ -136,7 +143,7 @@ class ElementsController extends Controller
         }
         $this->deleteFile($deleteFilesList);
         
-        return ['status' => 'success', 'result' => $element, 'setting' => $setting];
+        return [ 'status' => 'success', 'result' => $element, 'setting' => $setting, 'conditions' => $conditions ];
     }
 
     /**
@@ -278,6 +285,20 @@ class ElementsController extends Controller
         // DB::table('elements_data')->insert($setting);
         return $setting;
 
+    }
+
+    /**
+     * Сформировать условия
+     */
+    private function conditions($conditions, $elementId)
+    {
+        foreach($conditions as &$condition) {
+            $condition['conditions_answer'] = $this->parseJsonService->parseAnswerToJson($condition['conditions_answer'], $condition['element']['type'], $condition['conditions_element_id']);
+            $condition['element_id'] = $elementId;
+            unset($condition['element']);
+        }
+
+        return $conditions;
     }
 
     /**

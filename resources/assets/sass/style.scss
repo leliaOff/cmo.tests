@@ -114,7 +114,7 @@ p {
     }
 
     input {
-        display: none;
+        display: none !important;
     }
 
     span {
@@ -136,6 +136,24 @@ p {
     &:hover {
         .easy-checkbox-icon {
             background: $grey;
+        }
+    }
+}
+
+.row {
+    
+    & > div {
+
+        &.align-right {
+            text-align: right;
+        }
+
+        &.align-center {
+            text-align: center;
+        }
+
+        &.align-justify {
+            text-align: justify;
         }
     }
 }
@@ -573,6 +591,12 @@ p {
     }
 }
 
+#answerSelectorWindow {
+    .modal-dialog {
+        width: calc(100vw - 100px);
+    }
+}
+
 //Manager
 .manager {
 
@@ -791,8 +815,8 @@ p {
 
             hr {
                 
-                border-color: $black;
-                margin: 20px 80px 40px;
+                border-color: $blue;
+                margin: 1px 40px 20px;
                 
             }
 
@@ -887,6 +911,10 @@ p {
 
                 padding: 0 20px 20px;
                 @include box-sizing(border-box);
+
+                & > div > .row {
+                    margin: 0 0 20px;
+                }
 
                 .clearfix {
 
@@ -1337,5 +1365,22 @@ p {
         100% {
             width: 100%;
         }
+    }
+}
+
+.condition-form {
+    & > div {
+        padding: 0 5px 0 0 !important;
+    }
+
+    select {
+        padding: 2px 0 !important;
+    }
+
+    .btn-text {
+        padding: 0;
+        margin: 0;
+        font-size: 16px;
+        line-height: 1;
     }
 }

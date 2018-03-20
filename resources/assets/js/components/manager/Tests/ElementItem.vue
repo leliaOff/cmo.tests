@@ -30,8 +30,13 @@
         </div>
         <!-- настройки элемента -->
         <div class="element-setting" v-show="visibility === 1">
+            
+            <!-- Много из многих -->
+            <element-setting-checkbox v-if="item.type == 'checkbox'" 
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-checkbox>
+
             <element-setting-table v-if="item.type == 'table'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-table>
-            <element-setting-checkbox v-if="item.type == 'checkbox'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-checkbox>
             <element-setting-radio v-if="item.type == 'radio'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-radio>
             <element-setting-directory v-if="item.type == 'directory'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-directory>
         </div>
@@ -114,12 +119,13 @@
             return {
                 validation: { },
                 current: { 
-                    title: this.item.title,                    
-                    description: this.item.description,                    
-                    is_required: this.item.is_required,              
-                    sort: this.item.sort,
-                    setting: setting,
-                    files: this.item.files
+                    title           : this.item.title,                    
+                    description     : this.item.description,                    
+                    is_required     : this.item.is_required,              
+                    sort            : this.item.sort,
+                    setting         : setting,
+                    files           : this.item.files,
+                    conditions      : this.item.conditions
                 },
                 /* Отобразить/скрыть настройки элемента */
                 visibility: localStorage[this.item.id] == undefined ? 1 : parseInt(localStorage[this.item.id], 10)
@@ -183,10 +189,17 @@
 
             },
 
+            /* Произвели изменения в файлах */
             onChangeFiles(files) {
                 this.current.files = files;
             },
 
+            /* Произвели изменения в условиях */
+            onChangeConditions(conditions) {
+                this.current.conditions = conditions;
+            },
+
+            /* Сохранить изменения элемента */
             update() {
 
                 this.validation = {};
@@ -208,7 +221,8 @@
 
                 axios.post(window.baseurl + 'elementUpdate', {
                     
-                    data: data, id: this.item.id, setting: this.current.setting, type: this.item.type, files: this.current.files
+                    data: data, id: this.item.id, setting: this.current.setting, type: this.item.type, 
+                    files: this.current.files, conditions: this.current.conditions
 
                 }).then(response => {
 

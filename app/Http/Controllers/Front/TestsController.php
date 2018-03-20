@@ -12,17 +12,20 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Repositories\TestsRepository;
 use App\Http\Repositories\ElementsRepository;
+use App\Services\ParseJsonService;
 
 class TestsController extends Controller
 {
        
     private $elementsRepository;
     private $testsRepository;
+    private $parseJsonService;
 
-	public function __construct(ElementsRepository $elementsRepository, TestsRepository $testsRepository)
+	public function __construct(ElementsRepository $elementsRepository, TestsRepository $testsRepository, ParseJsonService $parseJsonService)
 	{ 
 		$this->elementsRepository   = $elementsRepository;
 		$this->testsRepository      = $testsRepository;
+		$this->parseJsonService     = $parseJsonService;
 	}
 
     /**
@@ -127,7 +130,7 @@ class TestsController extends Controller
             $type = $result['type'];
             $result = $result['result'];
 
-            $result = $this->resultsConvert($result, $type, $id);
+            $result = $this->parseJsonService->parseAnswerToJson($result, $type, $id);
             if($result === false) {
 
                 $ids[] = [
@@ -151,62 +154,6 @@ class TestsController extends Controller
 
         return ['status' => 'success', 'result' => $ids];
         
-    }
-
-    /**
-     * Обработка результатов в зависимости от типа
-     *
-     */
-    public function resultsConvert($result, $type, $id)
-    {
-
-        if($type == 'table') {
-            
-            foreach($result as $i => $cols) {
-                foreach($cols as $j => $cell) {
-                    $result[$i][$j] = (bool)$cell;
-                }
-            }
-
-            $result = json_encode($result);
-
-        } elseif($type == 'checkbox') {
-            
-            foreach($result as $i => $value) {
-                $result[$i] = (bool)$value;
-            }
-
-            $result = json_encode($result);
-
-        } elseif($type == 'radio') {
-
-            $result = (int)$result;
-            if($result < 0) $result = false;
-
-        } elseif($type == 'directory') {
-
-            $result = (int)$result;
-            
-            //Что за справочник
-            $dataResult = DB::table('elements_data')->
-                where([
-                    ['element_id', $id],
-                    ['key', 'alias'],
-                ])->
-                first();
-            if(empty($dataResult)) return ['status' => 'fail'];
-            $alias = $dataResult->value;
-
-            //Есть ли в нем такой элемент
-            $count = DB::table($alias)->where('id', $result)->count();
-            if($count == 0) $result = false;
-
-
-        } else {
-            $result = false;
-        }
-
-        return $result;
     }
 
 }

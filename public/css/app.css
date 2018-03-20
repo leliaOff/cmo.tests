@@ -7851,7 +7851,7 @@ p.justify {
 }
 
 .easy-checkbox input {
-  display: none;
+  display: none !important;
 }
 
 .easy-checkbox span {
@@ -7869,6 +7869,18 @@ p.justify {
 
 .easy-checkbox:hover .easy-checkbox-icon {
   background: #eeeeee;
+}
+
+.row > div.align-right {
+  text-align: right;
+}
+
+.row > div.align-center {
+  text-align: center;
+}
+
+.row > div.align-justify {
+  text-align: justify;
 }
 
 .easy-radio {
@@ -8282,6 +8294,10 @@ p.justify {
   opacity: .25;
 }
 
+#answerSelectorWindow .modal-dialog {
+  width: calc(100vw - 100px);
+}
+
 .manager.container {
   width: 100%;
   padding: 0px;
@@ -8469,8 +8485,8 @@ p.justify {
 }
 
 .manager .elements .element-item hr {
-  border-color: #333333;
-  margin: 20px 80px 40px;
+  border-color: #337ab7;
+  margin: 1px 40px 20px;
 }
 
 .manager .elements .element-item .element-header {
@@ -8555,6 +8571,10 @@ p.justify {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.manager .elements .element-item .element-setting > div > .row {
+  margin: 0 0 20px;
 }
 
 .manager .elements .element-item .element-setting .clearfix {
@@ -8915,4 +8935,19 @@ p.justify {
   100% {
     width: 100%;
   }
+}
+
+.condition-form > div {
+  padding: 0 5px 0 0 !important;
+}
+
+.condition-form select {
+  padding: 2px 0 !important;
+}
+
+.condition-form .btn-text {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1;
 }

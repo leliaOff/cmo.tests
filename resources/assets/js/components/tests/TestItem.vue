@@ -117,9 +117,9 @@
 
             setResult(result) {
 
-                 let index = parseInt(localStorage['start_test_' + this.testId], 10);
-                 this.elements[index].result = result;
-                 this.isNext = this.is_MoveOn();
+                let index = parseInt(localStorage['start_test_' + this.testId], 10);
+                this.elements[index].result = result;
+                this.isNext = this.is_MoveOn();
 
             },
 

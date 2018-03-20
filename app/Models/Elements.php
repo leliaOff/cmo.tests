@@ -30,4 +30,10 @@ class Elements extends Model
         return $this->hasMany('App\Models\ElementsFiles', 'element_id');
     }
 
+    /* Условия */
+    public function conditions()
+    {
+        return $this->hasMany('App\Models\ElementsCondition', 'element_id');
+    }
+
 }

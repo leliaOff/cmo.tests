@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 use App\Models\Elements;
 use App\Http\Repositories\ElementsDataRepository;
 use App\Http\Repositories\ElementsFilesRepository;
+use App\Http\Repositories\ElementsConditionsRepository;
 use App\Http\Repositories\ResultsRepository;
 
 class ElementsRepository extends BaseRepository 
@@ -11,26 +12,32 @@ class ElementsRepository extends BaseRepository
     
     private $data;
     private $files;
+    private $conditions;
     private $results;
     
-    public function __construct(Elements $model, ElementsDataRepository $data, ElementsFilesRepository $files, ResultsRepository $results) 
+    public function __construct(Elements $model, 
+        ElementsDataRepository $data,
+        ElementsFilesRepository $files,
+        ElementsConditionsRepository $conditions,
+        ResultsRepository $results) 
     {
-        $this->model = $model;
-        $this->data = $data;
-        $this->files = $files;
-        $this->results = $results;
+        $this->model        = $model;
+        $this->data         = $data;
+        $this->files        = $files;
+        $this->conditions   = $conditions;
+        $this->results      = $results;
     }
 
     /* Получить все записи */
     public function all($testId) 
     {
-        return $this->model->where('test_id', $testId)->with('files')->with('data');
+        return $this->model->where('test_id', $testId)->with('files')->with('data')->with('conditions');
     }
 
     /* Получить по ИД */
     public function find($id)
     {
-        return $this->model->with('files')->with('data')->find($id);
+        return $this->model->with('files')->with('data')->with('conditions')->find($id);
     }
 
     /* Создать */
@@ -43,7 +50,7 @@ class ElementsRepository extends BaseRepository
     }
 
     /* Обновить */
-    public function update($id, $data, $setting, $files)
+    public function update($id, $data, $setting, $files, $conditions)
     {
         $item = $this->model->find($id);
         $item->fill($data);
@@ -72,7 +79,10 @@ class ElementsRepository extends BaseRepository
         }
         $this->files->create($filesData);
 
-        return $this->model->with('files')->with('data')->find($id);
+        //conditions
+        $this->conditions->create($conditions);
+
+        return $this->model->with('files')->with('data')->with('conditions')->find($id);
     }
 
     /* Удалить */
