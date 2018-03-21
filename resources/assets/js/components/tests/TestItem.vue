@@ -131,7 +131,7 @@
 
                 this.updateRusult();
 
-                index = this.getConditionElement(index + 1);
+                index = this.getConditionNextElement(index + 1);
                 if(index === false) {
                     this.finish();
                 } else {
@@ -148,9 +148,13 @@
 
                 this.updateRusult();
 
-                index -= 1;
-                this.current = index;
-                localStorage['start_test_' + this.testId] = index;
+                index = this.getConditionPrevElement(index - 1);
+                if(index !== false) {
+                    this.current = index;
+                    localStorage['start_test_' + this.testId] = index;
+                }
+
+                
             },
 
             start() {
@@ -277,7 +281,8 @@
                 return false;
             },
 
-            getConditionElement(index) {
+            /* Ищем следующий элемент, подходящий под условие */
+            getConditionNextElement(index) {
                 
                 for(let i = index; i < this.elements.length; i++) {
                     //Для каждого Элемента определяем условность
@@ -287,6 +292,20 @@
                 }
 
                 return false;
+            },
+
+            /* Ищем предыдущий элемент, подходящий под условие */
+            getConditionPrevElement(index) {
+                
+                for(let i = index; i >= 0; i--) {
+                    //Для каждого Элемента определяем условность
+                    let is_condition = this.is_Condition(i);
+                    //Если есть хотя бы один доступный элемент
+                    if(is_condition == true) return i;
+                }
+
+                return false;
+
             },
 
             is_Condition(index) {
