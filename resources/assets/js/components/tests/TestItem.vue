@@ -31,7 +31,7 @@
                 @click="prev"><span class="glyphicon glyphicon-chevron-left">
             </span></button><!--
             --><button class="btn btn-success btn-turn" :class="(isNext == false ? 'disabled' : '')"
-                v-if="current != (elements.length - 1)" @click="next"><span class="glyphicon glyphicon-chevron-right">
+                v-if="(current != (elements.length - 1))" @click="next"><span class="glyphicon glyphicon-chevron-right">
             </span></button><!--
             --><button class="btn btn-success btn-turn" v-else :class="(isNext == false ? 'disabled' : '')"
                 @click="finish">Закончить анкетирование</button>
@@ -55,10 +55,10 @@
     export default {
 
         components: {
-            elementSettingTable: ElementSettingTable,
-            elementSettingCheckbox: ElementSettingCheckbox,
-            elementSettingRadio: ElementSettingRadio,
-            elementSettingDirectory: ElementSettingDirectory,
+            elementSettingTable:        ElementSettingTable,
+            elementSettingCheckbox:     ElementSettingCheckbox,
+            elementSettingRadio:        ElementSettingRadio,
+            elementSettingDirectory:    ElementSettingDirectory,
         },
 
         data() {
@@ -131,11 +131,15 @@
 
                 this.updateRusult();
 
-                index += 1;
-                this.current = index;
-                localStorage['start_test_' + this.testId] = index;
-                
-                this.isNext = this.is_MoveOn();
+                index = this.getConditionElement(index + 1);
+                if(index === false) {
+                    this.finish();
+                } else {
+                    this.current = index;
+                    localStorage['start_test_' + this.testId] = index;
+                    this.isNext = this.is_MoveOn();
+                }
+
             },
 
             prev() {
@@ -268,6 +272,83 @@
                         return true;
                     }
 
+                }
+
+                return false;
+            },
+
+            getConditionElement(index) {
+                
+                for(let i = index; i < this.elements.length; i++) {
+                    //Для каждого Элемента определяем условность
+                    let is_condition = this.is_Condition(i);
+                    //Если есть хотя бы один доступный элемент
+                    if(is_condition == true) return i;
+                }
+
+                return false;
+            },
+
+            is_Condition(index) {
+
+                let conditions = this.elements[index].conditions;
+                if(conditions.length == 0) return true;
+                let result = [];
+                
+                for(let i = 0; i < conditions.length; i++) {
+                    let elementsResults = this.getResultById(conditions[i].conditions_element_id);
+                    
+                    let value = this.is_TrueResult(elementsResults, conditions[i].conditions_answer);
+                    if(conditions[i].operand == '!') value = !value;
+                    
+                    result.push({
+                        value:          value,
+                        combination:    conditions[i].combination
+                    });
+                }
+
+                //Собираем полный результат
+                for(let i = 1; i < result.length; i++) {
+                    
+                    if(result[i].combination == 'or') continue;
+
+                    result[i - 1].value = (result[i].value === true && result[i - 1].value === true);
+                    result.splice(i, 1);
+                    i--;
+
+                }
+
+                for(let i = 0; i < result.length; i++) {                    
+                    if(result[i].value === true) return true;
+                }
+
+                return false;
+
+            },
+
+            getResultById(id) {
+                for(let i = 0; i < this.$store.state.results.length; i++) {
+
+                    if(this.$store.state.results[i] == undefined) {
+                        continue;
+                    }
+
+                    if(this.$store.state.results[i].id === id) {
+                        return this.$store.state.results[i];
+                    }
+                }
+                return false;
+            },
+
+            is_TrueResult(result, answer) {
+
+                if(result.type == 'radio' || result.type == 'directory') {
+                    return (parseInt(result.result, 10) == parseInt(answer, 10));
+                } else if(result.type == 'checkbox' || result.type == 'table') {
+                    let convertResult = Object.keys(result.result).map(i => result.result[i]);
+                    console.log(JSON.stringify(convertResult));
+                    console.log(answer);
+                    return (JSON.stringify(convertResult) == answer);
                 }
 
                 return false;

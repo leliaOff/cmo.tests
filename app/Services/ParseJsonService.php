@@ -61,4 +61,54 @@ class ParseJsonService
         return $result;
         
     }
+
+    /**
+     * Разобрать ответы
+     */
+    public function parseAnswerToArray($result, $type, $id)
+    {        
+        if($type == 'table') {
+
+            $result = json_decode($result);
+
+        } elseif($type == 'checkbox') {
+
+            $result = json_decode($result);
+
+        } elseif($type == 'radio') {
+
+            $result = (int)$result;
+
+        } elseif($type == 'directory') {
+
+            $result = (int)$result;
+
+        } else {
+            $result = false;
+        }
+
+        return $result;
+        
+    }
+
+    /**
+     * Разобрать варианты ответов
+     */
+    public function parseElemensDataToArray($data)
+    {        
+        $result = [];
+        foreach($data as $value) {
+            if($value->key == 'cols' || $value->key == 'rows') {
+                $items = json_decode($value->value);
+                foreach($items  as $item) {
+                    $result[$value->key][] = ['value' => $item];
+                }
+            } else {
+                $result[$value->key] = $value->value;
+            }
+        }
+
+        return $result;        
+    }
+
 }

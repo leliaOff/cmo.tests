@@ -8951,3 +8951,7 @@ p.justify {
   font-size: 16px;
   line-height: 1;
 }
+
+.condition-form.delete {
+  display: none;
+}

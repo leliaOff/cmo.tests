@@ -1,19 +1,6 @@
 <template>
     <div>
-        <easy-radio :name="'radio_' + id" :model="oldResult" :data="setting.rows" v-on:update="resultUpdate"></easy-radio>
-        
-        <!--
-        <div class="radio-container">
-            <div class="radio" v-for="(row, i) in setting.rows">
-                <label>
-                    <input type="radio" :name="'radio_' + id" :value="i" v-model="result" @click="resultUpdate" />
-                    {{ row.value }}>
-                    
-                </label>
-            </div>
-        </div>
-        -->
-              
+        <easy-radio :name="'radio_' + id" v-model="result" :data="setting.rows" v-on:update="resultUpdate"></easy-radio>              
     </div>
 </template>
 
@@ -21,6 +8,12 @@
     export default {
 
         props: ['setting', 'oldResult', 'id'],
+
+        computed: {
+            result() {
+                return this.oldResult;
+            }
+        },
 
         methods: {
 

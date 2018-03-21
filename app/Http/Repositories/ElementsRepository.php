@@ -80,7 +80,19 @@ class ElementsRepository extends BaseRepository
         $this->files->create($filesData);
 
         //conditions
-        $this->conditions->create($conditions);
+        foreach($conditions as $condition) {
+            if(isset($condition['is_delete']) && $condition['is_delete'] === true) {
+                if(isset($condition['id'])) {
+                    $this->conditions->delete($condition['id']);
+                }
+            } else {
+                if(isset($condition['id'])) {
+                    $this->conditions->update($condition['id'], $condition);
+                } else {
+                    $this->conditions->create($condition);
+                }
+            }
+        }
 
         return $this->model->with('files')->with('data')->with('conditions')->find($id);
     }

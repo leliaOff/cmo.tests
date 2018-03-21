@@ -24,7 +24,7 @@ class TestsRepository extends BaseRepository
     {
         return $this->model->where('state', $state)->with('elements')
                     ->select([
-                        'id', 'name', 'description',
+                        'id', 'name', 'description', 'after',
                         DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
                     ]);
     }
@@ -40,7 +40,7 @@ class TestsRepository extends BaseRepository
     {
         return $this->model->where('state', $state)->with('elements')
             ->select([
-                'id', 'name', 'description',
+                'id', 'name', 'description', 'after',
                 DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
             ])
             ->find($id);

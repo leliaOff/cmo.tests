@@ -1,7 +1,7 @@
 <template>
     <div class="row">
-        <div class="col-sm-12 clearfix" v-for="(condition, i) in conditions">
-            <div class="condition-form row">
+        <div class="col-sm-12 clearfix" v-for="(condition, i) in conditionsFilter">
+            <div class="condition-form row" v-bind:class="{'condition-form': true, 'row': true, 'delete': condition.is_delete}">
 
                 <!-- И / ИЛИ -->
                 <div class="col-sm-2 clearfix">
@@ -12,10 +12,10 @@
                 </div>
 
                 <!-- Вопрос -->
-                <div class="col-sm-5 clearfix"><elements-selector v-model="i" v-on:onChange="onChangeElement"></elements-selector></div>
+                <div class="col-sm-4 clearfix"><elements-selector :index="i" :elementId="elementId" v-model="condition.element" v-on:onChange="onChangeElement"></elements-selector></div>
 
                 <!-- Операнд -->
-                <div class="col-sm-3 clearfix">
+                <div class="col-sm-2 clearfix">
                     <select v-model="condition.operand" v-if="condition.conditions_element_id != 0">
                         <option value="=">Равно</option>
                         <option value="!">Не равно</option>
@@ -27,21 +27,24 @@
                 </div>
 
                 <!-- Ввети ответ -->
-                <div class="col-sm-2 clearfix align-right">
+                <div class="col-sm-3 clearfix">
                     <button class="btn btn-text" v-if="condition.conditions_element_id != 0" 
                         data-toggle="modal" data-target="#answerSelectorWindow" 
                         @click="setCurrentElementData(condition.element, i)">
-                            <span v-if="condition.conditions_answer == ''">Ввести ответ</span>
+                            <span v-if="condition.conditions_answer === ''">Ввести ответ</span>
                             <span v-else>Изменить ответ</span>
                     </button>
                 </div>
+
+                <!-- Кнопка удаления -->
+                <div class="col-sm-1 clearfix align-right"><button class="btn btn-text" title="Удалить условие" @click="deleteConditionForm(i)"><span class="glyphicon glyphicon-trash"></span></button></div>
 
             </div>
         </div>
         <div class="col-sm-12 clearfix align-right"><button class="btn btn-warning" @click="addConditionForm">Добавить условие</button></div>
 
         <!-- Диалоговое окно с выбором ответа -->
-        <answers-selector v-if="currentElementData" v-model="currentElementData" :index="currentIndex" v-on:onChange="onChangeAnswer"></answers-selector>
+        <answers-selector v-if="currentElementData" v-model="currentAnswer" :element="currentElementData" :index="currentIndex" v-on:onChange="onChangeAnswer"></answers-selector>
 
     </div>
 </template>
@@ -53,18 +56,29 @@
 
     export default {
 
-        props: ['value'],
+        props: ['value', 'elementId'],
 
         components: {
-            ElementsSelector: ElementsSelector,
-            AnswersSelector: AnswersSelector,
+            ElementsSelector        : ElementsSelector,
+            AnswersSelector         : AnswersSelector,
         },
 
         data() {
             return {
                 conditions          : this.value,
                 currentElementData  : false,
+                currentAnswer       : false,
                 currentIndex        : 0
+            }
+        },
+
+        computed: {
+            conditionsFilter() {
+                let conditions = [];
+                $.each(this.conditions, (i, value) => {
+                    conditions.push(value);
+                });
+                return conditions;
             }
         },
 
@@ -90,6 +104,13 @@
                 });
             },
 
+            /* Удаляем строку с условием */
+            deleteConditionForm(index) {
+                let condition                           = this.conditions[index];
+                condition.is_delete                     = true;
+                this.conditions.splice(index, 1, condition);
+            },
+
             /* Отслеживаем изменения элемента анкеты */
             onChangeElement(element, index) {
 
@@ -104,17 +125,23 @@
             /* Задать данные текущего элемента анкеты для выбора необходимого ответа в диалоговом окне */
             setCurrentElementData(element, index) {
                 this.currentElementData = element;
+                this.currentAnswer = this.conditions[index].conditions_answer;
                 this.currentIndex = index;
             },
             
             /* Отслеживаем изменение ответа */
             onChangeAnswer(answer, index) {
 
-                if(!answer) return;
+                if(answer !== false) {
+                    let conditions                          = this.conditions;
+                    conditions[index].conditions_answer     = answer;
+                    this.conditions                         = conditions;
+                }
 
-                let conditions                          = this.conditions;
-                conditions[index].conditions_answer     = answer;
-                this.conditions                         = conditions;
+                this.currentElementData = false;
+                this.currentAnswer = false;
+                this.currentIndex = 0;
+
 
             }
             

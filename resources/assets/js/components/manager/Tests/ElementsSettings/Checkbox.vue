@@ -25,19 +25,19 @@
         </div>
         <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Условия появления:</label></div>
-            <div class="col-sm-9 clearfix"><conditions v-model="conditions" v-on:onChange="onChangeConditions"></conditions></div>
+            <div class="col-sm-9 clearfix"><conditions v-model="conditions" :elementId="elementId" v-on:onChange="onChangeConditions"></conditions></div>
         </div>
     </div>
 </template>
 
 <script>
 
-    import ImagesGallery from '../ElementsControls/ImagesGallery.vue';
-    import Conditions from '../ElementsControls/Conditions.vue';
+    import ImagesGallery    from '../ElementsControls/ImagesGallery.vue';
+    import Conditions       from '../ElementsControls/Conditions.vue';
 
     export default {
 
-        props: ['setting', 'files', 'conditions'],
+        props: ['setting', 'files', 'conditions', 'elementId'],
 
         components: {
             ImagesGallery   : ImagesGallery,

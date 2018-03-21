@@ -1,7 +1,7 @@
 <template>
     <div>
         <select v-model="current">
-            <option v-for="element in elements" :value="element">{{ element.title }}</option>
+            <option v-if="element.id != elementId" v-for="element in elements" :value="element.id">{{ element.title }}</option>
         </select>
     </div>
 </template>
@@ -10,20 +10,21 @@
 
     export default {
 
-        props: ['value'],
+        /* Выбранный элемент (объект) и индекс Условия */
+        props: ['value', 'index', 'elementId'],
 
         data() {
             return {
                 elements    : [],
-                current     : 0,
-                condition   : this.value
+                current     : this.value.id,
             }
         },
 
         watch: {
-            current: function() {
-                this.$emit('onChange', this.current, this.condition);
-            }
+            current: function(current) {
+                let element = this.getCurrentElement(current);
+                this.$emit('onChange', element, this.index);
+            },
         },
 
         methods: {
@@ -45,6 +46,14 @@
                 });
 
             },
+
+            getCurrentElement(id) {
+                let result = false;
+                $.each(this.elements, (i, value) => {
+                    if(value.id === id) return result = value;
+                });
+                return result;
+            }
             
         },
 

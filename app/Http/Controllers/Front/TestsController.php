@@ -47,7 +47,7 @@ class TestsController extends Controller
         
         $tests = $this->testsRepository->allState('published')
             ->select([
-                'id', 'name', 'description',
+                'id', 'name', 'description', 'after',
                 DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
             ])
             ->get();
@@ -79,33 +79,12 @@ class TestsController extends Controller
 
         //Данные для элементов и результаты
         foreach($elements as $i => &$element) {
-            $data = $this->parseElementsData($element->data);
+            $data = $this->parseJsonService->parseElemensDataToArray($element->data);
             unset($element->data);
             $element->data = $data;
         }     
         
         return ['status' => 'success', 'result' => $tests, 'elements' => $elements, 'user' => $user];
-    }
-
-    /**
-     * Разбираем данные вопроса
-     */
-    private function parseElementsData($data)
-    {
-        //Разбираем данные
-        $result = [];
-        foreach($data as $value) {
-            if($value->key == 'cols' || $value->key == 'rows') {
-                $items = json_decode($value->value);
-                foreach($items  as $item) {
-                    $result[$value->key][] = ['value' => $item];
-                }
-            } else {
-                $result[$value->key] = $value->value;
-            }
-        }
-
-        return $result;
     }
 
     /**

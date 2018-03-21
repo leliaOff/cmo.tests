@@ -12,7 +12,7 @@
                         <button class="prev" @click="prev()"><span class="glyphicon glyphicon-chevron-left"></span></button>
                         <button class="next" @click="next()"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <img :src="images[current].path" style="width:100%"/>
+                        <img v-if="images[current] != undefined" :src="images[current].path" style="width:100%"/>
                     </div>
                 </div>
             </div>

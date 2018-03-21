@@ -12,6 +12,11 @@
 
         props: ['setting', 'oldResult'],
 
+        mounted() {
+            console.log(this.setting);
+            console.log(this.oldResult);
+        },
+
         data() {
 
             let self = this;
@@ -21,7 +26,7 @@
             //Количество
             let countResult = 0;
 
-            if(self.oldResult == undefined) {
+            if(self.oldResult == undefined || self.oldResult === false) {
 
                 $.each(self.setting.rows, function(i, row) {
                     result[i] = false;
@@ -40,8 +45,8 @@
             }
 
             return {
-                result: result,
-                countResult: countResult,
+                result      : result,
+                countResult : countResult,
             }
         },
 

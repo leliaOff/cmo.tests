@@ -12,9 +12,11 @@ class ElementsConditionsRepository extends BaseRepository
     }
 
     /* Создать */
-    public function create($items) 
+    public function create($data) 
     {
-        $this->model->insert($items);
+        $model = $this->model();
+        $item = (new $model())->create($data);
+        return $item;
     }
 
     /* Изменить */

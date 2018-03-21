@@ -37,6 +37,23 @@ class ElementsController extends Controller
         $elements = $this->elementsRepository->all($request['id'])
             ->orderBy('sort')
             ->get();
+
+        foreach($elements as &$element) {
+            
+            //Условия
+            foreach($element->conditions as &$condition) {
+                $condition['element'] = $this->elementsRepository->find($condition['conditions_element_id']);
+                $data = $this->parseJsonService->parseElemensDataToArray($condition['element']['data']);
+                unset($condition['element']['data']);
+                $condition['element']['data'] = $data;
+                $condition['conditions_answer'] = $this->parseJsonService->parseAnswerToArray($condition['conditions_answer'], $condition['element']['type'], $condition['conditions_element_id']);
+            }
+
+            //Данные
+            $data = $this->parseJsonService->parseElemensDataToArray($element->data);
+            unset($element->data);
+            $element->data = $data;
+        }
             
         return ['status' => 'success', 'result' => $elements];
     }
@@ -51,17 +68,18 @@ class ElementsController extends Controller
 
         $element = $this->elementsRepository->find($request['id']);
 
-        //Разбираем данные
-        $result = [];
-        foreach($element->data as $ed) {
-            if($ed->key == 'cols' || $ed->key == 'rows') {
-                $items = json_decode($ed->value);
-                foreach($items  as $item) {
-                    $result[$ed->key][] = ['value' => $item];
-                }
-            } else {
-                $result[$ed->key] = $ed->value;
-            }
+        //Данные
+        $result = $this->parseJsonService->parseElemensDataToArray($element->data);
+        unset($element->data);
+        $element->data = $result;
+        
+        /* Условия */
+        foreach($element->conditions as &$condition) {
+            $condition['element'] = $this->elementsRepository->find($condition['conditions_element_id']);
+            $data = $this->parseJsonService->parseElemensDataToArray($condition['element']['data']);
+            unset($condition['element']['data']);
+            $condition['element']['data'] = $data;
+            $condition['conditions_answer'] = $this->parseJsonService->parseAnswerToArray($condition['conditions_answer'], $condition['element']['type'], $condition['conditions_element_id']);
         }
 
         return ['status' => 'success', 'result' => $element, 'setting' => $result];

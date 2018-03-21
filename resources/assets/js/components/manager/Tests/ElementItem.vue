@@ -32,13 +32,25 @@
         <div class="element-setting" v-show="visibility === 1">
             
             <!-- Много из многих -->
-            <element-setting-checkbox v-if="item.type == 'checkbox'" 
+            <element-setting-checkbox v-if="item.type == 'checkbox'" :elementId="item.id"
                 :setting="current.setting" :files="current.files" :conditions="current.conditions" 
                 v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-checkbox>
 
-            <element-setting-table v-if="item.type == 'table'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-table>
-            <element-setting-radio v-if="item.type == 'radio'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-radio>
-            <element-setting-directory v-if="item.type == 'directory'" :setting="current.setting" :files="current.files" v-on:onChangeFiles="onChangeFiles"></element-setting-directory>
+            <!-- Один из многих -->
+            <element-setting-radio v-if="item.type == 'radio'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-radio>
+
+            <!-- Таблица -->
+            <element-setting-table v-if="item.type == 'table'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-table>
+
+            <!-- Элемент справочника -->
+            <element-setting-directory v-if="item.type == 'directory'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-directory>
+
         </div>
         <!-- кнопки элемента -->
         <div class="element-footer btn-group">
@@ -243,7 +255,9 @@
                         this.item.description   = this.current.description;
                         this.item.is_required   = this.current.is_required;
                         this.item.files         = response.data.result.files;
+                        this.item.conditions    = response.data.result.conditions;
                         this.current.files      = response.data.result.files;
+                        this.current.conditions = response.data.result.conditions;
 
                     }
 
