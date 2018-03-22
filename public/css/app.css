@@ -7847,7 +7847,9 @@ p.justify {
 .easy-checkbox .easy-checkbox-label {
   display: inline-block;
   vertical-align: middle;
-  margin: 0 0 0 10px;
+  width: 100%;
+  padding: 0 0 0 48px;
+  margin: 0 0 0 -32px;
 }
 
 .easy-checkbox input {
@@ -7905,14 +7907,6 @@ p.justify {
 .easy-radio .easy-radio-label {
   display: inline-block;
   vertical-align: middle;
-  margin: 0 0 0 10px;
-}
-
-.easy-radio.full {
-  width: 100%;
-}
-
-.easy-radio.full .easy-radio-label {
   width: 100%;
   padding: 0 0 0 48px;
   margin: 0 0 0 -32px;
