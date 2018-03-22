@@ -7908,6 +7908,16 @@ p.justify {
   margin: 0 0 0 10px;
 }
 
+.easy-radio.full {
+  width: 100%;
+}
+
+.easy-radio.full .easy-radio-label {
+  width: 100%;
+  padding: 0 0 0 48px;
+  margin: 0 0 0 -32px;
+}
+
 .easy-radio input {
   display: none;
 }
@@ -8954,4 +8964,16 @@ p.justify {
 
 .condition-form.delete {
   display: none;
+}
+
+.arbitrary {
+  width: 100%;
+  border: 1px solid #333333;
+  resize: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.arbitrary[disabled="disabled"] {
+  opacity: 0.2;
 }

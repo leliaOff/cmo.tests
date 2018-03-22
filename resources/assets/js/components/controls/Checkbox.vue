@@ -16,10 +16,16 @@
 
         props: ['checked', 'disabled', 'index', 'label', 'count'],
 
-        data() {
+         data() {
             return {
-                isChecked: this.checked
+                localChecked: this.checked
             }
+        },
+
+        computed: {
+            isChecked() {
+                return this.checked;
+            },
         },
 
         methods: {
@@ -27,8 +33,8 @@
 
                 if(!this.isChecked && this.disabled) return;
 
-                this.isChecked = !this.isChecked;
-                this.$emit('update', this.index, this.isChecked);
+                this.localChecked = !this.localChecked;
+                this.$emit('update', this.index, this.localChecked);
             }
         }
 

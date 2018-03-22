@@ -170,13 +170,15 @@
                             setting.rows.push({value: ''});
                         } else if(self.item.type == 'radio') {
                             setting = {
-                                'rows': response.data.setting.rows != undefined ? response.data.setting.rows : []
+                                'rows': response.data.setting.rows != undefined ? response.data.setting.rows : [],
+                                'arbitrary': response.data.setting.arbitrary != undefined ? parseInt(response.data.setting.arbitrary) : false
                             };
                             setting.rows.push({value: ''});
                         } else if(self.item.type == 'checkbox') {
                             setting = {
                                 'rows': response.data.setting.rows != undefined ? response.data.setting.rows : [],
-                                'count': response.data.setting.count != undefined ? response.data.setting.count : 2
+                                'count': response.data.setting.count != undefined ? response.data.setting.count : 2,
+                                'arbitrary': response.data.setting.arbitrary != undefined ? parseInt(response.data.setting.arbitrary) : false
                             };
                             setting.rows.push({value: ''});
                         } else if(self.item.type == 'title') {

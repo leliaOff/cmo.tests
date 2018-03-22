@@ -47,10 +47,10 @@
 
 <script>
 
-    import ElementSettingTable from './ElementsSettings/Table.vue';
-    import ElementSettingCheckbox from './ElementsSettings/Checkbox.vue';
-    import ElementSettingRadio from './ElementsSettings/Radio.vue';
-    import ElementSettingDirectory from './ElementsSettings/Directory.vue';
+    import ElementSettingTable      from './ElementsSettings/Table.vue';
+    import ElementSettingCheckbox   from './ElementsSettings/Checkbox.vue';
+    import ElementSettingRadio      from './ElementsSettings/Radio.vue';
+    import ElementSettingDirectory  from './ElementsSettings/Directory.vue';
 
     export default {
 
@@ -117,13 +117,14 @@
 
             setResult(result) {
 
-                let index = parseInt(localStorage['start_test_' + this.testId], 10);
+                let index                   = parseInt(localStorage['start_test_' + this.testId], 10);
                 this.elements[index].result = result;
-                this.isNext = this.is_MoveOn();
+                this.isNext                 = this.is_MoveOn();
 
             },
 
             next() {
+                
                 let index = parseInt(this.current, 10);
                 if(index == this.elements.length - 1) return;
 
@@ -198,8 +199,8 @@
                 if(result == undefined) return;
 
                 this.$store.state.results[index] = {
-                    id: this.elements[index].id,
-                    type: this.elements[index].type, 
+                    id:     this.elements[index].id,
+                    type:   this.elements[index].type, 
                     result: result
                 };              
 
@@ -238,7 +239,7 @@
                     $.each(element.result, function(i, cols) {
                         minCount++;
                         $.each(cols, function(j, cell) {
-                            if(cell == true) {
+                            if(cell !== false) {
                                 count++;
                                 return false;
                             }
@@ -252,7 +253,7 @@
                     //Проверка хотя бы одной отметки в каждой строке
                     let count = 0; 
                     $.each(element.result, function(i, value) {
-                        if(value == true) {
+                        if(value !== false && value != '') {
                             count++;
                             return false;
                         }

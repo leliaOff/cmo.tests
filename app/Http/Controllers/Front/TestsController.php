@@ -94,8 +94,8 @@ class TestsController extends Controller
     public function result(Request $request)
     {
         
-        $results =  $request['results'];
-        $user = (int)$request['user'];
+        $results    =  $request['results'];
+        $user       = (int)$request['user'];
 
         if($user < (time() - 14400)) return ['status' => 'fail', 'error' => 'time error'];
         if(count($results) == 0) return ['status' => 'fail', 'error' => 'results is null'];

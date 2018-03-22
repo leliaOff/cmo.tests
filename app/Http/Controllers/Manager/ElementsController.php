@@ -221,9 +221,11 @@ class ElementsController extends Controller
                 $validator = Validator::make([
                     'rows' => $rows,
                     'count' => $data['count'],
+                    'arbitrary' => $data['arbitrary'],
                 ], [
                     'rows' => 'required|array|min:1',
                     'count' => 'required|integer|min:1',
+                    'arbitrary' => 'required|boolean',
                 ]);
 
                 if($validator->fails()) {                    
@@ -233,6 +235,7 @@ class ElementsController extends Controller
                 $setting = [
                     ['element_id' => $id, 'key' => 'rows', 'value' => json_encode($rows)],
                     ['element_id' => $id, 'key' => 'count', 'value' => $data['count']],
+                    ['element_id' => $id, 'key' => 'arbitrary', 'value' => $data['arbitrary']],
                 ];
 
                 break;
@@ -245,8 +248,10 @@ class ElementsController extends Controller
 
                 $validator = Validator::make([
                     'rows' => $rows,
+                    'arbitrary' => $data['arbitrary'],
                 ], [
                     'rows' => 'required|array|min:1',
+                    'arbitrary' => 'required|boolean',
                 ]);
 
                 if($validator->fails()) {                    
@@ -255,6 +260,7 @@ class ElementsController extends Controller
 
                 $setting = [
                     ['element_id' => $id, 'key' => 'rows', 'value' => json_encode($rows)],
+                    ['element_id' => $id, 'key' => 'arbitrary', 'value' => $data['arbitrary']],
                 ];
 
                 break;

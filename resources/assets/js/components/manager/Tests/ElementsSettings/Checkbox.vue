@@ -1,9 +1,13 @@
 <template>
     <div>
+
+        <!-- Максимальное количество ответов -->
         <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Максимум можно выбрать:</label></div>
             <div class="col-sm-9 clearfix"><input type="text" placeholder="2" v-model="setting.count" /></div>
         </div>
+        
+        <!-- Список ответов -->
         <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Варианты ответов:</label></div>
             <div class="col-sm-9 clearfix">
@@ -19,14 +23,26 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Возможность произвольного ответа -->
+        <div class="row">
+            <div class="col-sm-3 clearfix"><label class="input-title">Произвольный ответ:</label></div>
+            <div class="col-sm-9 clearfix"><input type="checkbox" v-model="setting.arbitrary"/>
+                    <span class="alert alert-info">дать пользователю возможность ввести свой ответ</span></label></div>
+        </div>
+
+        <!-- Изображения -->
         <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Изображения:</label></div>
             <div class="col-sm-9 clearfix"><images-gallery v-model="files"></images-gallery></div>
         </div>
+
+        <!-- Условия -->
         <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Условия появления:</label></div>
             <div class="col-sm-9 clearfix"><conditions v-model="conditions" :elementId="elementId" v-on:onChange="onChangeConditions"></conditions></div>
         </div>
+
     </div>
 </template>
 

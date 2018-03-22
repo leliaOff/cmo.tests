@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Elements;
 
 class ParseJsonService
 {
@@ -23,17 +24,17 @@ class ParseJsonService
             $result = json_encode($result);
 
         } elseif($type == 'checkbox') {
-            
+
             foreach($result as $i => $value) {
-                $result[$i] = (bool)$value;
+                $result[$i] = $value;
             }
 
             $result = json_encode($result);
 
         } elseif($type == 'radio') {
 
-            $result = (int)$result;
-            if($result < 0) $result = false;
+            // $result = (int)$result;
+            // if($result < 0) $result = false;
 
         } elseif($type == 'directory') {
 

@@ -187,6 +187,17 @@ p {
 
     }
 
+    &.full {
+        width: 100%;
+
+        .easy-radio-label {
+            width: 100%;
+            padding: 0 0 0 48px;
+            margin: 0 0 0 -32px;
+    
+        }
+    }
+
     input {
         display: none;
     }
@@ -1386,5 +1397,17 @@ p {
 
     &.delete {
         display: none;
+    }
+}
+
+.arbitrary {
+    width: 100%;
+    border: 1px solid $black;
+    resize: none;
+    border-radius: 5px;
+    padding: 5px;
+
+    &[disabled="disabled"] {
+        opacity: 0.2;
     }
 }
