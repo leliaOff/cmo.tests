@@ -78,7 +78,7 @@
                 return true;
             },
             arbitraryChecked() {
-                return this.arbitraryText == '' ? false : true;
+                return this.arbitraryText.trim() == '' ? false : true;
             }
         },
 
