@@ -6,6 +6,9 @@ window.Vue = require('vue');
 import Datatable from 'vuejs-datatable';
 Vue.component('datatable', Datatable);
 
+import Datepicker from 'vue2-datepicker';
+Vue.component('datepicker', Datepicker);
+
 /* Элементы управления */
 import Loader from './components/controls/Loader.vue';
 Vue.component('loader', Loader);

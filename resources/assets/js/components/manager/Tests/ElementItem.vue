@@ -51,6 +51,41 @@
                 :setting="current.setting" :files="current.files" :conditions="current.conditions" 
                 v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-directory>
 
+            <!-- Произвольный текст -->
+            <element-setting-input-text v-if="item.type == 'input-text'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-text>
+
+            <!-- Произвольное целое -->
+            <element-setting-input-number v-if="item.type == 'input-number'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-number>
+
+            <!-- Произвольное дробное -->
+            <element-setting-input-double v-if="item.type == 'input-double'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-double>
+            
+            <!-- Произвольная дата -->
+            <element-setting-input-date v-if="item.type == 'input-date'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-date>
+            
+            <!-- Произвольный веб-адрес -->
+            <element-setting-input-web v-if="item.type == 'input-web'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-web>
+
+            <!-- Произвольный email -->
+            <element-setting-input-email v-if="item.type == 'input-email'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-email>
+
+            <!-- Произвольный телефон -->
+            <element-setting-input-phone v-if="item.type == 'input-phone'" :elementId="item.id"
+                :setting="current.setting" :files="current.files" :conditions="current.conditions" 
+                v-on:onChangeFiles="onChangeFiles" v-on:onChangeConditions="onChangeConditions"></element-setting-input-phone>
+
         </div>
         <!-- кнопки элемента -->
         <div class="element-footer btn-group">
@@ -63,36 +98,64 @@
 
 <script>
 
-    import ElementSettingTable from './ElementsSettings/Table.vue';
-    import ElementSettingCheckbox from './ElementsSettings/Checkbox.vue';
-    import ElementSettingRadio from './ElementsSettings/Radio.vue';
-    import ElementSettingDirectory from './ElementsSettings/Directory.vue';
+    import ElementSettingTable          from './ElementsSettings/Table.vue';
+    import ElementSettingCheckbox       from './ElementsSettings/Checkbox.vue';
+    import ElementSettingRadio          from './ElementsSettings/Radio.vue';
+    import ElementSettingDirectory      from './ElementsSettings/Directory.vue';
+    import ElementSettingInputText      from './ElementsSettings/InputText.vue';
+    import ElementSettingInputNumber    from './ElementsSettings/InputNumber.vue';
+    import ElementSettingInputDouble    from './ElementsSettings/InputDouble.vue';
+    import ElementSettingInputDate      from './ElementsSettings/InputDate.vue';
+    import ElementSettingInputWeb       from './ElementsSettings/InputWeb.vue';
+    import ElementSettingInputEmail     from './ElementsSettings/InputEmail.vue';
+    import ElementSettingInputPhone     from './ElementsSettings/InputPhone.vue';
 
     export default {
 
         props: ['item', 'count'],
 
         components: {
-            elementSettingTable: ElementSettingTable,
-            elementSettingCheckbox: ElementSettingCheckbox,
-            elementSettingRadio: ElementSettingRadio,
-            elementSettingDirectory: ElementSettingDirectory,
+            elementSettingTable         : ElementSettingTable,
+            elementSettingCheckbox      : ElementSettingCheckbox,
+            elementSettingRadio         : ElementSettingRadio,
+            elementSettingDirectory     : ElementSettingDirectory,
+            ElementSettingInputText     : ElementSettingInputText,
+            ElementSettingInputNumber   : ElementSettingInputNumber,
+            ElementSettingInputDouble   : ElementSettingInputDouble,
+            ElementSettingInputDate     : ElementSettingInputDate,
+            ElementSettingInputWeb      : ElementSettingInputWeb,
+            ElementSettingInputEmail    : ElementSettingInputEmail,
+            ElementSettingInputPhone    : ElementSettingInputPhone,
         },
 
         computed: {
             type_title() {
-                if(this.item.type == 'table') return 'Таблица';
-                if(this.item.type == 'radio') return 'Один из многих';
-                if(this.item.type == 'checkbox') return 'Много из многих';
-                if(this.item.type == 'title') return 'Заголовок и текст';
-                if(this.item.type == 'directory') return 'Выбор из справочника';
+                if(this.item.type == 'table')           return 'Таблица';
+                if(this.item.type == 'radio')           return 'Один из многих';
+                if(this.item.type == 'checkbox')        return 'Много из многих';
+                if(this.item.type == 'title')           return 'Заголовок и текст';
+                if(this.item.type == 'directory')       return 'Выбор из справочника';
+                if(this.item.type == 'input-text')      return 'Произвольный текст';
+                if(this.item.type == 'input-number')    return 'Целое число';
+                if(this.item.type == 'input-double')    return 'Дробное число';
+                if(this.item.type == 'input-date')      return 'Дата';
+                if(this.item.type == 'input-web')       return 'Адрес сайта';
+                if(this.item.type == 'input-email')     return 'Email';
+                if(this.item.type == 'input-phone')     return 'Телефон';
             },
             type_icon() {
-                if(this.item.type == 'table') return 'glyphicon glyphicon-th';
-                if(this.item.type == 'radio') return 'glyphicon glyphicon-record';
-                if(this.item.type == 'checkbox') return 'glyphicon glyphicon-check';
-                if(this.item.type == 'title') return 'glyphicon glyphicon-font';
-                if(this.item.type == 'directory') return 'glyphicon glyphicon-cloud-download';
+                if(this.item.type == 'table')           return 'glyphicon glyphicon-th';
+                if(this.item.type == 'radio')           return 'glyphicon glyphicon-record';
+                if(this.item.type == 'checkbox')        return 'glyphicon glyphicon-check';
+                if(this.item.type == 'title')           return 'glyphicon glyphicon-font';
+                if(this.item.type == 'directory')       return 'glyphicon glyphicon-cloud-download';
+                if(this.item.type == 'input-text')      return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-number')    return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-double')    return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-date')      return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-web')       return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-email')     return 'glyphicon glyphicon-pencil';
+                if(this.item.type == 'input-phone')     return 'glyphicon glyphicon-pencil';
             }
         },
 
@@ -101,28 +164,29 @@
             /* Настройки в зависимости от типа элемента */
             let setting = { };
             if(this.item.type == 'table') {
-                setting = {
-                    'cols': [{value: ''}],
-                    'rows': [{value: ''}],
-                    'count': 1
-                };
+                setting = { cols: [{value: ''}], rows: [{value: ''}], count: 1 };
             } else if(this.item.type == 'radio') {
-                setting = {
-                    'rows': [{value: ''}],
-                };
+                setting = { rows: [{value: ''}], };
             } else if(this.item.type == 'checkbox') {
-                setting = {
-                    'rows': [{value: ''}],
-                    'count': 2
-                };
+                setting = { rows: [{value: ''}], count: 2 };
             } else if(this.item.type == 'title') {
-                setting = {
-                    'data': ''
-                };
+                setting = { data: '' };
             } else if(this.item.type == 'directory') {
-                setting = {
-                    'alias': 'schools'
-                };
+                setting = { alias: 'schools' };
+            } else if(this.item.type == 'input-text') {
+                setting = { };
+            } else if(this.item.type == 'input-number') {
+                setting = { min: 0, max: false };
+            } else if(this.item.type == 'input-double') {
+                setting = { min: 0, max: false };
+            } else if(this.item.type == 'input-date') {
+                setting = { min: 0, max: false };
+            } else if(this.item.type == 'input-web') {
+                setting = { };
+            } else if(this.item.type == 'input-email') {
+                setting = { };
+            } else if(this.item.type == 'input-phone') {
+                setting = { };
             }
             /* конец Настройки в зависимости от типа элемента */
 
@@ -189,11 +253,34 @@
                             setting = {
                                 'alias': response.data.setting.alias != undefined ? response.data.setting.alias : 'schools'
                             };
+                        } else if(self.item.type == 'input-text') {
+                            setting = { };
+                        } else if(self.item.type == 'input-number') {
+                            setting = {
+                                min: response.data.setting.min != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                            };
+                        } else if(self.item.type == 'input-double') {
+                            setting = {
+                                min: response.data.setting.min != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                            };
+                        } else if(self.item.type == 'input-date') {
+                            setting = {
+                                min: response.data.setting.min != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                            };
+                        } else if(self.item.type == 'input-web') {
+                            setting = { };
+                        } else if(self.item.type == 'input-email') {
+                            setting = { };
+                        } else if(self.item.type == 'input-phone') {
+                            setting = { };
                         }
                         /* конец Настройки в зависимости от типа элемента */
 
-                        self.item.setting = Object.assign({}, setting);
-                        self.current.setting = Object.assign({}, setting);
+                        self.item.setting       = Object.assign({}, setting);
+                        self.current.setting    = Object.assign({}, setting);
 
                     }
                 }).catch(function (error) {
@@ -220,13 +307,10 @@
                 this.$store.state.loader = true;
 
                 //data
-                
                 let data = {
-                    
                     title:          this.current.title,
                     description:    this.current.description,
                     is_required:    this.current.is_required,
-
                 };
 
                 //settings

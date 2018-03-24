@@ -15,8 +15,18 @@ class ElementsDataRepository extends BaseRepository
     public function create($settings) 
     {
         foreach($settings as $data) {
-            $this->model->updateOrCreate(['element_id' => $data['element_id'], 'key' => $data['key']], $data);
+            if(!empty($data['id_delete'])) {
+                $this->deleteByKey($data['element_id'], $data['key']);
+            } else {
+                $this->model->updateOrCreate(['element_id' => $data['element_id'], 'key' => $data['key']], $data);
+            }
         }
+    }
+
+    /* Удалить по ключу */
+    private function deleteByKey($elementId, $key)
+    {
+        return $this->model->where('element_id', $elementId)->where('key', $key)->delete();
     }
 
     /* Удалить */

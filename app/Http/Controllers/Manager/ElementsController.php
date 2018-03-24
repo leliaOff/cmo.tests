@@ -102,16 +102,14 @@ class ElementsController extends Controller
             'sort'          => 'required|integer',
             'title'         => 'required|string|max:255',
             'is_required'   => 'boolean',
-            'type'          => 'required|string|in:table,checkbox,radio,title,directory',
+            'type'          => 'required|string|in:table,checkbox,radio,title,directory,input-text,input-number,input-double,input-date,input-web,input-email,input-phone',
         ]);
 
         if($validator->fails()) {
-            
             return [
                 'status' => 'fail',
                 'error'  => $validator->messages(),
             ];
-
         }
 
         $element = $this->elementsRepository->create($request['data']);
@@ -136,12 +134,10 @@ class ElementsController extends Controller
         ]);
 
         if($validator->fails()) {
-            
             return [
                 'status' => 'fail',
                 'error'  => $validator->messages(),
             ];
-
         }
 
         //Настройки элемента
@@ -269,20 +265,6 @@ class ElementsController extends Controller
             case 'title':
 
                 return ['status' => 'success', 'result'  => []];
-                // $validator = Validator::make([
-                //     'data' => $data['data'],
-                // ], [
-                //     'data' => 'required|string',
-                // ]);
-
-                // if($validator->fails()) {                    
-                //     return ['status' => 'fail', 'error'  => $validator->messages()];        
-                // }
-
-                // $setting = [
-                //     ['element_id' => $id, 'key' => 'data', 'value' => $data['data']],
-                // ];
-
                 break;
 
             /* Элемент справочника */
@@ -303,10 +285,61 @@ class ElementsController extends Controller
                 ];
 
                 break;
+
+            /* Произвольный текст */
+            case 'input-text':
+                $setting = [ ];
+                break;
+
+            /* Целое число */
+            case 'input-number':
+                
+                $setting = [];
+                if($data['min'] != '') $setting[] = ['element_id' => $id, 'key' => 'min', 'value' => $data['min']];
+                else $setting[] = ['element_id' => $id, 'key' => 'min', 'id_delete' => true];
+                if($data['max'] != '') $setting[] = ['element_id' => $id, 'key' => 'max', 'value' => $data['max']];
+                else $setting[] = ['element_id' => $id, 'key' => 'max', 'id_delete' => true];
+
+                break;
+
+            /* Дробное число */
+            case 'input-double':
+                
+                $setting = [];
+                if($data['min'] != '') $setting[] = ['element_id' => $id, 'key' => 'min', 'value' => $data['min']];
+                else $setting[] = ['element_id' => $id, 'key' => 'min', 'id_delete' => true];
+                if($data['max'] != '') $setting[] = ['element_id' => $id, 'key' => 'max', 'value' => $data['max']];
+                else $setting[] = ['element_id' => $id, 'key' => 'max', 'id_delete' => true];
+
+                break;
+
+            /* Дата */
+            case 'input-date':
+                
+                $setting = [];
+                if($data['min'] != '') $setting[] = ['element_id' => $id, 'key' => 'min', 'value' => $data['min']];
+                else $setting[] = ['element_id' => $id, 'key' => 'min', 'id_delete' => true];
+                if($data['max'] != '') $setting[] = ['element_id' => $id, 'key' => 'max', 'value' => $data['max']];
+                else $setting[] = ['element_id' => $id, 'key' => 'max', 'id_delete' => true];
+
+                break;
+
+            /* Веб-адрес */
+            case 'input-web':
+                $setting = [ ];
+                break;
+
+            /* Email */
+            case 'input-email':
+                $setting = [ ];
+                break;
+
+            /* Телефон */
+            case 'input-phone':
+                $setting = [ ];
+                break;
         }
 
-        // DB::table('elements_data')->where('element_id', $id)->delete();
-        // DB::table('elements_data')->insert($setting);
         return $setting;
 
     }

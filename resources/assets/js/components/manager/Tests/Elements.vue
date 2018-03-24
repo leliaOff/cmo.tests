@@ -38,6 +38,13 @@
                                     <option value="checkbox">Много из многих</option>
                                     <option value="title">Заголовок и текст</option>
                                     <option value="directory">Выбор из справочника</option>
+                                    <option value="input-text">Произвольный текст</option>
+                                    <option value="input-number">Целое число</option>
+                                    <option value="input-double">Дробное число</option>
+                                    <option value="input-date">Дата</option>
+                                    <option value="input-web">Адрес сайта</option>
+                                    <option value="input-email">Email</option>
+                                    <option value="input-phone">Телефон</option>
                                 </select></div>
                         </div>
                     </div>
@@ -101,20 +108,16 @@
                 
                 let data = {
                     
-                    title: this.newItem.title,
-                    description: this.newItem.description,
-                    is_required: this.newItem.is_required,
-                    type: this.newItem.type,
-                    sort: this.items.length,
-                    test_id: this.testId
+                    title:          this.newItem.title,
+                    description:    this.newItem.description,
+                    is_required:    this.newItem.is_required,
+                    type:           this.newItem.type,
+                    sort:           this.items.length,
+                    test_id:        this.testId
 
                 };
 
-                axios.post(window.baseurl + 'elementInsert', {
-                    
-                    data: data                    
-
-                }).then(function(response) {
+                axios.post(window.baseurl + 'elementInsert', { data: data }).then(function(response) {
 
                     self.$store.state.loader = false;                    
                     if(response.data.status == 'relogin') self.$router.push('/');
