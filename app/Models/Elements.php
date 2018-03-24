@@ -14,7 +14,7 @@ class Elements extends Model
         'sort',
         'title',
         'description',
-        'is_requiered',
+        'is_required',
         'type',
     ];
 

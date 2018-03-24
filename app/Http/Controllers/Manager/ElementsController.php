@@ -126,11 +126,11 @@ class ElementsController extends Controller
         if(!Auth::check()) return ['status' => 'relogin'];
 
         $validator = Validator::make([
-            'title' => $request['data']['title'],
-            'is_required' => $request['data']['is_required'],
+            'title'         => $request['data']['title'],
+            'is_required'   => $request['data']['is_required'],
         ], [
-            'title' => 'required|string|max:255',
-            'is_required' => 'boolean',
+            'title'         => 'required|string|max:255',
+            'is_required'   => 'boolean',
         ]);
 
         if($validator->fails()) {

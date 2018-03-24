@@ -13,7 +13,7 @@
             <div class="element-item" v-for="(element, i) in elements" :key="element.id" v-if="current == i">
                 
                 <!-- Деловая часть элемента -->
-                <h2>{{ element.title }}</h2>
+                <h2>{{ current + 1 }}. {{ element.title }}</h2>
                 <div class="alert alert-info" v-if="element.description" v-html="element.description"></div>
                 <image-gallery v-model="element.files"></image-gallery>
                 
@@ -79,10 +79,10 @@
 
             </div>
 
-            <button class="btn btn-default btn-turn" :class="(current == 0 ? 'disabled' : '')"
+            <button class="btn btn-default btn-turn" :class="(current == 0 ? 'opacity-hide' : '')"
                 @click="prev"><span class="glyphicon glyphicon-chevron-left">
             </span></button><!--
-            --><button class="btn btn-success btn-turn" :class="(isNext == false ? 'disabled' : '')"
+            --><button class="btn btn-success btn-turn" v-show="isNext === true"
                 v-if="(current != (elements.length - 1))" @click="next"><span class="glyphicon glyphicon-chevron-right">
             </span></button><!--
             --><button class="btn btn-success btn-turn" v-else :class="(isNext == false ? 'disabled' : '')"
@@ -90,9 +90,9 @@
         
         </div>
         <!-- Подвал -->
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary" @click="start" v-if="current == -1">Начать анкентирование</button>
-            <button type="button" class="btn btn-warning" @click="exit" v-if="current == -1">Все тесты и анкеты</button>
+        <div class="btn-group" v-if="current == -1">
+            <button type="button" class="btn btn-primary" @click="start">Начать анкентирование</button>
+            <button type="button" class="btn btn-warning" @click="exit">Все тесты и анкеты</button>
         </div>
     </div>
 </template>
@@ -130,17 +130,16 @@
         data() {
             
             let id = this.$route.params.id;
-            let user = localStorage['user_test_' + id] == undefined ? 0 : localStorage['user_test_' + id];
             
             return {
-                item: { 'name': '' },
-                elements: [],
-                current: -1,
-                testId: id,
-                isNext: true,
-                user: user,
-                isFinish: false,
-                finishResult: ''
+                item:           { 'name': '' },
+                elements:       [],
+                current:        -1,
+                testId:         id,
+                isNext:         false,
+                user:           0,
+                isFinish:       false,
+                finishResult:   ''
             }
         },
 
@@ -148,42 +147,37 @@
 
             get() {
                 
-                let self = this;
-                self.$store.state.loader = true;
-                let id = self.$route.params.id;
+                this.$store.state.loader = true;
+                let id = this.$route.params.id;
 
                 axios.post(window.baseurl + 'frontGetTest', {
-                    id: id, user: self.user
-                }).then(function (response) {
-                    self.$store.state.loader = false;
+                    id: id, user: this.user
+                }).then(response => {
+                    this.$store.state.loader = false;
                     if(response.data.status == 'success') {
+                        
                         //Код пользователя
-                        if(self.user == 0) {
-                            self.user = response.data.user;
-                            localStorage['user_test_' + self.testId] = response.data.user;
-                        }
-                        //Элементы теста
-                        self.item = response.data.result;
-                        self.elements = response.data.elements;
-                        //Шаг
-                        let step = isNaN(localStorage['start_test_' + self.testId]) || localStorage['start_test_' + self.testId] == undefined ? -1 : localStorage['start_test_' + self.testId];
-                        step = parseInt(step, 10);
-                        if(step == -1) return;
+                        this.user = response.data.user;
 
-                        self.current = step;
-                        localStorage['start_test_' + self.testId] = step;
-                        self.isNext = self.is_MoveOn();
+                        //Элементы теста
+                        this.item = response.data.result;
+                        this.elements = response.data.elements;
+
+                        this.isNext = this.is_MoveOn();
+
                     }
-                }).catch(function (error) {
-                    self.$store.state.loader = false;
+                }).catch(error => {
+
+                    this.$store.state.loader = false;
                     console.log(error);
+
                 });
 
             },
 
             setResult(result) {
 
-                let index                   = parseInt(localStorage['start_test_' + this.testId], 10);
+                let index                   = this.current;
                 this.elements[index].result = result;
                 this.isNext                 = this.is_MoveOn();
 
@@ -203,7 +197,6 @@
                     this.finish();
                 } else {
                     this.current = index;
-                    localStorage['start_test_' + this.testId] = index;
                     this.isNext = this.is_MoveOn();
                 }
 
@@ -218,23 +211,23 @@
                 index = this.getConditionPrevElement(index - 1);
                 if(index !== false) {
                     this.current = index;
-                    localStorage['start_test_' + this.testId] = index;
+                    this.isNext = this.is_MoveOn();
                 }
 
                 
             },
 
             start() {
+                
                 this.current = 0;
-                localStorage['start_test_' + this.testId] = 0;
                 
                 this.user = 0;
-                localStorage['user_test_' + this.testId] = 0;
 
                 this.isFinish = false;
                 this.get();
 
                 this.finishResult = '';
+
             },
 
             finish() {
@@ -245,11 +238,10 @@
                 this.saveResult();
 
                 this.user = 0;
-                localStorage['user_test_' + this.testId] = 0;
 
                 this.current = -1;
-                localStorage['start_test_' + this.testId] = -1;
                 this.isFinish = true;
+
             },
 
             exit() {
@@ -328,21 +320,25 @@
                     if(count > 0) return true;
 
                 } else if(element.type == 'radio') {
-                    
-                    if(element.result != undefined) {
-                        return true;
-                    }
-
+                    if(element.result != undefined) return true;
                 } else if(element.type == 'title') {
-
                     return true;
-                    
                 } else if(element.type == 'directory') {
-                    
-                    if(element.result != undefined && element.result != '') {
-                        return true;
-                    }
-
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-text') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-number') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-double') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-date') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-web') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-email') {
+                    if(element.result != undefined && element.result != '') return true;
+                } else if(element.type == 'input-phone') {
+                    if(element.result != undefined && element.result != '') return true;
                 }
 
                 return false;

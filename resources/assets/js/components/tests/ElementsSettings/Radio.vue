@@ -1,6 +1,6 @@
 <template>
     <div>
-        <easy-radio :name="'radio_' + id" v-model="result" :data="settingRows" v-on:update="resultUpdate"></easy-radio>
+        <easy-radio :name="'radio_' + id" :isArbitrary="setting.arbitrary" v-model="result" :data="settingRows" v-on:update="resultUpdate"></easy-radio>
     </div>
 </template>
 
@@ -9,15 +9,10 @@
 
         props: ['setting', 'oldResult', 'id'],
 
-        data() {
-
-            let rows = this.setting.rows;
-            if(parseInt(this.setting.arbitrary) == 1) {
-                rows.push({value: 'arbitrary'});
-            }            
+        data() {     
 
             return {
-                settingRows     : rows
+                settingRows     : this.setting.rows
             }
         },
 

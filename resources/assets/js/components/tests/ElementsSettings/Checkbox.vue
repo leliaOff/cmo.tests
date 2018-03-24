@@ -6,14 +6,12 @@
             v-on:update="resultUpdate"></easy-checkbox>  
 
         <!-- Произвольный ответ -->
-        <div class="row" v-if="arbitrary">
-            <div class="col-sm-1 clearfix">
-                <easy-checkbox :index="setting.rows.length" label=""
-                                v-on:update="arbitraryUpdate" :checked="arbitraryChecked"></easy-checkbox>
-            </div>
-            <div class="col-sm-11 clearfix">
-                <textarea class="arbitrary" placeholder="введите свой вариант ответа" v-model="arbitraryText" v-on:keyup="arbitraryUpdate"></textarea>
-            </div>
+        <div v-if="arbitrary" class="arbitrary-group">
+            <easy-checkbox :index="setting.rows.length" label=""
+                :disabled="(result[setting.rows.length] == '' && countResult == setting.count)" 
+                v-on:update="arbitraryUpdate" :checked="arbitraryChecked"></easy-checkbox>
+            <div class="arbitrary-container"><textarea class="arbitrary" placeholder="введите свой вариант ответа" v-model="arbitraryText" 
+                v-on:keyup="arbitraryUpdate" :disabled="(result[setting.rows.length] == '' && countResult == setting.count)" ></textarea></div>
         </div>
             
     </div>
@@ -57,10 +55,9 @@
 
                 //Пересчитываем количество ответов для строки
                 $.each(result, function(i, value) {
-                    if(value == true) countResult++;
+                    if(value == true || value != '') countResult++;
+                    arbitraryText = value;
                 });
-
-                arbitraryText = result[result.length - 1];
 
             }            
 
@@ -91,7 +88,7 @@
                 //Пересчитываем количество ответов для строки
                 this.countResult = 0;
                 $.each(this.result, (i, value) => {
-                    if(value == true) this.countResult++;
+                    if(value == true || value != '') this.countResult++;
                 });
 
                 //Отправляем результат папочке

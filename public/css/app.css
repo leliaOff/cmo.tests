@@ -7806,6 +7806,10 @@ p.justify {
   box-shadow: none;
 }
 
+.btn.opacity-hide {
+  opacity: 0;
+}
+
 .alert-browser {
   width: 90%;
   max-width: 600px;
@@ -7871,6 +7875,21 @@ p.justify {
 
 .easy-checkbox:hover .easy-checkbox-icon {
   background: #eeeeee;
+}
+
+.arbitrary-group .easy-checkbox {
+  width: 48px;
+  padding: 0;
+}
+
+.arbitrary-group .arbitrary-container {
+  width: 100%;
+  padding: 0 0 0 48px;
+  margin: 0 0 0 -52px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .row > div.align-right {
@@ -8184,7 +8203,17 @@ p.justify {
 }
 
 .welcome .elements-content .table-container table td .easy-checkbox {
-  padding: 0;
+  padding: 5px 10px;
+  min-width: 52px;
+}
+
+.welcome .elements-content .table-container table td.align-center {
+  text-align: center;
+}
+
+.welcome .elements-content .table-container table thead td {
+  font-weight: 700;
+  text-align: center;
 }
 
 .welcome .elements-content select {

@@ -2,20 +2,23 @@
     <div>
         <div class="table-container">
             <table>
-                <tr>
-                    <td class="row-item"></td>
-                    <td v-for="(col, i) in setting.cols"> {{ col.value }} </td>
-                </tr>
-                <tr v-for="(row, i) in setting.rows">
-                    <td class="row-item"> {{ row.value }} </td>
-                    <td v-for="(col, j) in setting.cols">
-                        <easy-checkbox
-                            :checked="result[i][j]" :index="[i, j]" 
-                            :countRowResult="countRowResult[i]" :count="setting.count" 
-                            :disabled="(result[i][j] == false && countRowResult[i] >= setting.count)" 
-                            v-on:update="resultUpdate"></easy-checkbox>
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td class="row-item"></td>
+                        <td v-for="(col, i) in setting.cols"> {{ col.value }} </td>
+                    </tr>
+                </thead><tbody>
+                    <tr v-for="(row, i) in setting.rows">
+                        <td class="row-item"> {{ row.value }} </td>
+                        <td v-for="(col, j) in setting.cols" class="align-center">
+                            <easy-checkbox
+                                :checked="result[i][j]" :index="[i, j]" 
+                                :countRowResult="countRowResult[i]" :count="setting.count" 
+                                :disabled="(result[i][j] == false && countRowResult[i] >= setting.count)" 
+                                v-on:update="resultUpdate"></easy-checkbox>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>        
     </div>

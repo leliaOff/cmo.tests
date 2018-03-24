@@ -45733,15 +45733,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
 
         var id = this.$route.params.id;
-        var user = localStorage['user_test_' + id] == undefined ? 0 : localStorage['user_test_' + id];
 
         return {
             item: { 'name': '' },
             elements: [],
             current: -1,
             testId: id,
-            isNext: true,
-            user: user,
+            isNext: false,
+            user: 0,
             isFinish: false,
             finishResult: ''
         };
@@ -45750,41 +45749,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         get: function get() {
+            var _this = this;
 
-            var self = this;
-            self.$store.state.loader = true;
-            var id = self.$route.params.id;
+            this.$store.state.loader = true;
+            var id = this.$route.params.id;
 
             axios.post(window.baseurl + 'frontGetTest', {
-                id: id, user: self.user
+                id: id, user: this.user
             }).then(function (response) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 if (response.data.status == 'success') {
-                    //Код пользователя
-                    if (self.user == 0) {
-                        self.user = response.data.user;
-                        localStorage['user_test_' + self.testId] = response.data.user;
-                    }
-                    //Элементы теста
-                    self.item = response.data.result;
-                    self.elements = response.data.elements;
-                    //Шаг
-                    var step = isNaN(localStorage['start_test_' + self.testId]) || localStorage['start_test_' + self.testId] == undefined ? -1 : localStorage['start_test_' + self.testId];
-                    step = parseInt(step, 10);
-                    if (step == -1) return;
 
-                    self.current = step;
-                    localStorage['start_test_' + self.testId] = step;
-                    self.isNext = self.is_MoveOn();
+                    //Код пользователя
+                    _this.user = response.data.user;
+
+                    //Элементы теста
+                    _this.item = response.data.result;
+                    _this.elements = response.data.elements;
+
+                    _this.isNext = _this.is_MoveOn();
                 }
             }).catch(function (error) {
-                self.$store.state.loader = false;
+
+                _this.$store.state.loader = false;
                 console.log(error);
             });
         },
         setResult: function setResult(result) {
 
-            var index = parseInt(localStorage['start_test_' + this.testId], 10);
+            var index = this.current;
             this.elements[index].result = result;
             this.isNext = this.is_MoveOn();
         },
@@ -45802,7 +45795,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.finish();
             } else {
                 this.current = index;
-                localStorage['start_test_' + this.testId] = index;
                 this.isNext = this.is_MoveOn();
             }
         },
@@ -45815,15 +45807,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             index = this.getConditionPrevElement(index - 1);
             if (index !== false) {
                 this.current = index;
-                localStorage['start_test_' + this.testId] = index;
+                this.isNext = this.is_MoveOn();
             }
         },
         start: function start() {
+
             this.current = 0;
-            localStorage['start_test_' + this.testId] = 0;
 
             this.user = 0;
-            localStorage['user_test_' + this.testId] = 0;
 
             this.isFinish = false;
             this.get();
@@ -45838,10 +45829,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.saveResult();
 
             this.user = 0;
-            localStorage['user_test_' + this.testId] = 0;
 
             this.current = -1;
-            localStorage['start_test_' + this.testId] = -1;
             this.isFinish = true;
         },
         exit: function exit() {
@@ -45912,18 +45901,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //Если хотя бы один true
                 if (_count > 0) return true;
             } else if (element.type == 'radio') {
-
-                if (element.result != undefined) {
-                    return true;
-                }
+                if (element.result != undefined) return true;
             } else if (element.type == 'title') {
-
                 return true;
             } else if (element.type == 'directory') {
-
-                if (element.result != undefined && element.result != '') {
-                    return true;
-                }
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-text') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-number') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-double') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-date') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-web') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-email') {
+                if (element.result != undefined && element.result != '') return true;
+            } else if (element.type == 'input-phone') {
+                if (element.result != undefined && element.result != '') return true;
             }
 
             return false;
@@ -46061,6 +46057,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -46141,15 +46140,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "table-container"
-  }, [_c('table', [_c('tr', [_c('td', {
+  }, [_c('table', [_c('thead', [_c('tr', [_c('td', {
     staticClass: "row-item"
   }), _vm._v(" "), _vm._l((_vm.setting.cols), function(col, i) {
     return _c('td', [_vm._v(" " + _vm._s(col.value) + " ")])
-  })], 2), _vm._v(" "), _vm._l((_vm.setting.rows), function(row, i) {
+  })], 2)]), _c('tbody', _vm._l((_vm.setting.rows), function(row, i) {
     return _c('tr', [_c('td', {
       staticClass: "row-item"
     }, [_vm._v(" " + _vm._s(row.value) + " ")]), _vm._v(" "), _vm._l((_vm.setting.cols), function(col, j) {
-      return _c('td', [_c('easy-checkbox', {
+      return _c('td', {
+        staticClass: "align-center"
+      }, [_c('easy-checkbox', {
         attrs: {
           "checked": _vm.result[i][j],
           "index": [i, j],
@@ -46162,7 +46163,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       })], 1)
     })], 2)
-  })], 2)])])
+  }))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46178,8 +46179,6 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -46235,10 +46234,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             //Пересчитываем количество ответов для строки
             $.each(result, function (i, value) {
-                if (value == true) countResult++;
+                if (value == true || value != '') countResult++;
+                arbitraryText = value;
             });
-
-            arbitraryText = result[result.length - 1];
         }
 
         return {
@@ -46269,7 +46267,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Пересчитываем количество ответов для строки
             this.countResult = 0;
             $.each(this.result, function (i, value) {
-                if (value == true) _this.countResult++;
+                if (value == true || value != '') _this.countResult++;
             });
 
             //Отправляем результат папочке
@@ -46300,20 +46298,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })
   }), _vm._v(" "), (_vm.arbitrary) ? _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-sm-1 clearfix"
+    staticClass: "arbitrary-group"
   }, [_c('easy-checkbox', {
     attrs: {
       "index": _vm.setting.rows.length,
       "label": "",
+      "disabled": (_vm.result[_vm.setting.rows.length] == '' && _vm.countResult == _vm.setting.count),
       "checked": _vm.arbitraryChecked
     },
     on: {
       "update": _vm.arbitraryUpdate
     }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-11 clearfix"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "arbitrary-container"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -46323,7 +46320,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "arbitrary",
     attrs: {
-      "placeholder": "введите свой вариант ответа"
+      "placeholder": "введите свой вариант ответа",
+      "disabled": (_vm.result[_vm.setting.rows.length] == '' && _vm.countResult == _vm.setting.count)
     },
     domProps: {
       "value": (_vm.arbitraryText)
@@ -46335,7 +46333,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.arbitraryText = $event.target.value
       }
     }
-  })])]) : _vm._e()], 2)
+  })])], 1) : _vm._e()], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46364,13 +46362,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
 
-        var rows = this.setting.rows;
-        if (parseInt(this.setting.arbitrary) == 1) {
-            rows.push({ value: 'arbitrary' });
-        }
-
         return {
-            settingRows: rows
+            settingRows: this.setting.rows
         };
     },
 
@@ -46401,6 +46394,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('easy-radio', {
     attrs: {
       "name": 'radio_' + _vm.id,
+      "isArbitrary": _vm.setting.arbitrary,
       "data": _vm.settingRows
     },
     on: {
@@ -46523,7 +46517,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return (_vm.current == i) ? _c('div', {
       key: element.id,
       staticClass: "element-item"
-    }, [_c('h2', [_vm._v(_vm._s(element.title))]), _vm._v(" "), (element.description) ? _c('div', {
+    }, [_c('h2', [_vm._v(_vm._s(_vm.current + 1) + ". " + _vm._s(element.title))]), _vm._v(" "), (element.description) ? _c('div', {
       staticClass: "alert alert-info",
       domProps: {
         "innerHTML": _vm._s(element.description)
@@ -46630,15 +46624,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }) : _vm._e()], 1)], 1) : _vm._e()
   }), _vm._v(" "), _c('button', {
     staticClass: "btn btn-default btn-turn",
-    class: (_vm.current == 0 ? 'disabled' : ''),
+    class: (_vm.current == 0 ? 'opacity-hide' : ''),
     on: {
       "click": _vm.prev
     }
   }, [_c('span', {
     staticClass: "glyphicon glyphicon-chevron-left"
   })]), ((_vm.current != (_vm.elements.length - 1))) ? _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isNext === true),
+      expression: "isNext === true"
+    }],
     staticClass: "btn btn-success btn-turn",
-    class: (_vm.isNext == false ? 'disabled' : ''),
     on: {
       "click": _vm.next
     }
@@ -46650,9 +46649,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.finish
     }
-  }, [_vm._v("Закончить анкетирование")])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v("Закончить анкетирование")])], 2) : _vm._e(), _vm._v(" "), (_vm.current == -1) ? _c('div', {
     staticClass: "btn-group"
-  }, [(_vm.current == -1) ? _c('button', {
+  }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "button"
@@ -46660,7 +46659,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.start
     }
-  }, [_vm._v("Начать анкентирование")]) : _vm._e(), _vm._v(" "), (_vm.current == -1) ? _c('button', {
+  }, [_vm._v("Начать анкентирование")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-warning",
     attrs: {
       "type": "button"
@@ -46668,7 +46667,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.exit
     }
-  }, [_vm._v("Все тесты и анкеты")]) : _vm._e()])], 1)
+  }, [_vm._v("Все тесты и анкеты")])]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -54136,7 +54135,7 @@ if(false) {
 /* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(149)(undefined);
+exports = module.exports = __webpack_require__(368)(undefined);
 // imports
 
 
@@ -54147,88 +54146,7 @@ exports.push([module.i, "\ntable th .sort[data-v-7ae6b86e] {\n\tcursor: pointer;
 
 
 /***/ }),
-/* 149 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
+/* 149 */,
 /* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55869,17 +55787,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
     name: 'easyRadio',
 
-    props: ['name', 'value', 'data'],
+    props: ['name', 'value', 'data', 'isArbitrary'],
 
     data: function data() {
+
+        var arbitraryText = '';
+        if (this.value != undefined && typeof this.value == 'string' && this.value != '') {
+            arbitraryText = this.value.substring(1);
+        }
+
         return {
             valueLocal: this.value,
-            arbitraryText: ''
+            arbitraryText: arbitraryText
         };
     },
 
@@ -55890,6 +55824,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit('update', i);
         },
         arbitraryUpdate: function arbitraryUpdate() {
+            this.valueLocal = '_' + this.arbitraryText;
             this.$emit('update', '_' + this.arbitraryText);
         }
     }
@@ -55903,11 +55838,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "easy-radio-group"
-  }, _vm._l((_vm.data), function(row, i) {
+  }, [_vm._l((_vm.data), function(row, i) {
     return _c('div', {
       staticClass: "easy-radio",
       class: {
-        checked: (i == _vm.valueLocal), full: (row.value == 'arbitrary')
+        checked: (i == _vm.valueLocal)
       },
       on: {
         "click": function($event) {
@@ -55938,33 +55873,62 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.valueLocal = i
         }
       }
-    })]), (row.value == 'arbitrary') ? _c('div', {
-      staticClass: "easy-radio-label"
-    }, [_c('textarea', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (_vm.arbitraryText),
-        expression: "arbitraryText"
-      }],
-      staticClass: "arbitrary",
-      attrs: {
-        "placeholder": "введите свой вариант ответа"
-      },
-      domProps: {
-        "value": (_vm.arbitraryText)
-      },
-      on: {
-        "keyup": _vm.arbitraryUpdate,
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          _vm.arbitraryText = $event.target.value
-        }
-      }
-    })]) : _c('div', {
+    })]), _c('div', {
       staticClass: "easy-radio-label"
     }, [_vm._v("\n            " + _vm._s(row.value) + "\n        ")])])
-  }))
+  }), _vm._v(" "), (parseInt(_vm.isArbitrary) == 1) ? _c('div', {
+    staticClass: "easy-radio",
+    class: {
+      checked: (_vm.arbitraryText != ''), full: true
+    }
+  }, [_c('div', {
+    staticClass: "easy-radio-icon"
+  }, [_c('span', {
+    staticClass: "easy-radio-icon-point"
+  }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.valueLocal),
+      expression: "valueLocal"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": _vm.name
+    },
+    domProps: {
+      "value": '_' + _vm.arbitraryText,
+      "checked": _vm._q(_vm.valueLocal, '_' + _vm.arbitraryText)
+    },
+    on: {
+      "__c": function($event) {
+        _vm.valueLocal = '_' + _vm.arbitraryText
+      }
+    }
+  })]), _c('div', {
+    staticClass: "easy-radio-label"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.arbitraryText),
+      expression: "arbitraryText"
+    }],
+    staticClass: "arbitrary",
+    attrs: {
+      "placeholder": "введите свой вариант ответа"
+    },
+    domProps: {
+      "value": (_vm.arbitraryText)
+    },
+    on: {
+      "keyup": _vm.arbitraryUpdate,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.arbitraryText = $event.target.value
+      }
+    }
+  })])]) : _vm._e()], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -59374,6 +59338,98 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-7951df3b", module.exports)
   }
 }
+
+/***/ }),
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ })
 /******/ ]);
