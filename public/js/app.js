@@ -46020,11 +46020,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'transitionOut': 'none',
                 'titlePosition': 'over'
             });
+        },
+        closeWindowDialog: function closeWindowDialog() {
+            var self = this;
+            window.onbeforeunload = function () {
+                if (self.current > 0) {
+                    return "Вы еще не закончили тест. Уверены, что хотите закрыть вкладку? Данные тестирования не сохранятся!";
+                }
+            };
         }
     },
 
     mounted: function mounted() {
         this.get();
+        this.closeWindowDialog();
     }
 });
 

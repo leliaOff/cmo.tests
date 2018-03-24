@@ -442,12 +442,22 @@
                     'transitionOut'		: 'none',
                     'titlePosition' 	: 'over',
                 });
+            },
+
+            closeWindowDialog() {
+                let self = this;
+                window.onbeforeunload = function() {
+                    if(self.current > 0) {
+                        return "Вы еще не закончили тест. Уверены, что хотите закрыть вкладку? Данные тестирования не сохранятся!";
+                    }
+                };
             }
 
         },
 
         mounted() {
             this.get();
+            this.closeWindowDialog();
         },
 
     }
