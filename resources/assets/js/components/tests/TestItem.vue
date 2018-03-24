@@ -19,10 +19,62 @@
                 
                 <!-- Структура элемента в зависимости от типа -->
                 <div class="element-item-setting">
-                    <element-setting-table v-if="element.type == 'table'" :setting="element.data" :oldResult="element.result" v-on:update="setResult"></element-setting-table>
-                    <element-setting-checkbox v-if="element.type == 'checkbox'" :setting="element.data" :oldResult="element.result" v-on:update="setResult"></element-setting-checkbox>
-                    <element-setting-radio v-if="element.type == 'radio'" :setting="element.data" :oldResult="element.result" :id="element.id" v-on:update="setResult"></element-setting-radio>
-                    <element-setting-directory v-if="element.type == 'directory'" :setting="element.data" :oldResult="element.result" v-on:update="setResult"></element-setting-directory>
+
+                    <!-- Таблица -->
+                    <element-setting-table          v-if="element.type == 'table'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-table>
+                    
+                    <!-- Много из многих -->
+                    <element-setting-checkbox       v-if="element.type == 'checkbox'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-checkbox>
+
+                    <!-- один из многих -->
+                    <element-setting-radio          v-if="element.type == 'radio'"
+                        :setting="element.data" :oldResult="element.result" :id="element.id" v-on:update="setResult">
+                    </element-setting-radio>
+
+                    <!-- Элемент справочника -->
+                    <element-setting-directory      v-if="element.type == 'directory'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-directory>
+
+                    <!-- Произвольный текст -->
+                    <element-setting-input-text     v-if="element.type == 'input-text'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-text>
+
+                    <!-- Произвольное целочисленное  -->
+                    <element-setting-input-number   v-if="element.type == 'input-number'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-number>
+
+                    <!-- Произвольное дробное -->
+                    <element-setting-input-double   v-if="element.type == 'input-double'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-double>
+
+                    <!-- Произвольная дата  -->
+                    <element-setting-input-date     v-if="element.type == 'input-date'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-date>
+
+                    <!-- Произвольный сайт -->
+                    <element-setting-input-web      v-if="element.type == 'input-web'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-web>
+
+                    <!-- Произвольный email -->
+                    <element-setting-input-email    v-if="element.type == 'input-email'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-email>
+
+                    <!-- Произвольный телефон -->
+                    <element-setting-input-phone    v-if="element.type == 'input-phone'"
+                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                    </element-setting-input-phone>
+
                 </div>
 
             </div>
@@ -47,10 +99,17 @@
 
 <script>
 
-    import ElementSettingTable      from './ElementsSettings/Table.vue';
-    import ElementSettingCheckbox   from './ElementsSettings/Checkbox.vue';
-    import ElementSettingRadio      from './ElementsSettings/Radio.vue';
-    import ElementSettingDirectory  from './ElementsSettings/Directory.vue';
+    import ElementSettingTable          from './ElementsSettings/Table.vue';
+    import ElementSettingCheckbox       from './ElementsSettings/Checkbox.vue';
+    import ElementSettingRadio          from './ElementsSettings/Radio.vue';
+    import ElementSettingDirectory      from './ElementsSettings/Directory.vue';
+    import ElementSettingInputText      from './ElementsSettings/InputText.vue';
+    import ElementSettingInputNumber    from './ElementsSettings/InputNumber.vue';
+    import ElementSettingInputDouble    from './ElementsSettings/InputDouble.vue';
+    import ElementSettingInputDate      from './ElementsSettings/InputDate.vue';
+    import ElementSettingInputWeb       from './ElementsSettings/InputWeb.vue';
+    import ElementSettingInputEmail     from './ElementsSettings/InputEmail.vue';
+    import ElementSettingInputPhone     from './ElementsSettings/InputPhone.vue';
 
     export default {
 
@@ -59,6 +118,13 @@
             elementSettingCheckbox:     ElementSettingCheckbox,
             elementSettingRadio:        ElementSettingRadio,
             elementSettingDirectory:    ElementSettingDirectory,
+            elementSettingInputText:    ElementSettingInputText,
+            elementSettingInputNumber:  ElementSettingInputNumber,
+            elementSettingInputDouble:  ElementSettingInputDouble,
+            elementSettingInputDate:    ElementSettingInputDate,
+            elementSettingInputWeb:     ElementSettingInputWeb,
+            elementSettingInputEmail:   ElementSettingInputEmail,
+            elementSettingInputPhone:   ElementSettingInputPhone,
         },
 
         data() {
