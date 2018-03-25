@@ -57358,9 +57358,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 welcome: {
                     url: '', title: 'На главную', auth: ''
                 },
-                tests: {
-                    url: 'tests', title: 'Пройти тест', auth: ''
-                },
                 manager: {
                     url: 'manager', title: 'Панель управления', auth: 'auth', role: 'admin'
                 },
