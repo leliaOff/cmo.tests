@@ -59484,6 +59484,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             return this.links.filter(function (item) {
                 if (item.title.toLowerCase().indexOf(_this.search.toString().toLowerCase()) != -1) return item;
+                for (var key in item.data) {
+                    var value = item.data[key];
+                    if (typeof value == 'number') value = value.toString();
+                    if (typeof value != 'string') continue;
+                    if (value.toLowerCase().indexOf(_this.search.toString().toLowerCase()) != -1) return item;
+                }
             });
         }
     },

@@ -102,13 +102,11 @@ class SchoolsController extends Controller
             'code' => $request['data']['code'],
             'municipality_id' => $request['data']['municipality_id'],
             'name' => $request['data']['name'],
-            'email' => $request['data']['email'],
             'INN' => $request['data']['INN'],
         ], [
             'code' => 'required|integer',
             'municipality_id' => 'required|integer|exists:municipalities,id',
             'name' => 'required|string|max:255',
-            'email' => 'email',
             'INN' => 'max:12',
         ]);
 

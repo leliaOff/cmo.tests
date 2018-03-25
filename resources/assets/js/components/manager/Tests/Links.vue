@@ -74,6 +74,12 @@
             filteredLinks() {
                 return this.links.filter(item => {
                     if(item.title.toLowerCase().indexOf(this.search.toString().toLowerCase()) != -1) return item;
+                    for(let key in item.data) {
+                        let value = item.data[key];
+                        if(typeof(value) == 'number') value = value.toString();
+                        if(typeof(value) != 'string') continue;
+                        if(value.toLowerCase().indexOf(this.search.toString().toLowerCase()) != -1) return item;
+                    }
                 });
             },
 

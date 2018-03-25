@@ -74,6 +74,7 @@ class TestsLinksController extends Controller
                 foreach($items as $item) {
                     $data[] =  [
                         'title'         => $item->name,
+                        'data'          => $item,
                         'link'          => $parseJsonService->getLinkByDirectory($testId, $alias, $item->id) 
                     ];
                 }
