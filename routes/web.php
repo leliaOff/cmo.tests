@@ -39,36 +39,42 @@ Route::post('/elementSort', 'Manager\ElementsController@sort');
 Route::post('/elementsFileUpload', 'Manager\ElementsController@uploadFile');
 
 /* Results */ 
-Route::post('/resultsList', 'Manager\ResultsController@select');
-Route::post('/resultsByAnswer', 'Manager\ResultsController@getResultStat');
-Route::get('/getExcel/{id}', 'Manager\ExcelController@get');
-Route::get('/cleanResults', 'Manager\ResultsController@cleanResults');
-Route::get('/archiveResults', 'Manager\ResultsController@archiveResults');
+Route::post('/resultsList',                             'Manager\ResultsController@select');
+Route::post('/resultsByAnswer',                         'Manager\ResultsController@getResultStat');
+Route::get('/getExcel/{id}',                            'Manager\ExcelController@get');
+Route::get('/cleanResults',                             'Manager\ResultsController@cleanResults');
+Route::get('/archiveResults',                           'Manager\ResultsController@archiveResults');
 
 /* Directories */ 
-Route::post('/directoriesList', 'Manager\DirectoriesController@select');
-Route::post('/directoryGet', 'Manager\DirectoriesController@get');
-Route::post('/directoryInsert', 'Manager\DirectoriesController@insert');
-Route::post('/directoryUpdate', 'Manager\DirectoriesController@update');
-Route::post('/directoryDelete', 'Manager\DirectoriesController@delete');
+Route::post('/directoriesList',                         'Manager\DirectoriesController@select');
+Route::post('/directoryGet',                            'Manager\DirectoriesController@get');
+Route::post('/directoryInsert',                         'Manager\DirectoriesController@insert');
+Route::post('/directoryUpdate',                         'Manager\DirectoriesController@update');
+Route::post('/directoryDelete',                         'Manager\DirectoriesController@delete');
 
 /* Schools */ 
-Route::post('/schoolsList', 'Manager\SchoolsController@select');
-Route::post('/schoolGet', 'Manager\SchoolsController@get');
-Route::post('/schoolInsert', 'Manager\SchoolsController@insert');
-Route::post('/schoolUpdate', 'Manager\SchoolsController@update');
-Route::post('/schoolDelete', 'Manager\SchoolsController@delete');
+Route::post('/schoolsList',                             'Manager\SchoolsController@select');
+Route::post('/schoolGet',                               'Manager\SchoolsController@get');
+Route::post('/schoolInsert',                            'Manager\SchoolsController@insert');
+Route::post('/schoolUpdate',                            'Manager\SchoolsController@update');
+Route::post('/schoolDelete',                            'Manager\SchoolsController@delete');
 
 /* Municipalities */ 
-Route::post('/municipalitiesList', 'Manager\MunicipalitiesController@select');
-Route::post('/municipalityGet', 'Manager\MunicipalitiesController@get');
-Route::post('/municipalityInsert', 'Manager\MunicipalitiesController@insert');
-Route::post('/municipalityUpdate', 'Manager\MunicipalitiesController@update');
-Route::post('/municipalityDelete', 'Manager\MunicipalitiesController@delete');
+Route::post('/municipalitiesList',                      'Manager\MunicipalitiesController@select');
+Route::post('/municipalityGet',                         'Manager\MunicipalitiesController@get');
+Route::post('/municipalityInsert',                      'Manager\MunicipalitiesController@insert');
+Route::post('/municipalityUpdate',                      'Manager\MunicipalitiesController@update');
+Route::post('/municipalityDelete',                      'Manager\MunicipalitiesController@delete');
 
 /* Users */
-Route::post('/usersList', 'Manager\UsersController@select');
-Route::post('/userGet', 'Manager\UsersController@get');
-Route::post('/userInsert', 'Manager\UsersController@insert');
-Route::post('/userUpdate', 'Manager\UsersController@update');
-Route::post('/userDelete', 'Manager\UsersController@delete');
+Route::post('/usersList',                               'Manager\UsersController@select');
+Route::post('/userGet',                                 'Manager\UsersController@get');
+Route::post('/userInsert',                              'Manager\UsersController@insert');
+Route::post('/userUpdate',                              'Manager\UsersController@update');
+Route::post('/userDelete',                              'Manager\UsersController@delete');
+
+/* Test's links */ 
+Route::get('/testsLinks/{testId}',                      'Manager\TestsLinksController@index');
+Route::get('/testsLinkInsert/{testId}/{directoryId}',   'Manager\TestsLinksController@insert');
+Route::get('/testsLinkDelete/{id}',                     'Manager\TestsLinksController@delete');
+Route::get('/links/{testId}',                           'Manager\TestsLinksController@links');

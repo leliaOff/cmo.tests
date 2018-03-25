@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\Elements;
 
@@ -110,6 +111,25 @@ class ParseJsonService
         }
 
         return $result;        
+    }
+
+    /**
+     * Получить ссылку для справочника
+     */
+    public function getLinkByDirectory($testId, $alias, $id)
+    {
+        $hash = $this->getLinkHash($testId, $alias, $id);
+        $link = env('APP_URL', '') . "#/test/$testId?$alias=$id&token=$hash";
+        return $link;
+    }
+
+    /**
+     * Получить хеш ссылки
+     */
+    public function getLinkHash($testId, $alias, $id)
+    {
+        $text = $testId . $alias . $id .'we34!FG#0A';
+        return md5($text);
     }
 
 }

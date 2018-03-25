@@ -8,19 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Repositories\TestsRepository;
 
 class TestsController extends Controller
 {
        
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        
-    }
+    private $testsRepository;
+
+	public function __construct(TestsRepository $testsRepository)
+	{ 
+        $this->testsRepository   = $testsRepository;
+	}
 
     /**
      * Show the application dashboard.
@@ -39,7 +37,7 @@ class TestsController extends Controller
     public function select()
     {
         if(!Auth::check()) return ['status' => 'relogin'];
-        $tests = DB::table('tests')->where('state', '!=', 'delete')->select('id', 'name', 'datetime', 'state')->get();
+        $tests = $this->testsRepository->all()->get();
         return ['status' => 'success', 'result' => $tests];
     }
 
@@ -50,14 +48,9 @@ class TestsController extends Controller
     public function get(Request $request)
     {
         if(!Auth::check()) return ['status' => 'relogin'];
-        $id = $request['id'];
-        $directory = DB::table('tests')->where('id', $id)->first();
-        return ['status' => 'success', 'result' => $directory];
+        $test = $this->testsRepository->find($request['id']);
+        return ['status' => 'success', 'result' => $test];
     }
-
-    // $table->string('name');
-    // $table->text('description');
-    // $table->string('state')->default('draft');
 
     /**
     * Вставить данные

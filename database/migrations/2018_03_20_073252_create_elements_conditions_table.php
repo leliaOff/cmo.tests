@@ -15,13 +15,13 @@ class CreateElementsConditionsTable extends Migration
     {
         Schema::create('elements_conditions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('element_id')->unsigned();
-            $table->integer('conditions_element_id');
+            $table->unsignedInteger('element_id');
+            $table->foreign('element_id')->references('id')->on('elements');
+            $table->unsignedInteger('conditions_element_id');
+            $table->foreign('conditions_element_id')->references('id')->on('elements');
             $table->text('conditions_answer');
             $table->enum('operand', ['=', '!', '<', '>', '<=', '>=']);
             $table->enum('combination', ['or', 'and'])->default('and');
-            $table->foreign('element_id')->references('id')->on('elements');
-            $table->foreign('conditions_element_id')->references('id')->on('elements');
         });
     }
 

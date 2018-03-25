@@ -14,7 +14,7 @@ class CreateMunicipalitiesTable extends Migration
     public function up()
     {
         Schema::create('municipalities', function (Blueprint $table) {
-            $table->integer('id')->unique();
+            $table->increments('id');
             $table->integer('code');
             $table->string('name');
         });

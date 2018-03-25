@@ -74,20 +74,20 @@
 
 <script>
 
-    import ElementSettingTable from './ResultsElementsSettings/Table.vue';
-    import ElementSettingCheckbox from './ResultsElementsSettings/Checkbox.vue';
-    import ElementSettingRadio from './ResultsElementsSettings/Radio.vue';
-    import ElementSettingDirectory from './ResultsElementsSettings/Directory.vue';
+    import ElementSettingTable          from './ResultsElementsSettings/Table.vue';
+    import ElementSettingCheckbox       from './ResultsElementsSettings/Checkbox.vue';
+    import ElementSettingRadio          from './ResultsElementsSettings/Radio.vue';
+    import ElementSettingDirectory      from './ResultsElementsSettings/Directory.vue';
 
     export default {
 
         props: ['testId'],
 
         components: {
-            elementSettingTable: ElementSettingTable,
-            elementSettingCheckbox: ElementSettingCheckbox,
-            elementSettingRadio: ElementSettingRadio,
-            elementSettingDirectory: ElementSettingDirectory,
+            elementSettingTable:        ElementSettingTable,
+            elementSettingCheckbox:     ElementSettingCheckbox,
+            elementSettingRadio:        ElementSettingRadio,
+            elementSettingDirectory:    ElementSettingDirectory,
         },
 
         data() {

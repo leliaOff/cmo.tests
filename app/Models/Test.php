@@ -28,4 +28,10 @@ class Test extends Model
         return $this->hasMany('App\Models\Elements', 'test_id');
     }
 
+    /* Ссылки */
+    public function links()
+    {
+        return $this->hasMany('App\Models\TestsLink', 'test_id');
+    }
+
 }

@@ -16,13 +16,13 @@ class TestsRepository extends BaseRepository
     /* Получить все записи */
     public function all() 
     {
-        return $this->model->with('elements');
+        return $this->model->where('state', '!=', 'delete')->with('elements')->with('links');
     }
 
     /* Получить все записи с учетом состояния */
     public function allState($state) 
     {
-        return $this->model->where('state', $state)->with('elements')
+        return $this->model->where('state', $state)->with('elements')->with('links')
                     ->select([
                         'id', 'name', 'description', 'after',
                         DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),
@@ -32,13 +32,13 @@ class TestsRepository extends BaseRepository
     /* Получить по ИД */
     public function find($id)
     {
-        return $this->model->with('elements')->find($id);
+        return $this->model->with('elements')->with('links')->find($id);
     }
 
     /* Получить по ИД */
     public function findState($id, $state)
     {
-        return $this->model->where('state', $state)->with('elements')
+        return $this->model->where('state', $state)->with('elements')->with('links')
             ->select([
                 'id', 'name', 'description', 'after',
                 DB::raw('DATE_FORMAT(datetime, \'%d.%m.%Y\') as datetime'),

@@ -7,6 +7,7 @@
             <nav class="tab"><ul>
                 <li><button class="btn btn-tab" v-bind:class="{ active: tab == 'data' }" @click="setTab('data')">Параметры анкеты</button></li><!--
                 --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'elements' }" @click="setTab('elements')" v-if="data.id != 0">Элементы анкеты</button></li><!--
+                --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'links' }" @click="setTab('links')" v-if="data.id != 0">Ссылки</button></li><!--
                 --><li><button class="btn btn-tab" v-bind:class="{ active: tab == 'results' }" @click="setTab('results')" v-if="data.id != 0">Результаты анкетирования</button></li>
             </ul></nav>
             
@@ -46,6 +47,11 @@
                 <elements :testId="data.id"></elements>
             </div>
 
+            <!-- Ссылки на анкету -->
+            <div class="tab-item" v-if="tab == 'links'">
+                <links :testId="data.id"></links>
+            </div>
+
             <!-- Результаты анкеты -->
             <div class="tab-item" v-if="tab == 'results'">
                 <results :testId="data.id"></results>
@@ -56,8 +62,9 @@
 
 <script>
 
-    import TestsElements from './Elements.vue';
-    import TestsResults from './Results.vue';
+    import TestsElements    from './Elements.vue';
+    import TestsResults     from './Results.vue';
+    import TestsLinks       from './Links.vue';
 
     export default {
 
@@ -71,8 +78,9 @@
         },
 
         components: {
-            elements: TestsElements,
-            results: TestsResults,
+            elements:   TestsElements,
+            results:    TestsResults,
+            links:      TestsLinks,
         },
 
         methods: {
