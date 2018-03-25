@@ -11,32 +11,32 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/',                                         'WelcomeController@index');
 
 /* Welcome */
-Route::post('/login', 'WelcomeController@login');
-Route::post('/registration', 'WelcomeController@registration');
-Route::post('/logout', 'WelcomeController@logout');
-Route::post('/frontTestsList', 'Front\TestsController@select');
-Route::post('/frontGetTest', 'Front\TestsController@get');
-Route::post('/frontResult', 'Front\TestsController@result');
-Route::post('/frontDirectoryData', 'Front\DirectoriesController@select');
+Route::post('/login',                                   'WelcomeController@login');
+Route::post('/registration',                            'WelcomeController@registration');
+Route::post('/logout',                                  'WelcomeController@logout');
+Route::post('/frontTestsList',                          'Front\TestsController@select');
+Route::post('/frontGetTest',                            'Front\TestsController@get');
+Route::post('/frontResult',                             'Front\TestsController@result');
+Route::post('/frontDirectoryData',                      'Front\DirectoriesController@select');
 
 /* Tests */ 
-Route::post('/testsList', 'Manager\TestsController@select');
-Route::post('/testGet', 'Manager\TestsController@get');
-Route::post('/testInsert', 'Manager\TestsController@insert');
-Route::post('/testUpdate', 'Manager\TestsController@update');
-Route::post('/testDelete', 'Manager\TestsController@delete');
+Route::post('/testsList',                               'Manager\TestsController@select');
+Route::post('/testGet',                                 'Manager\TestsController@get');
+Route::post('/testInsert',                              'Manager\TestsController@insert');
+Route::post('/testUpdate',                              'Manager\TestsController@update');
+Route::post('/testDelete',                              'Manager\TestsController@delete');
 
 /* Elements */ 
-Route::post('/elementsList', 'Manager\ElementsController@select');
-Route::post('/elementGet', 'Manager\ElementsController@get');
-Route::post('/elementInsert', 'Manager\ElementsController@insert');
-Route::post('/elementUpdate', 'Manager\ElementsController@update');
-Route::post('/elementDelete', 'Manager\ElementsController@delete');
-Route::post('/elementSort', 'Manager\ElementsController@sort');
-Route::post('/elementsFileUpload', 'Manager\ElementsController@uploadFile');
+Route::post('/elementsList',                            'Manager\ElementsController@select');
+Route::post('/elementGet',                              'Manager\ElementsController@get');
+Route::post('/elementInsert',                           'Manager\ElementsController@insert');
+Route::post('/elementUpdate',                           'Manager\ElementsController@update');
+Route::post('/elementDelete',                           'Manager\ElementsController@delete');
+Route::post('/elementSort',                             'Manager\ElementsController@sort');
+Route::post('/elementsFileUpload',                      'Manager\ElementsController@uploadFile');
 
 /* Results */ 
 Route::post('/resultsList',                             'Manager\ResultsController@select');
@@ -78,3 +78,4 @@ Route::get('/testsLinks/{testId}',                      'Manager\TestsLinksContr
 Route::get('/testsLinkInsert/{testId}/{directoryId}',   'Manager\TestsLinksController@insert');
 Route::get('/testsLinkDelete/{id}',                     'Manager\TestsLinksController@delete');
 Route::get('/links/{testId}',                           'Manager\TestsLinksController@links');
+Route::post('/linkValidation',                           'Manager\TestsLinksController@linkValidation');

@@ -94,6 +94,14 @@ class TestsController extends Controller
     public function result(Request $request)
     {
         
+        $test   = $request['id'];
+        $alias  = $request['alias'];
+        $item   = $request['item'];
+        $token  = $request['token'];
+
+        $isValid = $this->linkValidation($test, $alias, $item, $token);
+        if(!$isValid) return response('link fail', 403);        
+        
         $results    =  $request['results'];
         $user       = (int)$request['user'];
 
@@ -113,16 +121,18 @@ class TestsController extends Controller
             if($result === false) {
 
                 $ids[] = [
-                    'id' => $id,
-                    'result' => 'fail'
+                    'id'        => $id,
+                    'result'    => 'fail'
                 ];
                 
             } else {
                 
                 $insertList[] = [
-                    'element_id' => $id,
-                    'result' => $result,
-                    'user_key' => $user
+                    'element_id'    => $id,
+                    'result'        => $result,
+                    'user_key'      => $user,
+                    'alias'         => $alias,
+                    'item_id'       => $item
                 ];
 
             }
@@ -134,5 +144,21 @@ class TestsController extends Controller
         return ['status' => 'success', 'result' => $ids];
         
     }
+
+    /**
+     * Проверить валидность ссылки
+     */
+    private function linkValidation($test, $alias, $item, $token)
+    {
+        
+        $linksDirectories = $this->index($test);
+        if(count($linksDirectories) == 0) return true;
+
+        $parseJsonService = new ParseJsonService();
+        $hash = $parseJsonService->getLinkHash($test, $alias, $item);
+        if($hash == $token) return true;
+        return false;
+
+    } 
 
 }

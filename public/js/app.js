@@ -44971,12 +44971,7 @@ var routes = [
 {
     path: '/',
     component: __webpack_require__(46)
-},
-// {
-//     path: '/registration',
-//     component: require('./components/welcome/Registration.vue')
-// },
-{
+}, {
     path: '/about',
     component: __webpack_require__(49)
 }, {
@@ -44989,6 +44984,9 @@ var routes = [
     component: __webpack_require__(55)
 }, {
     path: '/test/:id',
+    component: __webpack_require__(58)
+}, {
+    path: '/test/:id/:alias/:item/token/:token',
     component: __webpack_require__(58)
 },
 /* Manager */
@@ -45700,6 +45698,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -45732,13 +45742,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
 
-        var id = this.$route.params.id;
-
         return {
+            linkData: {
+                alias: this.$route.params.alias == undefined ? '' : this.$route.params.alias,
+                item: this.$route.params.item == undefined ? '' : this.$route.params.item,
+                token: this.$route.params.token == undefined ? '' : this.$route.params.token
+            },
+            isValid: 0,
+            directoryTitle: '',
             item: { 'name': '' },
             elements: [],
             current: -1,
-            testId: id,
+            testId: this.$route.params.id,
             isNext: false,
             user: 0,
             isFinish: false,
@@ -45748,8 +45763,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        get: function get() {
+        tokenValidation: function tokenValidation() {
             var _this = this;
+
+            axios.post(window.baseurl + 'linkValidation', {
+                id: this.testId, alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
+            }).then(function (response) {
+                _this.get();
+                _this.directoryTitle = response.data.title;
+                _this.isValid = 1;
+            }).catch(function (error) {
+                _this.isValid = -1;
+            });
+        },
+        get: function get() {
+            var _this2 = this;
 
             this.$store.state.loader = true;
             var id = this.$route.params.id;
@@ -45757,21 +45785,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post(window.baseurl + 'frontGetTest', {
                 id: id, user: this.user
             }).then(function (response) {
-                _this.$store.state.loader = false;
+                _this2.$store.state.loader = false;
                 if (response.data.status == 'success') {
 
                     //Код пользователя
-                    _this.user = response.data.user;
+                    _this2.user = response.data.user;
 
                     //Элементы теста
-                    _this.item = response.data.result;
-                    _this.elements = response.data.elements;
+                    _this2.item = response.data.result;
+                    _this2.elements = response.data.elements;
 
-                    _this.isNext = _this.is_MoveOn();
+                    _this2.isNext = _this2.is_MoveOn();
                 }
             }).catch(function (error) {
 
-                _this.$store.state.loader = false;
+                _this2.$store.state.loader = false;
                 console.log(error);
             });
         },
@@ -45851,19 +45879,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
         },
         saveResult: function saveResult() {
+            var _this3 = this;
 
             axios.post(window.baseurl + 'frontResult', {
-                results: this.$store.state.results, user: this.user
+
+                results: this.$store.state.results, user: this.user, id: this.testId,
+                alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
+
             }).then(function (response) {
 
-                var self = this;
                 $.each(response.data, function (key, value) {
                     if (value.result == 'fail') {
-                        self.finishResult = 'Не удалось сохранить один или несколько ответов';
+                        _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
                     }
                 });
             }).catch(function (error) {
-                console.log(error);
+
+                if (error.response.status == 500) {
+                    _this3.finishResult = 'Критическая ошибка приложения. Повторите запрос позже';
+                } else if (error.response.status == 403) {
+                    _this3.finishResult = 'Ошибка целостности ссылки. Невозможно сохранить результаты с данными параметрами';
+                } else {
+                    _this3.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже';
+                }
             });
         },
         is_MoveOn: function is_MoveOn() {
@@ -46032,7 +46070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        this.get();
+        this.tokenValidation();
         this.closeWindowDialog();
     }
 });
@@ -47281,12 +47319,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "container welcome form test-item",
     class: _vm.current == -1 ? 'finish' : 'start'
-  }, [(_vm.current == -1) ? _c('welcome-menu') : _vm._e(), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.item.name))]), _vm._v(" "), (!_vm.isFinish) ? _c('div', {
+  }, [(_vm.current == -1) ? _c('welcome-menu') : _vm._e(), _vm._v(" "), (_vm.isValid == -1) ? _c('div', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v("Внимание! Вы перешли по несуществующей ссылке. Прохождение теста по этой ссылке невозможно")]) : _vm._e(), _vm._v(" "), (_vm.isValid == 1) ? _c('div', [_c('h1', [_vm._v(_vm._s(_vm.item.name))]), _vm._v(" "), (_vm.directoryTitle != '') ? _c('h3', [_vm._v(_vm._s(_vm.directoryTitle))]) : _vm._e(), _vm._v(" "), (!_vm.isFinish) ? _c('div', {
     staticClass: "alert alert-success"
-  }, [_vm._v(_vm._s(_vm.item.description))]) : _c('div', {
+  }, [_vm._v(_vm._s(_vm.item.description))]) : _vm._e(), _vm._v(" "), (_vm.isFinish && _vm.finishResult == '') ? _c('div', {
     staticClass: "alert alert-success"
-  }, [_vm._v(_vm._s(_vm.item.after))]), _vm._v(" "), (_vm.finishResult != '') ? _c('div', {
-    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.item.after))]) : _vm._e(), _vm._v(" "), (_vm.finishResult != '') ? _c('div', {
+    staticClass: "alert alert-danger"
   }, [_vm._v(_vm._s(_vm.finishResult))]) : _vm._e(), _vm._v(" "), (_vm.current != -1) ? _c('div', {
     staticClass: "elements-content"
   }, [_vm._l((_vm.elements), function(element, i) {
@@ -47443,7 +47483,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.exit
     }
-  }, [_vm._v("Все тесты и анкеты")])]) : _vm._e()], 1)
+  }, [_vm._v("Все тесты и анкеты")])]) : _vm._e()]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

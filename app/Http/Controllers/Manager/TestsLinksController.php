@@ -85,4 +85,29 @@ class TestsLinksController extends Controller
 
     }
 
+    /**
+     * Проверка верности ссылки
+     */
+    public function linkValidation(Request $request)
+    {
+        $test   = $request['id'];
+        $alias  = $request['alias'];
+        $item   = $request['item'];
+        $token  = $request['token'];
+        
+        $linksDirectories = $this->index($test);
+        if(count($linksDirectories) == 0) {
+            return response(['title' => ''], 200);
+        }
+
+        $parseJsonService = new ParseJsonService();
+        $hash = $parseJsonService->getLinkHash($test, $alias, $item);
+        if($hash == $token) {
+            $directory = DB::table($alias)->where('id', $item)->first();
+            return response(['title' => $directory->name], 200);
+        }
+        return response('fail', 403);
+
+    }
+
 }

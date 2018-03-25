@@ -119,7 +119,7 @@ class ParseJsonService
     public function getLinkByDirectory($testId, $alias, $id)
     {
         $hash = $this->getLinkHash($testId, $alias, $id);
-        $link = env('APP_URL', '') . "#/test/$testId?$alias=$id&token=$hash";
+        $link = env('APP_URL', '') . "#/test/$testId/$alias/$id/token/$hash";
         return $link;
     }
 

@@ -2,98 +2,110 @@
     <div class="container welcome form test-item" :class="current == -1 ? 'finish' : 'start'">
         <!-- Шапка -->
         <welcome-menu v-if="current == -1"></welcome-menu>
-        <h1>{{ item.name }}</h1>
-        <div class="alert alert-success" v-if="!isFinish">{{ item.description }}</div>
-        <div class="alert alert-success" v-else>{{ item.after }}</div>
-        <div class="alert alert-warning" v-if="finishResult != ''">{{ finishResult }}</div>
-        <!-- Контент -->
-        <div class="elements-content" v-if="current != -1">
+
+        <!-- Ошибка ссылки -->
+        <div v-if="isValid == -1" class="alert alert-danger">Внимание! Вы перешли по несуществующей ссылке. Прохождение теста по этой ссылке невозможно</div>
+        
+        <div v-if="isValid == 1">
             
-            <!-- Список элементов -->
-            <div class="element-item" v-for="(element, i) in elements" :key="element.id" v-if="current == i">
-                
-                <!-- Деловая часть элемента -->
-                <h2>{{ current + 1 }}. {{ element.title }}</h2>
-                <div class="alert alert-info" v-if="element.description" v-html="element.description"></div>
-                <image-gallery v-model="element.files"></image-gallery>
-                
-                <!-- Структура элемента в зависимости от типа -->
-                <div class="element-item-setting">
+            <h1>{{ item.name }}</h1>
+            <h3 v-if="directoryTitle!= ''">{{ directoryTitle }}</h3>
 
-                    <!-- Таблица -->
-                    <element-setting-table          v-if="element.type == 'table'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-table>
+            <div class="alert alert-success" v-if="!isFinish">{{ item.description }}</div>
+            <div class="alert alert-success" v-if="isFinish && finishResult == ''">{{ item.after }}</div>
+            <div class="alert alert-danger" v-if="finishResult != ''">{{ finishResult }}</div>
+            
+            <!-- Контент -->
+            <div class="elements-content" v-if="current != -1">
+                
+                <!-- Список элементов -->
+                <div class="element-item" v-for="(element, i) in elements" :key="element.id" v-if="current == i">
                     
-                    <!-- Много из многих -->
-                    <element-setting-checkbox       v-if="element.type == 'checkbox'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-checkbox>
+                    <!-- Деловая часть элемента -->
+                    <h2>{{ current + 1 }}. {{ element.title }}</h2>
+                    <div class="alert alert-info" v-if="element.description" v-html="element.description"></div>
+                    <image-gallery v-model="element.files"></image-gallery>
+                    
+                    <!-- Структура элемента в зависимости от типа -->
+                    <div class="element-item-setting">
 
-                    <!-- один из многих -->
-                    <element-setting-radio          v-if="element.type == 'radio'"
-                        :setting="element.data" :oldResult="element.result" :id="element.id" v-on:update="setResult">
-                    </element-setting-radio>
+                        <!-- Таблица -->
+                        <element-setting-table          v-if="element.type == 'table'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-table>
+                        
+                        <!-- Много из многих -->
+                        <element-setting-checkbox       v-if="element.type == 'checkbox'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-checkbox>
 
-                    <!-- Элемент справочника -->
-                    <element-setting-directory      v-if="element.type == 'directory'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-directory>
+                        <!-- один из многих -->
+                        <element-setting-radio          v-if="element.type == 'radio'"
+                            :setting="element.data" :oldResult="element.result" :id="element.id" v-on:update="setResult">
+                        </element-setting-radio>
 
-                    <!-- Произвольный текст -->
-                    <element-setting-input-text     v-if="element.type == 'input-text'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-text>
+                        <!-- Элемент справочника -->
+                        <element-setting-directory      v-if="element.type == 'directory'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-directory>
 
-                    <!-- Произвольное целочисленное  -->
-                    <element-setting-input-number   v-if="element.type == 'input-number'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-number>
+                        <!-- Произвольный текст -->
+                        <element-setting-input-text     v-if="element.type == 'input-text'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-text>
 
-                    <!-- Произвольное дробное -->
-                    <element-setting-input-double   v-if="element.type == 'input-double'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-double>
+                        <!-- Произвольное целочисленное  -->
+                        <element-setting-input-number   v-if="element.type == 'input-number'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-number>
 
-                    <!-- Произвольная дата  -->
-                    <element-setting-input-date     v-if="element.type == 'input-date'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-date>
+                        <!-- Произвольное дробное -->
+                        <element-setting-input-double   v-if="element.type == 'input-double'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-double>
 
-                    <!-- Произвольный сайт -->
-                    <element-setting-input-web      v-if="element.type == 'input-web'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-web>
+                        <!-- Произвольная дата  -->
+                        <element-setting-input-date     v-if="element.type == 'input-date'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-date>
 
-                    <!-- Произвольный email -->
-                    <element-setting-input-email    v-if="element.type == 'input-email'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-email>
+                        <!-- Произвольный сайт -->
+                        <element-setting-input-web      v-if="element.type == 'input-web'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-web>
 
-                    <!-- Произвольный телефон -->
-                    <element-setting-input-phone    v-if="element.type == 'input-phone'"
-                        :setting="element.data" :oldResult="element.result" v-on:update="setResult">
-                    </element-setting-input-phone>
+                        <!-- Произвольный email -->
+                        <element-setting-input-email    v-if="element.type == 'input-email'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-email>
+
+                        <!-- Произвольный телефон -->
+                        <element-setting-input-phone    v-if="element.type == 'input-phone'"
+                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                        </element-setting-input-phone>
+
+                    </div>
 
                 </div>
 
+                <button class="btn btn-default btn-turn" :class="(current == 0 ? 'opacity-hide' : '')"
+                    @click="prev"><span class="glyphicon glyphicon-chevron-left">
+                </span></button><!--
+                --><button class="btn btn-success btn-turn" v-show="isNext === true"
+                    v-if="(current != (elements.length - 1))" @click="next"><span class="glyphicon glyphicon-chevron-right">
+                </span></button><!--
+                --><button class="btn btn-success btn-turn" v-else :class="(isNext == false ? 'disabled' : '')"
+                    @click="finish">Закончить анкетирование</button>
+            
             </div>
+            <!-- Подвал -->
+            <div class="btn-group" v-if="current == -1">
+                <button type="button" class="btn btn-primary" @click="start">Начать анкентирование</button>
+                <button type="button" class="btn btn-warning" @click="exit">Все тесты и анкеты</button>
+            </div>
+        </div>
 
-            <button class="btn btn-default btn-turn" :class="(current == 0 ? 'opacity-hide' : '')"
-                @click="prev"><span class="glyphicon glyphicon-chevron-left">
-            </span></button><!--
-            --><button class="btn btn-success btn-turn" v-show="isNext === true"
-                v-if="(current != (elements.length - 1))" @click="next"><span class="glyphicon glyphicon-chevron-right">
-            </span></button><!--
-            --><button class="btn btn-success btn-turn" v-else :class="(isNext == false ? 'disabled' : '')"
-                @click="finish">Закончить анкетирование</button>
-        
-        </div>
-        <!-- Подвал -->
-        <div class="btn-group" v-if="current == -1">
-            <button type="button" class="btn btn-primary" @click="start">Начать анкентирование</button>
-            <button type="button" class="btn btn-warning" @click="exit">Все тесты и анкеты</button>
-        </div>
+
     </div>
 </template>
 
@@ -129,21 +141,40 @@
 
         data() {
             
-            let id = this.$route.params.id;
-            
             return {
-                item:           { 'name': '' },
-                elements:       [],
-                current:        -1,
-                testId:         id,
-                isNext:         false,
-                user:           0,
-                isFinish:       false,
-                finishResult:   ''
+                linkData        : {
+                    alias   : (this.$route.params.alias  == undefined ? '' : this.$route.params.alias),
+                    item    : (this.$route.params.item   == undefined ? '' : this.$route.params.item),
+                    token   : (this.$route.params.token  == undefined ? '' : this.$route.params.token),
+                },
+                isValid         : 0,
+                directoryTitle  : '',
+                item            : { 'name': '' },
+                elements        : [],
+                current         : -1,
+                testId          : this.$route.params.id,
+                isNext          : false,
+                user            : 0,
+                isFinish        : false,
+                finishResult    : ''
             }
         },
 
         methods: {
+
+            tokenValidation() {
+
+                axios.post(window.baseurl + 'linkValidation', {
+                    id: this.testId, alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
+                }).then(response => {
+                    this.get();
+                    this.directoryTitle = response.data.title;
+                    this.isValid = 1;
+                }).catch(error => {
+                    this.isValid = -1;
+                });
+
+            },
 
             get() {
                 
@@ -213,7 +244,6 @@
                     this.current = index;
                     this.isNext = this.is_MoveOn();
                 }
-
                 
             },
 
@@ -267,18 +297,28 @@
             saveResult() {
 
                 axios.post(window.baseurl + 'frontResult', {
-                    results: this.$store.state.results, user: this.user
-                }).then(function (response) { 
                     
-                    let self = this;
-                    $.each(response.data, function(key, value) {
+                    results: this.$store.state.results, user: this.user, id: this.testId, 
+                    alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
+
+                }).then((response) => { 
+                    
+                    $.each(response.data, (key, value) => {
                         if(value.result == 'fail') {
-                            self.finishResult = 'Не удалось сохранить один или несколько ответов';
+                            this.finishResult = 'Не удалось сохранить один или несколько ответов';
                         }
                     });
 
-                }).catch(function (error) {
-                    console.log(error);
+                }).catch((error) => {
+
+                    if(error.response.status == 500) {
+                        this.finishResult = 'Критическая ошибка приложения. Повторите запрос позже';
+                    } else if(error.response.status == 403) {
+                        this.finishResult = 'Ошибка целостности ссылки. Невозможно сохранить результаты с данными параметрами';
+                    } else {
+                        this.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже';
+                    }
+                    
                 });
 
             },
@@ -456,7 +496,7 @@
         },
 
         mounted() {
-            this.get();
+            this.tokenValidation();
             this.closeWindowDialog();
         },
 

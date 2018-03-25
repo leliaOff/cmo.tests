@@ -6,10 +6,6 @@ let routes = [
         path: '/',
         component: require('./components/welcome/Welcome.vue')
     },
-    // {
-    //     path: '/registration',
-    //     component: require('./components/welcome/Registration.vue')
-    // },
     {
         path: '/about',
         component: require('./components/welcome/About.vue')
@@ -25,6 +21,10 @@ let routes = [
     },
     {
         path: '/test/:id',
+        component: require('./components/tests/TestItem.vue')
+    },
+    {
+        path: '/test/:id/:alias/:item/token/:token',
         component: require('./components/tests/TestItem.vue')
     },
     /* Manager */
