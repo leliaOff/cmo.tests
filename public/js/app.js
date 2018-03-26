@@ -45849,16 +45849,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.finishResult = '';
         },
         finish: function finish() {
-
             if (this.is_MoveOn() == false) return;
-
             this.updateRusult();
             this.saveResult();
-
-            this.user = 0;
-
-            this.current = -1;
-            this.isFinish = true;
         },
         exit: function exit() {
             this.$router.push('/tests');
@@ -45881,17 +45874,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             axios.post(window.baseurl + 'frontResult', {
-
-                results: this.$store.state.results, user: this.user, id: this.testId,
-                alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
-
+                results: this.$store.state.results,
+                user: this.user,
+                id: this.testId,
+                alias: this.linkData.alias,
+                item: this.linkData.item,
+                token: this.linkData.token
             }).then(function (response) {
 
+                var isTrue = true;
                 $.each(response.data, function (key, value) {
                     if (value.result == 'fail') {
-                        _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
+                        isTrue = false;
                     }
                 });
+
+                if (isTrue === true) {
+                    _this3.user = 0;
+                    _this3.current = -1;
+                    _this3.isFinish = true;
+                } else {
+                    _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
+                }
             }).catch(function (error) {
 
                 if (error.response.status == 500) {
@@ -46247,7 +46251,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting', 'oldResult'],
+    props: ['setting', 'index'],
 
     mounted: function mounted() {
         console.log(this.setting);
@@ -46255,18 +46259,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
 
-        var self = this;
-
         //Хранилище результатов
         var result = [];
         //Количество
         var countResult = 0;
         //Если есть произвольный ответ
         var arbitraryText = '';
+        //Уже отвечали
+        var oldResult = this.$store.state.results[this.index];
 
-        if (self.oldResult == undefined || self.oldResult === false) {
+        if (oldResult == undefined || oldResult === false) {
 
-            $.each(self.setting.rows, function (i, row) {
+            $.each(this.setting.rows, function (i, row) {
                 result[i] = false;
             });
 
@@ -46276,19 +46280,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } else {
 
             //Хранилище результатов
-            result = Object.assign({}, self.oldResult);
+            result = oldResult.result;
 
             //Пересчитываем количество ответов для строки
-            $.each(result, function (i, value) {
-                if (value == true || value != '') countResult++;
-                arbitraryText = value;
-            });
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] == true || result[i] != '') countResult++;
+            }
         }
 
         return {
             result: result,
             countResult: countResult,
-            arbitraryText: arbitraryText
+            arbitraryText: result[result.length - 1]
         };
     },
 
@@ -47358,7 +47361,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }) : _vm._e(), _vm._v(" "), (element.type == 'checkbox') ? _c('element-setting-checkbox', {
       attrs: {
         "setting": element.data,
-        "oldResult": element.result
+        "index": i
       },
       on: {
         "update": _vm.setResult
@@ -52675,24 +52678,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -53577,25 +53562,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-sm-4 clearfix"
   }, [_c('label', [_vm._v(_vm._s(_vm.general.countPeople))])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
-  }, [_vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-3 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countFinish))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-3 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countPeople - _vm.general.countFinish))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_vm._m(7), _vm._v(" "), _c('div', {
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countResult))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_vm._m(8), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_vm._m(9), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countPeople == 0 ? '' : _vm.general.percent + '%'))])])]), _vm._v(" "), _c('h2', [_vm._v("Подробная статистика")]), _vm._v(" "), _vm._l((_vm.items), function(item, i) {
+  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), _c('h2', [_vm._v("Подробная статистика")]), _vm._v(" "), _vm._l((_vm.items), function(item, i) {
     return (item.type != 'title') ? _c('div', {
       key: item.id,
       staticClass: "element-item"
@@ -53608,11 +53577,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v("Общие сведения")]) : _vm._e()]), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._m(10, true), _vm._v(" "), _c('div', {
+    }, [_vm._m(4, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
     }, [_c('label', [_vm._v(_vm._s(item.stat.count))])])]), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._m(11, true), _vm._v(" "), _c('div', {
+    }, [_vm._m(5, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
     }, [_c('label', [_vm._v(_vm._s(item.stat.count == 0 ? '' : item.stat.percent + '%'))])])]), _vm._v(" "), _c('div', [(item.type == 'table') ? _c('element-setting-table', {
       attrs: {
@@ -53660,32 +53629,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', [_vm._v("Общее число респондентов, прошедших тест")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-1 clearfix"
-  }, [_c('label')])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("из них закончили тест")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-1 clearfix"
-  }, [_c('label')])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("не закончили тест")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("Всего дано ответов")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
     staticClass: "col-sm-8 clearfix"
   }, [_c('label', [_vm._v("Число вопросов")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("Общий процент выполняемости")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-8 clearfix"

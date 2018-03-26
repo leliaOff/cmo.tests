@@ -20,7 +20,7 @@
 <script>
     export default {
 
-        props: ['setting', 'oldResult'],
+        props: ['setting', 'index'],
 
         mounted() {
             console.log(this.setting);
@@ -28,8 +28,6 @@
         },
 
         data() {
-
-            let self = this;
             
             //Хранилище результатов
             let result = [];
@@ -37,10 +35,12 @@
             let countResult = 0;
             //Если есть произвольный ответ
             let arbitraryText = '';
+            //Уже отвечали
+            let oldResult = this.$store.state.results[this.index];
 
-            if(self.oldResult == undefined || self.oldResult === false) {
+            if(oldResult == undefined || oldResult === false) {
 
-                $.each(self.setting.rows, function(i, row) {
+                $.each(this.setting.rows, function(i, row) {
                     result[i] = false;
                 });
 
@@ -51,20 +51,18 @@
             } else {
 
                 //Хранилище результатов
-                result = Object.assign({}, self.oldResult);
+                result = oldResult.result;
 
                 //Пересчитываем количество ответов для строки
-                $.each(result, function(i, value) {
-                    if(value == true || value != '') countResult++;
-                    arbitraryText = value;
-                });
-
+                for(let i = 0; i < result.length; i++) {
+                    if(result[i] == true || result[i] != '') countResult++;
+                }
             }            
 
             return {
                 result              : result,
                 countResult         : countResult,
-                arbitraryText       : arbitraryText,
+                arbitraryText       : result[result.length - 1],
             }
         },
 

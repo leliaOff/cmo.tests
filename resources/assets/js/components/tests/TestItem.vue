@@ -36,7 +36,7 @@
                         
                         <!-- Много из многих -->
                         <element-setting-checkbox       v-if="element.type == 'checkbox'"
-                            :setting="element.data" :oldResult="element.result" v-on:update="setResult">
+                            :setting="element.data" :index="i" v-on:update="setResult">
                         </element-setting-checkbox>
 
                         <!-- один из многих -->
@@ -260,17 +260,9 @@
             },
 
             finish() {
-
                 if(this.is_MoveOn() == false) return;
-
                 this.updateRusult();
                 this.saveResult();
-
-                this.user = 0;
-
-                this.current = -1;
-                this.isFinish = true;
-
             },
 
             exit() {
@@ -296,17 +288,28 @@
             saveResult() {
 
                 axios.post(window.baseurl + 'frontResult', {
-                    
-                    results: this.$store.state.results, user: this.user, id: this.testId, 
-                    alias: this.linkData.alias, item: this.linkData.item, token: this.linkData.token
-
+                    results : this.$store.state.results,
+                    user    : this.user,
+                    id      : this.testId, 
+                    alias   : this.linkData.alias,
+                    item    : this.linkData.item,
+                    token   : this.linkData.token
                 }).then((response) => { 
                     
+                    let isTrue = true;
                     $.each(response.data, (key, value) => {
                         if(value.result == 'fail') {
-                            this.finishResult = 'Не удалось сохранить один или несколько ответов';
+                            isTrue = false;
                         }
                     });
+
+                    if(isTrue === true) {
+                        this.user = 0;
+                        this.current = -1;
+                        this.isFinish = true;
+                    } else {
+                        this.finishResult = 'Не удалось сохранить один или несколько ответов';
+                    }
 
                 }).catch((error) => {
 

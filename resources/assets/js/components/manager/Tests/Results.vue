@@ -20,26 +20,8 @@
             <div class="col-sm-4 clearfix"><label>{{ general.countPeople }}</label></div>
         </div>
         <div class="row">
-            <div class="col-sm-1 clearfix"><label></label></div>
-            <div class="col-sm-8 clearfix"><label>из них закончили тест</label></div>
-            <div class="col-sm-3 clearfix"><label>{{ general.countFinish }}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1 clearfix"><label></label></div>
-            <div class="col-sm-8 clearfix"><label>не закончили тест</label></div>
-            <div class="col-sm-3 clearfix"><label>{{ general.countPeople - general.countFinish }}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 clearfix"><label>Всего дано ответов</label></div>
-            <div class="col-sm-4 clearfix"><label>{{ general.countResult }}</label></div>
-        </div>
-        <div class="row">
             <div class="col-sm-8 clearfix"><label>Число вопросов</label></div>
             <div class="col-sm-4 clearfix"><label>{{ general.countElements }}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 clearfix"><label>Общий процент выполняемости</label></div>
-            <div class="col-sm-4 clearfix"><label>{{ general.countPeople == 0 ? '' : general.percent + '%' }}</label></div>
         </div>
         <h2>Подробная статистика</h2>
         <div class="element-item" v-for="(item, i) in items" :key="item.id" v-if="item.type != 'title'">

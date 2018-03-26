@@ -165,40 +165,6 @@ class ResultsController extends Controller
             return DB::table('elements')->where('test_id', $test_id)->count();
         });
 
-        //Количество респондентов, полностью прошедших тест
-        $countFinish = Cache::remember('manager_getGeneralResults_countFinish', 10, function() use($countElements, $incisions) {
-            $query = DB::table('results')->
-                selectRaw(DB::raw('count(user_key)'));
-            if($incisions) {
-                foreach($incisions as $incision) { //разрез
-                    $query->orWhere($incision);
-                }
-            }
-            $countFinish = $query
-                ->groupBy('user_key')
-                ->havingRaw("count(user_key) = $countElements")
-                ->get();
-            return count($countFinish);
-        });
-        
-        //Всего дано ответов
-        $countResult = Cache::remember('manager_getGeneralResults_countResult_' . $test_id, 10, function() use($test_id, $incisions) {
-            $query = DB::table('results')->
-                join('elements', function($join) use ($test_id) {
-                    $join->on('results.element_id', '=', 'elements.id')
-                        ->where('elements.test_id', '=', $test_id);
-                });
-            if($incisions) {
-                foreach($incisions as $incision) { //разрез
-                    $query->orWhere($incision);
-                }
-            }
-            return $query->count(); 
-        });
-        
-        //Процент ответов: количество ответов / (количество респондентов * количество элементов в тесте)
-        $percent = round(($countFinish / $countPeople) * 100, 2);
-
         //Время обновления
         date_default_timezone_set('Etc/GMT-4');
         $tm = Cache::remember('manager_getGeneralResults_tm_' . $test_id, 10, function() {
@@ -206,12 +172,9 @@ class ResultsController extends Controller
         });
         
         return [
-            'countPeople' => $countPeople,
-            'countResult' => $countResult,
+            'countPeople'   => $countPeople,
             'countElements' => $countElements,
-            'countFinish' => $countFinish,
-            'percent' => $percent,
-            'tm' => $tm
+            'tm'            => $tm
         ];
     }
 
