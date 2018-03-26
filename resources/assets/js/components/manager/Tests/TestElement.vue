@@ -14,23 +14,23 @@
             <!-- Параметры анкеты -->
             <div class="tab-item" v-if="tab == 'data'">
                 <div class="row">
-                    <div class="col-sm-2 clearfix"><label class="input-title">Наименование: *</label></div>
-                    <div class="col-sm-10 clearfix"><input type="text" placeholder="наименование" v-model="current.name"/>
+                    <div class="col-sm-3 clearfix"><label class="input-title">Наименование: *</label></div>
+                    <div class="col-sm-9 clearfix"><input type="text" placeholder="наименование" v-model="current.name"/>
                         <span class="input-validator name" v-if="validation.name != undefined">{{ validation.name[0] }}</span></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2 clearfix"><label class="input-title">Описание:</label></div>
-                    <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
+                    <div class="col-sm-3 clearfix"><label class="input-title">Описание:</label></div>
+                    <div class="col-sm-9 clearfix"><textarea type="text" placeholder="описание"
                                                         v-model="current.description"></textarea></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2 clearfix"><label class="input-title">Благодарность после прохождения теста:</label></div>
-                    <div class="col-sm-10 clearfix"><textarea type="text" placeholder="описание"
+                    <div class="col-sm-3 clearfix"><label class="input-title">Благодарность после прохождения теста:</label></div>
+                    <div class="col-sm-9 clearfix"><textarea type="text" placeholder="описание"
                                                         v-model="current.after"></textarea></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2 clearfix"><label class="input-title">Состояние: *</label></div>
-                    <div class="col-sm-10 clearfix"><select v-model="current.state">
+                    <div class="col-sm-3 clearfix"><label class="input-title">Состояние: *</label></div>
+                    <div class="col-sm-9 clearfix"><select v-model="current.state">
                             <option value="draft" selected>Черновик</option>
                             <option value="published">Опубликован</option>
                         </select></div>

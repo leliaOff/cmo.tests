@@ -101,7 +101,6 @@
             <!-- Подвал -->
             <div class="btn-group" v-if="current == -1">
                 <button type="button" class="btn btn-primary" @click="start">Начать анкентирование</button>
-                <button type="button" class="btn btn-warning" @click="exit">Все тесты и анкеты</button>
             </div>
         </div>
 
