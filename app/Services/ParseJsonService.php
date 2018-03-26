@@ -32,11 +32,6 @@ class ParseJsonService
 
             $result = json_encode($result);
 
-        } elseif($type == 'radio') {
-
-            // $result = (int)$result;
-            // if($result < 0) $result = false;
-
         } elseif($type == 'directory') {
 
             $result = (int)$result;
@@ -74,10 +69,6 @@ class ParseJsonService
         } elseif($type == 'checkbox') {
 
             $result = json_decode($result);
-
-        } elseif($type == 'radio') {
-
-            $result = (int)$result;
 
         } elseif($type == 'directory') {
 

@@ -117,6 +117,8 @@ class TestsController extends Controller
             $type   = $result['type'];
             $result = $result['result'];
 
+            if(empty($id)) continue;
+
             $result = $this->parseJsonService->parseAnswerToJson($result, $type, $id);
             if($result === false) {
 
