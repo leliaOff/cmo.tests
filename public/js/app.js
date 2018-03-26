@@ -45883,17 +45883,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
 
                 var isTrue = true;
-                $.each(response.data, function (key, value) {
+                $.each(response.data.result, function (key, value) {
                     if (value.result == 'fail') {
                         isTrue = false;
                     }
                 });
 
                 if (isTrue === true) {
-                    _this3.user = 0;
-                    _this3.current = -1;
-                    _this3.isFinish = true;
-                    _this3.$store.state.results = [];
+                    location.reload();
                 } else {
                     _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
                 }
@@ -45903,6 +45900,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.finishResult = 'Критическая ошибка приложения. Повторите запрос позже';
                 } else if (error.response.status == 403) {
                     _this3.finishResult = 'Ошибка целостности ссылки. Невозможно сохранить результаты с данными параметрами';
+                } else if (error.response.status == 409) {
+                    _this3.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже [' + error.response.data + ']';
                 } else {
                     _this3.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже';
                 }

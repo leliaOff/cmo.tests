@@ -105,16 +105,16 @@ class TestsController extends Controller
         $results    =  $request['results'];
         $user       = (int)$request['user'];
 
-        if($user < (time() - 14400)) return ['status' => 'fail', 'error' => 'time error'];
-        if(count($results) == 0) return ['status' => 'fail', 'error' => 'results is null'];
+        if($user < (time() - 14400)) return response('time error', 409);
+        if(count($results) == 0) return response('results is null', 409);
         
         $ids = [];
         $insertList = [];
         
         foreach($results as $result) {
 
-            $id = (int)$result['id'];
-            $type = $result['type'];
+            $id     = (int)$result['id'];
+            $type   = $result['type'];
             $result = $result['result'];
 
             $result = $this->parseJsonService->parseAnswerToJson($result, $type, $id);

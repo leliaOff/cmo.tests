@@ -56,8 +56,6 @@ class ParseJsonService
             if($count == 0) $result = false;
 
 
-        } else {
-            $result = false;
         }
 
         return $result;
@@ -85,8 +83,6 @@ class ParseJsonService
 
             $result = (int)$result;
 
-        } else {
-            $result = false;
         }
 
         return $result;

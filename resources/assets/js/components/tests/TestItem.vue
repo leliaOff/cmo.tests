@@ -297,17 +297,14 @@
                 }).then((response) => { 
                     
                     let isTrue = true;
-                    $.each(response.data, (key, value) => {
+                    $.each(response.data.result, (key, value) => {
                         if(value.result == 'fail') {
                             isTrue = false;
                         }
                     });
 
                     if(isTrue === true) {
-                        this.user                   = 0;
-                        this.current                = -1;
-                        this.isFinish               = true;
-                        this.$store.state.results   = [];
+                        location.reload();
                     } else {
                         this.finishResult = 'Не удалось сохранить один или несколько ответов';
                     }
@@ -318,6 +315,8 @@
                         this.finishResult = 'Критическая ошибка приложения. Повторите запрос позже';
                     } else if(error.response.status == 403) {
                         this.finishResult = 'Ошибка целостности ссылки. Невозможно сохранить результаты с данными параметрами';
+                    } else if(error.response.status == 409) {
+                        this.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже [' + error.response.data + ']';
                     } else {
                         this.finishResult = 'При сохранении результатов возникла ошибка. Повторите запрос позже';
                     }
