@@ -179,14 +179,13 @@ class ResultsController extends Controller
     }
 
     /**
-     * Получить статистику для каждого элемента: количество и процент
+     * Получить статистику для каждого элемента: количество
      *
      */
     public function getElementStat($element, $countPeople, $incisions)
     {
         //Количество ответов
-        $query = DB::table('results')->
-            where('element_id', $element->id);
+        $query = DB::table('results')->where('element_id', $element->id);
         if($incisions) {
             $query->where(function ($query) use($incisions) {
                 foreach($incisions as $incision) { //разрез
@@ -197,10 +196,7 @@ class ResultsController extends Controller
         
         $countResult = $query->count();
 
-        //Процентное соотношение: количество ответов к количество респондентов
-        $percent = round(($countResult / $countPeople) * 100, 2);
-
-        return ['count' => $countResult, 'percent' => $percent];
+        return ['count' => $countResult];
     }
 
     /**
@@ -213,9 +209,9 @@ class ResultsController extends Controller
         
         if(!Auth::check()) return ['status' => 'relogin'];
 
-        $element = $request['item'];
-        $data = $element['data'];
-        $incisions = isset($request['incisions']) ? $request['incisions'] : false;
+        $element    = $request['item'];
+        $data       = $element['data'];
+        $incisions  = isset($request['incisions']) ? $request['incisions'] : false;
         if($incisions) $incisions = $this->getIncision($incisions);
         
         if($element['type'] == 'table') {
@@ -305,17 +301,26 @@ class ResultsController extends Controller
 
                 //Бегаем по матрице, считаем true
                 foreach($result as $i => $cell) {
-                    if($cell == true) {
+                    if($cell === true) {
 
                         $matrix[$i]['count']++;
 
                         //Общее количество ответов
                         $allCount++;
 
+                    } elseif(is_string($cell) && $cell != '') {
+                        
+                        $matrix[$i]['count']++;
+                        //Общее количество ответов
+                        $allCount++;
                     }
                 }
 
             } elseif($element['type'] == 'radio') {
+                
+                if(!isset($matrix[$result])) {
+                    $result = count($matrix) - 1;
+                }
 
                 $matrix[$result]['count']++;
                 $matrix[$result]['percent'] = round(($matrix[$result]['count'] / $element['stat']['count']) * 100, 2);

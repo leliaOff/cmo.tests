@@ -52676,6 +52676,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -53027,8 +53030,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -53057,18 +53058,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getResult: function getResult() {
+            var _this = this;
+
             //checkbox
 
-            var self = this;
-            self.$store.state.loader = true;
+            this.$store.state.loader = true;
+
+            //Если есть Другой ответ
+            if (parseInt(this.item.data.arbitrary) === 1 && this.item.data.rows[this.item.data.rows.length - 1].value != 'Другое') {
+                this.item.data.rows.push({ value: 'Другое' });
+            }
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: self.item, incisions: self.incisions
+                item: this.item, incisions: this.incisions
             }).then(function (response) {
-                self.$store.state.loader = false;
-                self.stat = response.data;
+                _this.$store.state.loader = false;
+                _this.stat = response.data;
             }).catch(function (error) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 console.log(error);
             });
 
@@ -53091,10 +53098,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Загрузить результаты")])]), _vm._v(" "), (_vm.stat.length != 0) ? _c('div', {
     staticClass: "table-container"
-  }, [_c('table', _vm._l((_vm.setting.rows), function(row, i) {
-    return (_vm.param.nr == false || _vm.stat[i].count != 0) ? _c('tr', [_c('td', {
-      staticClass: "row-item"
-    }, [_vm._v(_vm._s(row.value))]), _vm._v(" "), _c('td', [(_vm.stat[i].count != 0) ? _c('div', {
+  }, _vm._l((_vm.setting.rows), function(row, i) {
+    return (_vm.param.nr == false || _vm.stat[i].count != 0) ? _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4 clearfix"
+    }, [_c('b', [_vm._v(_vm._s(row.value))])]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-8 clearfix"
+    }, [(_vm.stat[i].count != 0) ? _c('div', {
       staticClass: "stat-item"
     }, [_c('div', {
       staticClass: "row"
@@ -53104,14 +53115,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row"
     }, [_vm._m(1, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
-    }, [_c('label', [_vm._v(_vm._s(_vm.stat[i].count == 0 ? '' : _vm.stat[i].percent + '%'))])])]), _vm._v(" "), _c('div', {
+    }, [_c('label', [_vm._v(_vm._s(_vm.stat[i].count == 0 ? '' : _vm.stat[i].percent + '%'))])])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-12 clearfix"
+    }, [_c('div', {
       staticClass: "percent-graf"
     }, [_c('div', {
       style: ({
         width: _vm.stat[i].percent + '%'
       })
-    })])]) : _vm._e()])]) : _vm._e()
-  }))]) : _vm._e()])
+    })])])]) : _vm._e()
+  })) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-8 clearfix"
@@ -53201,8 +53214,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -53231,18 +53242,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getResult: function getResult() {
+            var _this = this;
+
             //radio
 
-            var self = this;
-            self.$store.state.loader = true;
+            this.$store.state.loader = true;
+
+            //Если есть Другой ответ
+            if (parseInt(this.item.data.arbitrary) === 1 && this.item.data.rows[this.item.data.rows.length - 1].value != 'Другое') {
+                this.item.data.rows.push({ value: 'Другое' });
+            }
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: self.item, incisions: self.incisions
+                item: this.item, incisions: this.incisions
             }).then(function (response) {
-                self.$store.state.loader = false;
-                self.stat = response.data;
+                _this.$store.state.loader = false;
+                _this.stat = response.data;
             }).catch(function (error) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 console.log(error);
             });
 
@@ -53265,10 +53282,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Загрузить результаты")])]), _vm._v(" "), (_vm.stat.length != 0) ? _c('div', {
     staticClass: "table-container"
-  }, [_c('table', _vm._l((_vm.setting.rows), function(row, i) {
-    return (_vm.param.nr == false || _vm.stat[i].count != 0) ? _c('tr', [_c('td', {
-      staticClass: "row-item"
-    }, [_vm._v(_vm._s(row.value))]), _vm._v(" "), _c('td', [(_vm.stat[i].count != 0) ? _c('div', {
+  }, _vm._l((_vm.setting.rows), function(row, i) {
+    return (_vm.param.nr == false || _vm.stat[i].count != 0) ? _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4 clearfix"
+    }, [_c('b', [_vm._v(_vm._s(row.value))])]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-8 clearfix"
+    }, [(_vm.stat[i].count != 0) ? _c('div', {
       staticClass: "stat-item"
     }, [_c('div', {
       staticClass: "row"
@@ -53278,14 +53299,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row"
     }, [_vm._m(1, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
-    }, [_c('label', [_vm._v(_vm._s(_vm.stat[i].count == 0 ? '' : _vm.stat[i].percent + '%'))])])]), _vm._v(" "), _c('div', {
+    }, [_c('label', [_vm._v(_vm._s(_vm.stat[i].count == 0 ? '' : _vm.stat[i].percent + '%'))])])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-12 clearfix"
+    }, [_c('div', {
       staticClass: "percent-graf"
     }, [_c('div', {
       style: ({
         width: _vm.stat[i].percent + '%'
       })
-    })])]) : _vm._e()])]) : _vm._e()
-  }))]) : _vm._e()])
+    })])])]) : _vm._e()
+  })) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-sm-8 clearfix"
@@ -53503,7 +53526,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container results"
+    staticClass: "results"
   }, [_c('div', {
     staticClass: "row without-back"
   }, [_c('div', {
@@ -53577,16 +53600,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row"
     }, [_vm._m(4, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
-    }, [_c('label', [_vm._v(_vm._s(item.stat.count))])])]), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_vm._m(5, true), _vm._v(" "), _c('div', {
-      staticClass: "col-sm-4 clearfix"
-    }, [_c('label', [_vm._v(_vm._s(item.stat.count == 0 ? '' : item.stat.percent + '%'))])])]), _vm._v(" "), _c('div', [(item.type == 'table') ? _c('element-setting-table', {
-      attrs: {
-        "setting": item.data,
-        "item": item
-      }
-    }) : _vm._e(), _vm._v(" "), (item.type == 'checkbox') ? _c('element-setting-checkbox', {
+    }, [_c('label', [_vm._v(_vm._s(item.stat.count))])])]), _vm._v(" "), _c('div', [(item.type == 'checkbox') ? _c('element-setting-checkbox', {
       attrs: {
         "setting": item.data,
         "item": item,
@@ -53597,6 +53611,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "setting": item.data,
         "item": item,
         "param": _vm.setting
+      }
+    }) : _vm._e(), _vm._v(" "), (item.type == 'table') ? _c('element-setting-table', {
+      attrs: {
+        "setting": item.data,
+        "item": item
       }
     }) : _vm._e(), _vm._v(" "), (item.type == 'directory') ? _c('element-setting-directory', {
       attrs: {
@@ -53633,10 +53652,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "col-sm-8 clearfix"
   }, [_c('label', [_vm._v("Число респондентов, давших ответ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("Процент респондентов, давших ответ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

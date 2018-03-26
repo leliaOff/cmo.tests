@@ -1,5 +1,5 @@
 <template>
-    <div class="container results">
+    <div class="results">
         <div class="row without-back">
             <div class="col-sm-12 clearfix">
                 <a class="btn btn-text" :href="'/getExcel/' + testId" v-if="testId == 1">Выгрузить в матрицу</a>
@@ -30,25 +30,28 @@
                 <div class="col-sm-8 clearfix"><label>Число респондентов, давших ответ</label></div>
                 <div class="col-sm-4 clearfix"><label>{{ item.stat.count }}</label></div>
             </div>
-            <div class="row">
-                <div class="col-sm-8 clearfix"><label>Процент респондентов, давших ответ</label></div>
-                <div class="col-sm-4 clearfix"><label>{{ item.stat.count == 0 ? '' : item.stat.percent + '%' }}</label></div>
-            </div>
             <div>
-                <!-- отображение результатов, в зависимости от типа элемента -->
-                <element-setting-table v-if="item.type == 'table'" :setting="item.data" 
-                    :item="item"></element-setting-table>
+            
+                <!-- Много из многих -->
                 <element-setting-checkbox v-if="item.type == 'checkbox'" 
                     :setting="item.data" :item="item" :param="setting">
                 </element-setting-checkbox>
+
+                <!-- Один из многих -->
                 <element-setting-radio v-if="item.type == 'radio'" 
                     :setting="item.data" :item="item" :param="setting">
                 </element-setting-radio>
+
+                <!-- Таблица -->
+                <element-setting-table v-if="item.type == 'table'" :setting="item.data" 
+                    :item="item"></element-setting-table>
+                
+                <!-- Элемент справочника -->
                 <element-setting-directory v-if="item.type == 'directory'" 
                     :elementId="item.id" :item="item" :param="setting" 
                     v-on:setIncisions="addIncisions">
                 </element-setting-directory>
-                <!-- конец отображение результатов, в зависимости от типа элемента -->
+                
             </div>
         </div>
     </div>
