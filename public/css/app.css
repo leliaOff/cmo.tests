@@ -7841,6 +7841,8 @@ p.justify {
   border: 1px solid #333333;
   text-align: center;
   line-height: 2;
+  position: relative;
+  z-index: 2;
   border-radius: 5px;
 }
 
@@ -7854,6 +7856,8 @@ p.justify {
   width: 100%;
   padding: 0 0 0 48px;
   margin: 0 0 0 -32px;
+  position: relative;
+  z-index: 1;
 }
 
 .easy-checkbox input {
@@ -7921,6 +7925,8 @@ p.justify {
   text-align: center;
   padding: 5px 0;
   border-radius: 50%;
+  position: relative;
+  z-index: 2;
 }
 
 .easy-radio .easy-radio-label {
@@ -7929,6 +7935,8 @@ p.justify {
   width: 100%;
   padding: 0 0 0 48px;
   margin: 0 0 0 -32px;
+  position: relative;
+  z-index: 1;
 }
 
 .easy-radio input {

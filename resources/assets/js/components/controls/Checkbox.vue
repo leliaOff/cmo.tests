@@ -1,6 +1,6 @@
 <template>
-    <div class="easy-checkbox" v-bind:class="{ checked: isChecked, disabled: disabled }" @click="click">
-        <div class="easy-checkbox-icon" v-bind:class="{ radio: count == 1 }">
+    <div class="easy-checkbox" v-bind:class="{ checked: isChecked, disabled: disabled }">
+        <div class="easy-checkbox-icon" @click="click" v-bind:class="{ radio: count == 1 }">
             <span class="glyphicon glyphicon-ok"></span>
             <input type="checkbox" v-model="isChecked" :disabled="disabled" />
         </div><div class="easy-checkbox-label" v-if="label != undefined">

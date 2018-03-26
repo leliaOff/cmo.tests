@@ -1,9 +1,9 @@
 <template>
     <div class="easy-radio-group">
         
-        <div class="easy-radio" v-for="(row, i) in data" @click="click(i)" v-bind:class="{ checked: (i == valueLocal) }">
+        <div class="easy-radio" v-for="(row, i) in data" v-bind:class="{ checked: (i == valueLocal) }">
             
-            <div class="easy-radio-icon">
+            <div class="easy-radio-icon" @click="click(i)">
                 <span class="easy-radio-icon-point"></span>
                 <input type="radio" :name="name" :value="i" v-model="valueLocal" />
             </div><!--
