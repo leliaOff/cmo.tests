@@ -68,6 +68,12 @@ p {
     }
 }
 
+.input-validation {
+    display: block;
+    color: $error;
+    padding: 10px;
+}
+
 .alert-browser {
     width: 90%;
     max-width: 600px;

@@ -46702,6 +46702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* Произвольное целочисленное */
@@ -46711,14 +46712,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            result: this.oldResult != undefined ? this.oldResult : ''
+            result: this.oldResult != undefined ? this.oldResult : '',
+            isValid: true
         };
     },
 
 
     watch: {
         result: function result(value) {
-            this.$emit('update', this.result);
+            this.isValid = this.validation(value);
+            if (this.isValid) {
+                this.$emit('update', this.result);
+            } else {
+                this.$emit('update', '');
+            }
+        }
+    },
+
+    methods: {
+        validation: function validation(value) {
+
+            if (value >= this.setting.min && value <= this.setting.max) {
+                return true;
+            }
+            return false;
         }
     }
 });
@@ -46756,7 +46773,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$forceUpdate()
       }
     }
-  })])
+  }), _vm._v(" "), (!_vm.isValid) ? _c('span', {
+    staticClass: "input-validation"
+  }, [_vm._v("Введите целое число от " + _vm._s(this.setting.min) + " до " + _vm._s(this.setting.max) + " включительно")]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46818,6 +46837,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* Произвольное целочисленное */
@@ -46827,16 +46847,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            result: this.oldResult != undefined ? this.oldResult : ''
+            result: this.oldResult != undefined ? this.oldResult : '',
+            isValid: true
         };
     },
 
 
     watch: {
         result: function result(value) {
-            this.$emit('update', this.result);
+            this.isValid = this.validation(value);
+            if (this.isValid) {
+                this.$emit('update', this.result);
+            } else {
+                this.$emit('update', '');
+            }
+        }
+    },
+
+    methods: {
+        validation: function validation(value) {
+
+            if (value >= this.setting.min && value <= this.setting.max) {
+                return true;
+            }
+            return false;
         }
     }
+
 });
 
 /***/ }),
@@ -46873,7 +46910,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$forceUpdate()
       }
     }
-  })])
+  }), _vm._v(" "), (!_vm.isValid) ? _c('span', {
+    staticClass: "input-validation"
+  }, [_vm._v("Введите дробное число от " + _vm._s(this.setting.min) + " до " + _vm._s(this.setting.max) + " включительно")]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -56643,7 +56682,7 @@ if(false) {
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(232)(undefined);
+exports = module.exports = __webpack_require__(231)(undefined);
 // imports
 
 
@@ -59660,8 +59699,7 @@ var index_esm = {
 /* 228 */,
 /* 229 */,
 /* 230 */,
-/* 231 */,
-/* 232 */
+/* 231 */
 /***/ (function(module, exports) {
 
 /*

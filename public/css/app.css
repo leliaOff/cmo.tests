@@ -7810,6 +7810,12 @@ p.justify {
   opacity: 0;
 }
 
+.input-validation {
+  display: block;
+  color: #ff7c3a;
+  padding: 10px;
+}
+
 .alert-browser {
   width: 90%;
   max-width: 600px;
