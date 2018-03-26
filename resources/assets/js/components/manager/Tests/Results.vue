@@ -26,7 +26,7 @@
             <div class="col-sm-4 clearfix"><label>{{ general.countElements }}</label></div>
         </div>
         
-        <h2>Статистика по ссылкам</h2>
+        <h2 v-if="linksResults.length > 0">Статистика по ссылкам</h2>
         <div class="row" v-for="result in linksResults" :key="result.id" v-if="result.count > 0">
             <div class="col-sm-8 clearfix"><label>{{ result.title }}</label></div>
             <div class="col-sm-4 clearfix"><label>{{ result.count }}</label></div>

@@ -48536,17 +48536,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     } else if (self.item.type == 'input-number') {
                         setting = {
                             min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                            max: response.data.setting.max != undefined ? response.data.setting.min : ''
+                            max: response.data.setting.max != undefined ? response.data.setting.max : ''
                         };
                     } else if (self.item.type == 'input-double') {
                         setting = {
                             min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                            max: response.data.setting.max != undefined ? response.data.setting.min : ''
+                            max: response.data.setting.max != undefined ? response.data.setting.max : ''
                         };
                     } else if (self.item.type == 'input-date') {
                         setting = {
                             min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                            max: response.data.setting.max != undefined ? response.data.setting.min : ''
+                            max: response.data.setting.max != undefined ? response.data.setting.max : ''
                         };
                     } else if (self.item.type == 'input-web') {
                         setting = {};
@@ -53604,7 +53604,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_vm._m(3), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), _c('h2', [_vm._v("Статистика по ссылкам")]), _vm._v(" "), _vm._l((_vm.linksResults), function(result) {
+  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), (_vm.linksResults.length > 0) ? _c('h2', [_vm._v("Статистика по ссылкам")]) : _vm._e(), _vm._v(" "), _vm._l((_vm.linksResults), function(result) {
     return (result.count > 0) ? _c('div', {
       key: result.id,
       staticClass: "row"

@@ -258,17 +258,17 @@
                         } else if(self.item.type == 'input-number') {
                             setting = {
                                 min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.max : '',
                             };
                         } else if(self.item.type == 'input-double') {
                             setting = {
                                 min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.max : '',
                             };
                         } else if(self.item.type == 'input-date') {
                             setting = {
                                 min: response.data.setting.min != undefined ? response.data.setting.min : '',
-                                max: response.data.setting.max != undefined ? response.data.setting.min : '',
+                                max: response.data.setting.max != undefined ? response.data.setting.max : '',
                             };
                         } else if(self.item.type == 'input-web') {
                             setting = { };
