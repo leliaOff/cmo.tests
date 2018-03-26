@@ -304,6 +304,7 @@
                     });
 
                     if(isTrue === true) {
+                        this.current = -1;
                         location.reload();
                     } else {
                         this.finishResult = 'Не удалось сохранить один или несколько ответов';

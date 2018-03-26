@@ -45890,6 +45890,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
 
                 if (isTrue === true) {
+                    _this3.current = -1;
                     location.reload();
                 } else {
                     _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
@@ -52678,6 +52679,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52706,6 +52716,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 countElements: 0,
                 tm: ''
             },
+            linksResults: [],
             //Разрезы
             incisions: [],
             //Настройки
@@ -52756,16 +52767,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 localStorage['resultSetting_' + key] = value;
             });
         },
+        getLinksStat: function getLinksStat() {
+            var _this = this;
 
+            this.$store.state.loader = true;
 
-        /* Выгрузить */
-        exportExcel: function exportExcel() {
-            window.location;
+            axios.get(window.baseurl + 'getLinksResult/' + this.testId).then(function (response) {
+
+                _this.$store.state.loader = false;
+                _this.linksResults = response.data;
+            }).catch(function (error) {
+                _this.$store.state.loader = false;
+                console.log(error);
+            });
         }
     },
 
     mounted: function mounted() {
         this.list();
+        this.getLinksStat();
     }
 });
 
@@ -53584,7 +53604,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_vm._m(3), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), _c('h2', [_vm._v("Подробная статистика")]), _vm._v(" "), _vm._l((_vm.items), function(item, i) {
+  }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), _c('h2', [_vm._v("Статистика по ссылкам")]), _vm._v(" "), _vm._l((_vm.linksResults), function(result) {
+    return (result.count > 0) ? _c('div', {
+      key: result.id,
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-8 clearfix"
+    }, [_c('label', [_vm._v(_vm._s(result.title))])]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4 clearfix"
+    }, [_c('label', [_vm._v(_vm._s(result.count))])])]) : _vm._e()
+  }), _vm._v(" "), _c('h2', [_vm._v("Подробная статистика")]), _vm._v(" "), _vm._l((_vm.items), function(item, i) {
     return (item.type != 'title') ? _c('div', {
       key: item.id,
       staticClass: "element-item"

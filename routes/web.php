@@ -43,7 +43,7 @@ Route::post('/resultsList',                             'Manager\ResultsControll
 Route::post('/resultsByAnswer',                         'Manager\ResultsController@getResultStat');
 Route::get('/getExcel/{id}',                            'Manager\ExcelController@get');
 Route::get('/cleanResults',                             'Manager\ResultsController@cleanResults');
-Route::get('/archiveResults',                           'Manager\ResultsController@archiveResults');
+Route::get('/getLinksResult/{id}',                      'Manager\ResultsController@getLinksResult');
 
 /* Directories */ 
 Route::post('/directoriesList',                         'Manager\DirectoriesController@select');

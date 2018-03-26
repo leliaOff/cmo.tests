@@ -5,11 +5,13 @@
                 <a class="btn btn-text" :href="'/getExcel/' + testId" v-if="testId == 1">Выгрузить в матрицу</a>
             </div>
         </div>
+        
         <h2>Настройки отображения статистики</h2>
         <div class="row">
             <div class="col-sm-8 clearfix"><label for="setting-nr">Скрыть нулевые результаты?</label></div>
             <div class="col-sm-4 clearfix"><input type="checkbox" id="setting-nr" v-model="setting.nr" @change="settingChange"/></div>
         </div>
+
         <h2>Общая статистика</h2>
         <div class="row">
             <div class="col-sm-8 clearfix"><label>Последнее обновление: </label></div>
@@ -23,6 +25,13 @@
             <div class="col-sm-8 clearfix"><label>Число вопросов</label></div>
             <div class="col-sm-4 clearfix"><label>{{ general.countElements }}</label></div>
         </div>
+        
+        <h2>Статистика по ссылкам</h2>
+        <div class="row" v-for="result in linksResults" :key="result.id" v-if="result.count > 0">
+            <div class="col-sm-8 clearfix"><label>{{ result.title }}</label></div>
+            <div class="col-sm-4 clearfix"><label>{{ result.count }}</label></div>
+        </div>
+        
         <h2>Подробная статистика</h2>
         <div class="element-item" v-for="(item, i) in items" :key="item.id" v-if="item.type != 'title'">
             <h3>{{ (i + 1) }}. {{ item.title }} <button class="btn btn-text" @click="removeIncisions(item.id)" v-if="incisions[item.id] != undefined">Общие сведения</button></h3>
@@ -85,6 +94,7 @@
                     countElements: 0,
                     tm: ''
                 },
+                linksResults: [],
                 //Разрезы
                 incisions: [],
                 //Настройки
@@ -138,15 +148,27 @@
                 });
             },
 
-            /* Выгрузить */
-            exportExcel() {
-                window.location
-            }
+            getLinksStat() {
+
+                this.$store.state.loader = true;
+
+                axios.get(window.baseurl + 'getLinksResult/' + this.testId).then(response => {
+                    
+                    this.$store.state.loader = false; 
+                    this.linksResults = response.data;
+                    
+                }).catch(error => {
+                    this.$store.state.loader = false;
+                    console.log(error);
+                });
+
+            },
             
         },
 
         mounted() {
             this.list();
+            this.getLinksStat();
         },
     }
 </script>

@@ -9,21 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Repositories\TestsLinksRepository;
 
 use Illuminate\Support\Facades\Cache;
 
 class ResultsController extends Controller
 {
        
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        
-    }
+    private $testsLinksRepository;
+
+	public function __construct(TestsLinksRepository $testsLinksRepository)
+	{ 
+        $this->testsLinksRepository   = $testsLinksRepository;
+	}
 
     /**
      * Show the application dashboard.
@@ -374,29 +372,60 @@ class ResultsController extends Controller
             ])->delete();
         }
     }
-	
-	function archiveResults() {
-		
-		// $uk = 1504612417;
-		
-		// $results = DB::table('results')
-            // ->where('user_key', '<', $uk)
-            // ->get();
-			
-		// foreach($results as $value) {
-            // DB::table('old_results')->insert([
-				// 'id' => $value->id,
-				// 'element_id' => $value->element_id,
-				// 'result' => $value->result,
-				// 'user_key' => $value->user_key
-			// ]);
-        // }
+
+    /**
+     * Статистика по ссылкам
+     */
+    public function getLinksResult($id)
+    {
         
-        // //Удаляем предыдущие ответы этого пользователя
-        // DB::table('results')->where([
-            // 'user_key', '<', $uk
-        // ])->delete();
+        if(!Auth::check()) return ['status' => 'relogin'];
         
-	}
+        /* Полчаем все ссылки на тест */
+        $linksDirectories = $this->testsLinksRepository->all($id)->get()->keyBy('directory.alias');
+        if(count($linksDirectories) == 0) {
+            return [];
+        }
+
+        $data = [];
+        foreach($linksDirectories as $alias => $directory) {
+
+            $items = DB::table($alias)->get();
+            
+            foreach($items as $item) {
+                $data[] =  [
+                    'title'         => $item->name,
+                    'id'            => $item->id,
+                    'alias'         => $alias,
+                    'data'          => $item,
+                ];
+            }
+
+        }
+
+        /* Список ИД элементов теста */
+        $elementsIds = Cache::remember('manager_elements_ids_' . $id, 60, function() use($id) {
+            $elements = DB::table('elements')->where('test_id', $id)->orderBy('sort')->get();
+            $result = [];
+            foreach($elements as $element) {
+                $result[] = $element->id;
+            }
+            return $result;
+        });
+
+        /* Собираем статистику по каждой */
+        foreach($data as &$value) {
+            $query = DB::table('results')
+                ->select('user_key')
+                ->distinct()
+                ->whereIn('element_id', $elementsIds)
+                ->where('alias', $value['alias'])
+                ->where('item_id', $value['id'])
+                ->get();
+            $value['count'] = count($query);
+        }
+
+        return $data;
+    }
 
 }

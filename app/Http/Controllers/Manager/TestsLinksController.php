@@ -60,6 +60,9 @@ class TestsLinksController extends Controller
      */
     public function links($testId)
     {
+        
+        if(!Auth::check()) return ['status' => 'relogin'];
+        
         $linksDirectories = $this->index($testId);
         $data = [];
 
@@ -91,6 +94,9 @@ class TestsLinksController extends Controller
      */
     public function linkValidation(Request $request)
     {
+        
+        if(!Auth::check()) return ['status' => 'relogin'];
+        
         $test   = $request['id'];
         $alias  = $request['alias'];
         $item   = $request['item'];
