@@ -45893,6 +45893,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.user = 0;
                     _this3.current = -1;
                     _this3.isFinish = true;
+                    _this3.$store.state.results = [];
                 } else {
                     _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
                 }
@@ -46253,10 +46254,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     props: ['setting', 'index'],
 
-    mounted: function mounted() {
-        console.log(this.setting);
-        console.log(this.oldResult);
-    },
     data: function data() {
 
         //Хранилище результатов
@@ -46407,7 +46404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['setting', 'oldResult', 'id'],
+    props: ['setting', 'index', 'id'],
 
     data: function data() {
 
@@ -46419,7 +46416,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         result: function result() {
-            return this.oldResult;
+            var a = this.$store.state.results[this.index] == undefined ? -1 : this.$store.state.results[this.index].result;
+            return this.$store.state.results[this.index] == undefined ? -1 : this.$store.state.results[this.index].result;
         },
         arbitrary: function arbitrary() {
             if (this.setting.arbitrary == undefined) return false;
@@ -47369,7 +47367,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }) : _vm._e(), _vm._v(" "), (element.type == 'radio') ? _c('element-setting-radio', {
       attrs: {
         "setting": element.data,
-        "oldResult": element.result,
+        "index": i,
         "id": element.id
       },
       on: {
@@ -58348,10 +58346,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-    name: 'easyRadio',
 
     props: ['name', 'value', 'data', 'isArbitrary'],
 
@@ -58373,6 +58370,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         click: function click(i) {
             this.valueLocal = i;
             this.$emit('update', i);
+
+            //Сбрасываем текст
+            if (typeof i != 'string') {
+                this.arbitraryText = '';
+            }
         },
         arbitraryUpdate: function arbitraryUpdate() {
             this.valueLocal = '_' + this.arbitraryText;

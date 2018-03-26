@@ -22,11 +22,6 @@
 
         props: ['setting', 'index'],
 
-        mounted() {
-            console.log(this.setting);
-            console.log(this.oldResult);
-        },
-
         data() {
             
             //Хранилище результатов

@@ -7,7 +7,7 @@
 <script>
     export default {
 
-        props: ['setting', 'oldResult', 'id'],
+        props: ['setting', 'index', 'id'],
 
         data() {     
 
@@ -18,7 +18,8 @@
 
         computed: {
             result() {
-                return this.oldResult;
+                let a = this.$store.state.results[this.index] == undefined ? -1 : this.$store.state.results[this.index].result;
+                return this.$store.state.results[this.index] == undefined ? -1 : this.$store.state.results[this.index].result;
             },
             arbitrary() {
                 if(this.setting.arbitrary == undefined) return false;

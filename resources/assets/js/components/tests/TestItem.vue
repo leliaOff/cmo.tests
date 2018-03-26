@@ -41,7 +41,7 @@
 
                         <!-- один из многих -->
                         <element-setting-radio          v-if="element.type == 'radio'"
-                            :setting="element.data" :oldResult="element.result" :id="element.id" v-on:update="setResult">
+                            :setting="element.data" :index="i" :id="element.id" v-on:update="setResult">
                         </element-setting-radio>
 
                         <!-- Элемент справочника -->
@@ -304,9 +304,10 @@
                     });
 
                     if(isTrue === true) {
-                        this.user = 0;
-                        this.current = -1;
-                        this.isFinish = true;
+                        this.user                   = 0;
+                        this.current                = -1;
+                        this.isFinish               = true;
+                        this.$store.state.results   = [];
                     } else {
                         this.finishResult = 'Не удалось сохранить один или несколько ответов';
                     }

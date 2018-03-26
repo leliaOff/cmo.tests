@@ -1,5 +1,6 @@
 <template>
     <div class="easy-radio-group">
+        
         <div class="easy-radio" v-for="(row, i) in data" @click="click(i)" v-bind:class="{ checked: (i == valueLocal) }">
             
             <div class="easy-radio-icon">
@@ -28,8 +29,6 @@
 
 <script>
     export default {
-        
-        name:   'easyRadio',
 
         props: ['name', 'value', 'data', 'isArbitrary'],
 
@@ -50,6 +49,12 @@
             click(i) {
                 this.valueLocal = i;
                 this.$emit('update', i);
+
+                //Сбрасываем текст
+                if(typeof(i) != 'string') {
+                    this.arbitraryText = '';
+                }
+
             },
             arbitraryUpdate() {
                 this.valueLocal = '_' + this.arbitraryText;
