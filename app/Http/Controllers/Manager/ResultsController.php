@@ -147,15 +147,25 @@ class ResultsController extends Controller
     {      
         
         //Количество респондентов  
-		$countPeople = Cache::remember('manager_getGeneralResults_countPeople', 10, function() use($incisions) {
-            $query = DB::table('results')->select('user_key');
-            if($incisions) {
-                foreach($incisions as $incision) { //разрез
-                    $query->orWhere($incision);
+		$countPeople = Cache::remember('manager_getGeneralResults_countPeople_' . $test_id, 10, function() use($test_id, $incisions) {
+            
+            $elementsIds = Cache::remember('manager_elements_ids_' . $test_id, 60, function() use($test_id) {
+                $elements = DB::table('elements')->where('test_id', $test_id)->get();
+                $result = [];
+                foreach($elements as $element) {
+                    $result[] = $element->id;
                 }
-            }
-            $result = $query->groupBy('user_key')->get();
-            return count($result);
+                return $result;
+            });
+            
+            $query = DB::table('results')
+                ->select('user_key')
+                ->distinct()
+                ->whereIn('element_id', $elementsIds)
+                ->get();
+                
+            return count($query);
+            
         });
 
         //Всего элементов в тесте        
@@ -172,6 +182,7 @@ class ResultsController extends Controller
         return [
             'countPeople'   => $countPeople,
             'countElements' => $countElements,
+            //'elementsId'    => $countElements,
             'tm'            => $tm
         ];
     }
