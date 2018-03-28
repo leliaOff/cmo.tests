@@ -11,19 +11,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(value, i) in stat" 
-                        v-if="
-                            (incisions[elementId] == undefined || incisions[elementId] == value.id) && 
-                            (param.nr == false || value.count != 0)">
-
+                    <tr v-for="(value, i) in stat" v-if="param.nr == false || value.count != 0">
                         <td width="40%">{{ value.name }}</td>
                         <td width="10%">{{ value.count }}</td>
-                        <td width="40%">
+                        <td width="50%">
                             {{ value.count == 0 ? '' : value.percent + '%' }}
                             <div class="percent-graf" v-if="value.count != 0"><div :style="{ width: value.percent + '%' }"></div></div>
-                        </td>
-                        <td width="10%">
-                            <button class="btn btn-text" @click="setIncisions(value)" v-if="incisions[elementId] == undefined">В разрезе</button>
                         </td>
 
                     </tr>
@@ -46,8 +39,7 @@
 
         computed: {
             incisions() {
-                let incisions = Object.assign({}, this.$store.state.incisions);
-                return incisions;
+                return Object.assign({}, this.$store.state.incisions);
             }
         },
 
@@ -58,21 +50,17 @@
         },
 
         methods: {
-            setIncisions(value) {
-                this.$emit('setIncisions', this.elementId, value.id);
-            },
             getResult() { //directory
 
-                let self = this;
-                self.$store.state.loader = true;
+                this.$store.state.loader = true;
 
                 axios.post(window.baseurl + 'resultsByAnswer', {
-                    item: self.item, incisions: self.incisions
-                }).then(function (response) {
-                    self.$store.state.loader = false;
-                    self.stat = response.data;
-                }).catch(function (error) {
-                    self.$store.state.loader = false;
+                    item: this.item, incisions: this.$store.state.incisions
+                }).then(response => {
+                    this.$store.state.loader = false;
+                    this.stat = response.data;
+                }).catch(error => {
+                    this.$store.state.loader = false;
                     console.log(error);
                 });
 

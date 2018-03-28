@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
         },
 
         /* В каком разрезе данные */
-        incisions: [],
+        incisions: {},
 
         /* Результаты теста */
         results: []

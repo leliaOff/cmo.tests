@@ -44,8 +44,7 @@
 
         computed: {
             incisions() {
-                let incisions = Object.assign({}, this.$store.state.incisions);
-                return incisions;
+                return Object.assign({}, this.$store.state.incisions);
             }
         },
 
@@ -58,16 +57,15 @@
         methods: {
             getResult() { //table
 
-                let self = this;
-                self.$store.state.loader = true;
+                this.$store.state.loader = true;
 
                 axios.post(window.baseurl + 'resultsByAnswer', {
-                    item: self.item, incisions: self.incisions
-                }).then(function (response) {
-                    self.$store.state.loader = false;
-                    self.stat = response.data;
-                }).catch(function (error) {
-                    self.$store.state.loader = false;
+                    item: this.item, incisions: this.$store.state.incisions
+                }).then(response => {
+                    this.$store.state.loader = false;
+                    this.stat = response.data;
+                }).catch(error => {
+                    this.$store.state.loader = false;
                     console.log(error);
                 });
 

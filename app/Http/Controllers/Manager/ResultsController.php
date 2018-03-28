@@ -24,16 +24,6 @@ class ResultsController extends Controller
 	}
 
     /**
-     * Show the application dashboard.
-     *
-     * @return void
-     */
-    public function index()
-    {
-        
-    }
-
-    /**
      * Получить список
      *
      */
@@ -43,7 +33,6 @@ class ResultsController extends Controller
 
         //Статистика в разрезе
         $incisions = isset($request['incisions']) ? $request['incisions'] : false;
-        if($incisions) $incisions = $this->getIncision($incisions);
 
         //Общая статистика
         $general = $this->getGeneralResults($request['id'], $incisions);
@@ -92,81 +81,37 @@ class ResultsController extends Controller
     }
 
     /**
-     * Получить список пользователей для разреза
-     *
-     */
-    public function getIncision($incisions)
-    {        
-        $users = Cache::remember('manager_getIncision_users', 60, function() {
-            $result = DB::table('results')->select('user_key')->groupBy('user_key')->get();
-            $users = [];
-            foreach($result as $value) {
-                $users[] = $value->user_key;
-            }
-            return $users;
-        });
-        
-        //Объединяем с другими результатми, если разрезов несколько
-        foreach($incisions as $i => $incision) {
-
-            if(empty($incision)) continue;
-            
-            $incisionUsers = Cache::remember('manager_incisionUsers_' . $i . '_' . $incision, 60, function() use($i, $incision) {
-                
-                $result = DB::table('results')->select('user_key')->where([
-                    'element_id' => $i,
-                    'result' => $incision
-                ])->groupBy('user_key')->get();
-
-                $incisionUsers = [];
-                foreach($result as $value) {
-                    $incisionUsers[] = $value->user_key;
-                }
-
-                return $incisionUsers;
-
-            });
-
-            $users = array_intersect($users, $incisionUsers);
-        }
-
-        //Собираем "where" массив
-        $where = [];
-        foreach($users as $user) {
-            $where[] = ['user_key' => $user];
-        }
-
-        return $where;
-    }
-
-    /**
      * Получить общую статистику: количество и процент
      * TODO: переделать запросы, что бы получать результат в рамках одного теста
      */
     public function getGeneralResults($test_id, $incisions)
-    {      
-        
-        //Количество респондентов  
-		$countPeople = Cache::remember('manager_getGeneralResults_countPeople_' . $test_id, 10, function() use($test_id, $incisions) {
-            
-            $elementsIds = Cache::remember('manager_elements_ids_' . $test_id, 60, function() use($test_id) {
-                $elements = DB::table('elements')->where('test_id', $test_id)->get();
-                $result = [];
-                foreach($elements as $element) {
-                    $result[] = $element->id;
-                }
-                return $result;
-            });
-            
-            $query = DB::table('results')
+    { 
+        /* Все элементы теста */
+        $elementsIds = Cache::remember('manager_elements_ids_' . $test_id, 60, function() use($test_id) {
+            $elements = DB::table('elements')->where('test_id', $test_id)->get();
+            $result = [];
+            foreach($elements as $element) {
+                $result[] = $element->id;
+            }
+            return $result;
+        });
+
+        /* Запрос количества */
+        $query = DB::table('results')
                 ->select('user_key')
                 ->distinct()
-                ->whereIn('element_id', $elementsIds)
-                ->get();
-                
-            return count($query);
-            
-        });
+                ->whereIn('element_id', $elementsIds);
+
+        /* Если есть разрезы */
+        if($incisions !== false) {
+            foreach($incisions as $alias => $itemId) {
+                $query->where('alias', $alias)->where('item_id', $itemId);
+            }
+        }
+
+        /* Получаем результат */
+        $query = $query->get();
+        $countPeople = count($query);
 
         //Всего элементов в тесте        
         $countElements = Cache::remember('manager_getGeneralResults_countElements_' . $test_id, 1440, function() use($test_id) {
@@ -182,7 +127,6 @@ class ResultsController extends Controller
         return [
             'countPeople'   => $countPeople,
             'countElements' => $countElements,
-            //'elementsId'    => $countElements,
             'tm'            => $tm
         ];
     }
@@ -195,12 +139,11 @@ class ResultsController extends Controller
     {
         //Количество ответов
         $query = DB::table('results')->where('element_id', $element->id);
-        if($incisions) {
-            $query->where(function ($query) use($incisions) {
-                foreach($incisions as $incision) { //разрез
-                    $query->orWhere($incision);
-                }
-            });
+        
+        if($incisions !== false) {
+            foreach($incisions as $alias => $itemId) {
+                $query->where('alias', $alias)->where('item_id', $itemId);
+            }
         }            
         
         $countResult = $query->count();
@@ -220,13 +163,15 @@ class ResultsController extends Controller
 
         $element    = $request['item'];
         $data       = $element['data'];
-        $incisions  = isset($request['incisions']) ? $request['incisions'] : false;
-        if($incisions) $incisions = $this->getIncision($incisions);
         
+        $incisions  = isset($request['incisions']) ? $request['incisions'] : false;
+        
+        
+        //Матрица вариантов ответов
+        $matrix = [];
+
         if($element['type'] == 'table') {
 
-            //Матрица вариантов ответов
-            $matrix = [];
             //Всего дано ответов на данный вопрос
             $allCount = [];
 
@@ -242,8 +187,6 @@ class ResultsController extends Controller
 
         } elseif($element['type'] == 'checkbox' || $element['type'] == 'radio') {
 
-            //Матрица вариантов ответов
-            $matrix = [];
             //Всего дано ответов на данный вопрос
             $allCount = 0;
 
@@ -252,9 +195,10 @@ class ResultsController extends Controller
             }
 
         } elseif($element['type'] == 'directory') {
+
+            //Всего дано ответов на данный вопрос
+            $allCount = 0;
             
-            //Матрица вариантов ответов
-            $matrix = [];
             //Получаем справочник
             $directories = DB::table($data['alias'])->select('id', 'name')->get();
             foreach($directories as $directory) {
@@ -269,12 +213,10 @@ class ResultsController extends Controller
 
         //Результаты
         $query = DB::table('results')->where('element_id', $element['id']);
-        if($incisions) {
-            $query->where(function ($query) use($incisions) {
-                foreach($incisions as $incision) { //разрез
-                    $query->orWhere($incision);
-                }
-            });
+        if($incisions !== false) {
+            foreach($incisions as $alias => $itemId) {
+                $query->where('alias', $alias)->where('item_id', $itemId);
+            }
         }
             
         $results = $query->get();
@@ -327,18 +269,20 @@ class ResultsController extends Controller
 
             } elseif($element['type'] == 'radio') {
                 
+                $allCount++;
+                
                 if(!isset($matrix[$result])) {
                     $result = count($matrix) - 1;
                 }
 
                 $matrix[$result]['count']++;
-                $matrix[$result]['percent'] = round(($matrix[$result]['count'] / $element['stat']['count']) * 100, 2);
                 
             } elseif($element['type'] == 'directory') {
                 
+                $allCount++;
+                
                 if(!isset($matrix[$result])) continue;
                 $matrix[$result]['count']++;
-                $matrix[$result]['percent'] = round(($matrix[$result]['count'] / $element['stat']['count']) * 100, 2);
                 
             }
 
@@ -357,6 +301,17 @@ class ResultsController extends Controller
             
             foreach($matrix as $i => $value) {
                 $matrix[$i]['percent'] = round(($value['count'] / $allCount) * 100, 2);
+            }
+
+        } elseif($element['type'] == 'radio') {
+            
+            foreach($matrix as $i => $value) {
+                $matrix[$i]['percent'] = round(($value['count'] / $allCount) * 100, 2);
+            }
+
+        } elseif($element['type'] == 'directory') {
+            
+            foreach($matrix as $i => $value) {
                 $matrix[$i]['percent'] = round(($value['count'] / $allCount) * 100, 2);
             }
 

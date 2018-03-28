@@ -52727,6 +52727,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -52756,8 +52757,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 tm: ''
             },
             linksResults: [],
-            //Разрезы
-            incisions: [],
             //Настройки
             setting: {
                 nr: localStorage['resultSetting_nr'] == 'true' ? true : false
@@ -52773,7 +52772,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.$store.state.loader = true;
 
             axios.post(window.baseurl + 'resultsList', {
-                id: self.testId, incisions: this.incisions
+                id: self.testId, incisions: this.$store.state.incisions
             }).then(function (response) {
                 self.$store.state.loader = false;
                 if (response.data.status == 'relogin') self.$router.push('/');
@@ -52788,14 +52787,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        addIncisions: function addIncisions(elementId, result) {
-            this.incisions[elementId] = result;
-            this.$store.state.incisions = Object.assign({}, this.incisions);
+        addIncisions: function addIncisions(alias, item_id) {
+            var incisions = this.$store.state.incisions;
+            incisions[alias] = item_id;
+            this.$store.state.incisions = Object.assign({}, incisions);
             this.list();
         },
         removeIncisions: function removeIncisions(elementId) {
-            delete this.incisions[elementId];
-            this.$store.state.incisions = Object.assign({}, this.incisions);
+            this.$store.state.incisions[alias] = {};
             this.list();
         },
 
@@ -52921,8 +52920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         incisions: function incisions() {
-            var incisions = Object.assign({}, this.$store.state.incisions);
-            return incisions;
+            return Object.assign({}, this.$store.state.incisions);
         }
     },
 
@@ -52934,18 +52932,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getResult: function getResult() {
+            var _this = this;
+
             //table
 
-            var self = this;
-            self.$store.state.loader = true;
+            this.$store.state.loader = true;
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: self.item, incisions: self.incisions
+                item: this.item, incisions: this.$store.state.incisions
             }).then(function (response) {
-                self.$store.state.loader = false;
-                self.stat = response.data;
+                _this.$store.state.loader = false;
+                _this.stat = response.data;
             }).catch(function (error) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 console.log(error);
             });
 
@@ -53103,8 +53102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         incisions: function incisions() {
-            var incisions = Object.assign({}, this.$store.state.incisions);
-            return incisions;
+            return Object.assign({}, this.$store.state.incisions);
         }
     },
 
@@ -53128,7 +53126,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: this.item, incisions: this.incisions
+                item: this.item, incisions: this.$store.state.incisions
             }).then(function (response) {
                 _this.$store.state.loader = false;
                 _this.stat = response.data;
@@ -53287,8 +53285,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         incisions: function incisions() {
-            var incisions = Object.assign({}, this.$store.state.incisions);
-            return incisions;
+            return Object.assign({}, this.$store.state.incisions);
         }
     },
 
@@ -53312,7 +53309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: this.item, incisions: this.incisions
+                item: this.item, incisions: this.$store.state.incisions
             }).then(function (response) {
                 _this.$store.state.loader = false;
                 _this.stat = response.data;
@@ -53458,13 +53455,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['elementId', 'item', 'param'],
@@ -53479,8 +53469,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         incisions: function incisions() {
-            var incisions = Object.assign({}, this.$store.state.incisions);
-            return incisions;
+            return Object.assign({}, this.$store.state.incisions);
         }
     },
 
@@ -53491,22 +53480,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        setIncisions: function setIncisions(value) {
-            this.$emit('setIncisions', this.elementId, value.id);
-        },
         getResult: function getResult() {
+            var _this = this;
+
             //directory
 
-            var self = this;
-            self.$store.state.loader = true;
+            this.$store.state.loader = true;
 
             axios.post(window.baseurl + 'resultsByAnswer', {
-                item: self.item, incisions: self.incisions
+                item: this.item, incisions: this.$store.state.incisions
             }).then(function (response) {
-                self.$store.state.loader = false;
-                self.stat = response.data;
+                _this.$store.state.loader = false;
+                _this.stat = response.data;
             }).catch(function (error) {
-                self.$store.state.loader = false;
+                _this.$store.state.loader = false;
                 console.log(error);
             });
 
@@ -53530,9 +53517,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Загрузить результаты")])]), _vm._v(" "), _c('div', {
     staticClass: "table-container"
   }, [(_vm.stat.length != 0) ? _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.stat), function(value, i) {
-    return (
-      (_vm.incisions[_vm.elementId] == undefined || _vm.incisions[_vm.elementId] == value.id) &&
-      (_vm.param.nr == false || value.count != 0)) ? _c('tr', [_c('td', {
+    return (_vm.param.nr == false || value.count != 0) ? _c('tr', [_c('td', {
       attrs: {
         "width": "40%"
       }
@@ -53542,7 +53527,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v(_vm._s(value.count))]), _vm._v(" "), _c('td', {
       attrs: {
-        "width": "40%"
+        "width": "50%"
       }
     }, [_vm._v("\n                        " + _vm._s(value.count == 0 ? '' : value.percent + '%') + "\n                        "), (value.count != 0) ? _c('div', {
       staticClass: "percent-graf"
@@ -53550,18 +53535,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       style: ({
         width: value.percent + '%'
       })
-    })]) : _vm._e()]), _vm._v(" "), _c('td', {
-      attrs: {
-        "width": "10%"
-      }
-    }, [(_vm.incisions[_vm.elementId] == undefined) ? _c('button', {
-      staticClass: "btn btn-text",
-      on: {
-        "click": function($event) {
-          _vm.setIncisions(value)
-        }
-      }
-    }, [_vm._v("В разрезе")]) : _vm._e()])]) : _vm._e()
+    })]) : _vm._e()])]) : _vm._e()
   }))]) : _vm._e()])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('td'), _c('td', [_c('span', {
@@ -53634,36 +53608,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('h2', [_vm._v("Общая статистика")]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.tm))])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', [_vm._v(_vm._s(_vm.general.countPeople))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2 clearfix"
+  }, [_c('button', {
+    staticClass: "btn btn-text",
+    attrs: {
+      "title": "Посмотреть общие результаты без разрезов"
+    },
+    on: {
+      "click": _vm.removeIncisions
+    }
+  }, [_vm._v("Подробно")])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4 clearfix"
-  }, [_c('label', [_vm._v(_vm._s(_vm.general.countPeople))])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-5 clearfix"
+  }, [_c('label', [_vm._v(_vm._s(_vm.general.tm))])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_vm._m(3), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4 clearfix"
+    staticClass: "col-sm-5 clearfix"
   }, [_c('label', [_vm._v(_vm._s(_vm.general.countElements))])])]), _vm._v(" "), (_vm.linksResults.length > 0) ? _c('h2', [_vm._v("Статистика по ссылкам")]) : _vm._e(), _vm._v(" "), _vm._l((_vm.linksResults), function(result) {
     return (result.count > 0) ? _c('div', {
       key: result.id,
       staticClass: "row"
     }, [_c('div', {
-      staticClass: "col-sm-8 clearfix"
+      staticClass: "col-sm-7 clearfix"
     }, [_c('label', [_vm._v(_vm._s(result.title))])]), _vm._v(" "), _c('div', {
-      staticClass: "col-sm-4 clearfix"
-    }, [_c('label', [_vm._v(_vm._s(result.count))])])]) : _vm._e()
+      staticClass: "col-sm-3 clearfix"
+    }, [_c('label', [_vm._v(_vm._s(result.count))])]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2 clearfix"
+    }, [_c('button', {
+      staticClass: "btn btn-text",
+      attrs: {
+        "title": "Посмотреть результаты в разрезе"
+      },
+      on: {
+        "click": function($event) {
+          _vm.addIncisions(result.alias, result.id)
+        }
+      }
+    }, [_vm._v("Подробно")])])]) : _vm._e()
   }), _vm._v(" "), _c('h2', [_vm._v("Подробная статистика")]), _vm._v(" "), _vm._l((_vm.items), function(item, i) {
     return (item.type != 'title') ? _c('div', {
       key: item.id,
       staticClass: "element-item"
-    }, [_c('h3', [_vm._v(_vm._s((i + 1)) + ". " + _vm._s(item.title) + " "), (_vm.incisions[item.id] != undefined) ? _c('button', {
-      staticClass: "btn btn-text",
-      on: {
-        "click": function($event) {
-          _vm.removeIncisions(item.id)
-        }
-      }
-    }, [_vm._v("Общие сведения")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    }, [_c('h4', [_vm._v(_vm._s((i + 1)) + ". " + _vm._s(item.title))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_vm._m(4, true), _vm._v(" "), _c('div', {
       staticClass: "col-sm-4 clearfix"
@@ -53689,9 +53678,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "elementId": item.id,
         "item": item,
         "param": _vm.setting
-      },
-      on: {
-        "setIncisions": _vm.addIncisions
       }
     }) : _vm._e()], 1)]) : _vm._e()
   })], 2)
@@ -53705,15 +53691,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Скрыть нулевые результаты?")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-8 clearfix"
-  }, [_c('label', [_vm._v("Последнее обновление: ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-8 clearfix"
+    staticClass: "col-sm-7 clearfix"
   }, [_c('label', [_vm._v("Общее число респондентов, прошедших тест")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-8 clearfix"
+    staticClass: "col-sm-7 clearfix"
+  }, [_c('label', [_vm._v("Последнее обновление: ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-7 clearfix"
   }, [_c('label', [_vm._v("Число вопросов")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
@@ -56682,7 +56668,7 @@ if(false) {
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(231)(undefined);
+exports = module.exports = __webpack_require__(194)(undefined);
 // imports
 
 
@@ -56693,7 +56679,88 @@ exports.push([module.i, "\ntable th .sort[data-v-7ae6b86e] {\n\tcursor: pointer;
 
 
 /***/ }),
-/* 194 */,
+/* 194 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
 /* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -58868,7 +58935,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
                 },
 
                 /* В каком разрезе данные */
-                incisions: [],
+                incisions: {},
 
                 /* Результаты теста */
                 results: []
@@ -59694,91 +59761,6 @@ var index_esm = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
 
 /***/ })
 /******/ ]);
