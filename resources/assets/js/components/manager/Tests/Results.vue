@@ -128,16 +128,30 @@
 
             },
 
+            initIncisions() {
+                let incisions = localStorage['incisions-' + this.testId];
+                if(typeof incisions == undefined) return;
+                incisions = JSON.parse(incisions);
+                this.$store.state.incisions = Object.assign({}, incisions);
+
+            },
+
             addIncisions(alias, item_id) {
                 let incisions = this.$store.state.incisions;
                 incisions[alias] = item_id;
                 this.$store.state.incisions = Object.assign({}, incisions);
                 this.list();
+
+                //save
+                localStorage['incisions-' + this.testId] = JSON.stringify(incisions);
             },
 
             removeIncisions(elementId) {
-                this.$store.state.incisions[alias] = {};
+                this.$store.state.incisions = {};
                 this.list();
+
+                //save
+                localStorage['incisions-' + this.testId] = JSON.stringify({});
             },
 
             /* Настройки */
@@ -166,6 +180,7 @@
         },
 
         mounted() {
+            this.initIncisions();
             this.list();
             this.getLinksStat();
         },
