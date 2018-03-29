@@ -130,7 +130,7 @@
 
             initIncisions() {
                 let incisions = localStorage['incisions-' + this.testId];
-                if(typeof incisions == undefined) return;
+                if(incisions == undefined) return;
                 incisions = JSON.parse(incisions);
                 this.$store.state.incisions = Object.assign({}, incisions);
 

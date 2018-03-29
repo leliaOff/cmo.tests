@@ -52659,8 +52659,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ResultsElementsSettings_Radio_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ResultsElementsSettings_Radio_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ResultsElementsSettings_Directory_vue__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ResultsElementsSettings_Directory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ResultsElementsSettings_Directory_vue__);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 //
 //
 //
@@ -52791,7 +52789,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         },
         initIncisions: function initIncisions() {
             var incisions = localStorage['incisions-' + this.testId];
-            if ((typeof incisions === 'undefined' ? 'undefined' : _typeof(incisions)) == undefined) return;
+            if (incisions == undefined) return;
             incisions = JSON.parse(incisions);
             this.$store.state.incisions = Object.assign({}, incisions);
         },
