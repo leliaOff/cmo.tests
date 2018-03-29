@@ -487,7 +487,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\ImagesGallery.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\ImagesGallery.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImagesGallery.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -527,7 +527,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\Conditions.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\Conditions.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Conditions.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13569,7 +13569,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\TestItem.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\TestItem.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] TestItem.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13609,7 +13609,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Table.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Table.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Table.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13649,7 +13649,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Checkbox.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Checkbox.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Checkbox.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13689,7 +13689,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Radio.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Radio.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Radio.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13729,7 +13729,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Directory.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\Directory.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Directory.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45096,7 +45096,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\Welcome.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\Welcome.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Welcome.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45168,7 +45168,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\About.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\About.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] About.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45223,9 +45223,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "form"
-  }, [_c('p', [_vm._v("Платформа для анкетирования и тестирования позволяет проводить оценку качества образования. Респондентами являются родители обучающихся.")]), _vm._v(" "), _c('p', {
+  }, [_c('p', [_vm._v("Система для анкетирования и тестирования позволяет проводить оценку качества образования. Респондентами являются родители обучающихся.")]), _vm._v(" "), _c('p', {
     staticClass: "center"
-  }, [_vm._v("Все права защещены © Единая платформа тестирования ЦМО")]), _vm._v(" "), _c('p', {
+  }, [_vm._v("Все права защещены © единая система анкетирования ЦМО")]), _vm._v(" "), _c('p', {
     staticClass: "center"
   }, [_vm._v("Астрахань 2017")])])
 }]}
@@ -45254,7 +45254,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\Login.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\welcome\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45457,7 +45457,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\Tests.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\Tests.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tests.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46561,7 +46561,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputText.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputText.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputText.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46667,7 +46667,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputNumber.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputNumber.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputNumber.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46802,7 +46802,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputDouble.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputDouble.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputDouble.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46939,7 +46939,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputDate.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputDate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputDate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47046,7 +47046,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputWeb.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputWeb.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputWeb.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47153,7 +47153,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputEmail.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputEmail.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputEmail.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47260,7 +47260,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputPhone.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\tests\\ElementsSettings\\InputPhone.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputPhone.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47541,7 +47541,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Manager.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Manager.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Manager.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47622,7 +47622,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Tests.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Tests.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Tests.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47791,7 +47791,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\TestElement.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\TestElement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] TestElement.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -48050,7 +48050,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Elements.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Elements.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Elements.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -48264,7 +48264,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementItem.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementItem.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ElementItem.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -48746,7 +48746,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Table.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Table.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Table.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -49187,7 +49187,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\ElementsSelector.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\ElementsSelector.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ElementsSelector.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -49333,7 +49333,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\AnswersSelector.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsControls\\AnswersSelector.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AnswersSelector.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -49915,7 +49915,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Checkbox.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Checkbox.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Checkbox.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50234,7 +50234,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Radio.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Radio.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Radio.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50512,7 +50512,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Directory.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\Directory.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Directory.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50731,7 +50731,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputText.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputText.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputText.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -50885,7 +50885,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputNumber.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputNumber.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputNumber.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51117,7 +51117,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputDouble.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputDouble.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputDouble.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51349,7 +51349,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputDate.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputDate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputDate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51561,7 +51561,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputWeb.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputWeb.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputWeb.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51715,7 +51715,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputEmail.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputEmail.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputEmail.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51869,7 +51869,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputPhone.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ElementsSettings\\InputPhone.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputPhone.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52622,7 +52622,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Results.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Results.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Results.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -52844,7 +52844,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Table.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Table.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Table.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53032,7 +53032,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Checkbox.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Checkbox.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Checkbox.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53215,7 +53215,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Radio.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Radio.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Radio.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53398,7 +53398,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Directory.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\ResultsElementsSettings\\Directory.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Directory.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -53731,7 +53731,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Links.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Tests\\Links.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Links.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54364,7 +54364,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Directories.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Directories.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Directories.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54523,7 +54523,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\DirectoryElement.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\DirectoryElement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] DirectoryElement.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -54875,7 +54875,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Municipalities.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Municipalities.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Municipalities.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -55034,7 +55034,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\MunicipalityElement.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\MunicipalityElement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] MunicipalityElement.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -55350,7 +55350,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Schools.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Schools.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Schools.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -55509,7 +55509,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\SchoolElement.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\SchoolElement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SchoolElement.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -56042,7 +56042,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Users.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\Users.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Users.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -56201,7 +56201,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\UserElement.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\manager\\UserElement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] UserElement.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -56615,7 +56615,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\node_modules\\vuejs-datatable\\src\\vue-datatable.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\node_modules\\vuejs-datatable\\src\\vue-datatable.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] vue-datatable.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -57604,7 +57604,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Loader.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Loader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loader.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -57696,7 +57696,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\WelcomeMenu.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\WelcomeMenu.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] WelcomeMenu.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -57815,7 +57815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "h2"
   }, [_vm._v("по Астраханской области")]), _vm._v(" "), _c('span', {
     staticClass: "h3"
-  }, [_vm._v("единая платформа анкетирования")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("единая система анкетирования")]), _vm._v(" "), _c('div', {
     staticClass: "actions"
   }, _vm._l((_vm.items), function(item, key) {
     return (((item.auth == '') ||
@@ -57859,7 +57859,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\ManagerMenu.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\ManagerMenu.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ManagerMenu.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -57979,7 +57979,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "h2"
   }, [_vm._v("по Астраханской области")]), _vm._v(" "), _c('span', {
     staticClass: "h3"
-  }, [_vm._v("единая платформа анкетирования")])]), _c('div', {
+  }, [_vm._v("единая система анкетирования")])]), _c('div', {
     staticClass: "menu-content"
   }, [_c('ul', {
     staticClass: "menu"
@@ -58054,7 +58054,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Modals.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Modals.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Modals.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58204,7 +58204,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Checkbox.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Checkbox.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Checkbox.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58357,7 +58357,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Radio.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\Radio.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Radio.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58576,7 +58576,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\InputSelect.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\InputSelect.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] InputSelect.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -58733,7 +58733,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "c:\\OpenServer\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\ImageGallery.vue"
+Component.options.__file = "c:\\OSPanel\\domains\\cmo.tests\\resources\\assets\\js\\components\\controls\\ImageGallery.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ImageGallery.vue: functional components are not supported with templates, they should use render functions.")}
 

@@ -2,7 +2,7 @@
     <div>
         <span class="h1">Центр Мониторинга в Образовании</span>
         <span class="h2">по Астраханской области</span>
-        <span class="h3">единая платформа анкетирования</span>
+        <span class="h3">единая система анкетирования</span>
         <div class="actions">
             <button v-for="(item, key) in items"
                 v-if="( (item.auth == '') || 

@@ -4,7 +4,7 @@
             <a class="logo" @click="home">
                 <span class="h1">Центр Мониторинга в Образовании</span>
                 <span class="h2">по Астраханской области</span>
-                <span class="h3">единая платформа анкетирования</span>
+                <span class="h3">единая система анкетирования</span>
             </a><div class="menu-content">
                 <ul class="menu">
                     <li><button class="btn btn-text" @click="router('users')">Пользователи</button></li>
