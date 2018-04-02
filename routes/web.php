@@ -41,8 +41,9 @@ Route::post('/elementsFileUpload',                      'Manager\ElementsControl
 /* Results */ 
 Route::post('/resultsList',                             'Manager\ResultsController@select');
 Route::post('/resultsByAnswer',                         'Manager\ResultsController@getResultStat');
-Route::get('/getExcel/{id}',                            'Manager\ExcelController@get');
 Route::get('/getLinksResult/{id}',                      'Manager\ResultsController@getLinksResult');
+Route::get('/getExcel/{id}',                            'Manager\ExcelController@get');
+Route::get('/getExcel/{id}/{itemAlias}/{itemId}',                   'Manager\ExcelController@get');
 
 /* Directories */ 
 Route::post('/directoriesList',                         'Manager\DirectoriesController@select');
