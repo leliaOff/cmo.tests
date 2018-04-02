@@ -5,23 +5,32 @@
             <div class="col-sm-9 clearfix"><input type="text" placeholder="2" v-model="setting.count" /></div>
         </div>
         <div class="row">
+            <div class="col-sm-3 clearfix"><label class="input-title">Тип таблицы:</label></div>
+            <div class="col-sm-9 clearfix">
+                <select v-model="setting.type">
+                    <option value="d">Цифровой</option>
+                    <option value="n">Номинальный</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-3 clearfix"><label class="input-title">Варианты ответов:</label></div>
             <div class="col-sm-9 clearfix">
                 <div class="table-container">
                     <table>
                         <tr>
                             <td class="row-item"></td>
-                            <td v-for="(col, i) in setting.cols" class="element-table">
+                            <td v-for="(col, i) in setting.cols" :key="'column_' + i" class="element-table">
                                 <input type="text" v-model="col.value" v-on:keyup="columnUpdate" placeholder="введите значение"/>
                                 <button type="button" class="btn btn-default" v-if="i < (setting.cols.length - 1)" @click="columnRemove(i)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
                             </td>
                         </tr>
-                        <tr v-for="(row, i) in setting.rows">
+                        <tr v-for="(row, i) in setting.rows" :key="'row_' + i">
                             <td class="row-item element-table">
                                 <textarea v-model="row.value" v-on:keyup="rowUpdate" placeholder="введите значение"></textarea>
                                 <button type="button" class="btn btn-default" v-if="i < (setting.rows.length - 1)" @click="rowRemove(i)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
                             </td>
-                            <td v-for="col in setting.cols"></td>
+                            <td v-for="(col, j) in setting.cols" :key="'cell_' + i + '-' + j"></td>
                         </tr>
                     </table>
                 </div> 

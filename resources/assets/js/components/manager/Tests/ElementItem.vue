@@ -164,7 +164,7 @@
             /* Настройки в зависимости от типа элемента */
             let setting = { };
             if(this.item.type == 'table') {
-                setting = { cols: [{value: ''}], rows: [{value: ''}], count: 1 };
+                setting = { cols: [{value: ''}], rows: [{value: ''}], count: 1, type: 'n' };
             } else if(this.item.type == 'radio') {
                 setting = { rows: [{value: ''}], };
             } else if(this.item.type == 'checkbox') {
@@ -228,7 +228,8 @@
                             setting = {
                                 'cols': response.data.setting.cols != undefined ? response.data.setting.cols : [],
                                 'rows': response.data.setting.rows != undefined ? response.data.setting.rows : [],
-                                'count': response.data.setting.count != undefined ? response.data.setting.count : 1
+                                'count': response.data.setting.count != undefined ? response.data.setting.count : 1,
+                                'type': response.data.setting.type != undefined ? response.data.setting.type : 'n',
                             };
                             setting.cols.push({value: ''});
                             setting.rows.push({value: ''});

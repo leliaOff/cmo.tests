@@ -50402,7 +50402,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /* Настройки в зависимости от типа элемента */
         var setting = {};
         if (this.item.type == 'table') {
-            setting = { cols: [{ value: '' }], rows: [{ value: '' }], count: 1 };
+            setting = { cols: [{ value: '' }], rows: [{ value: '' }], count: 1, type: 'n' };
         } else if (this.item.type == 'radio') {
             setting = { rows: [{ value: '' }] };
         } else if (this.item.type == 'checkbox') {
@@ -50466,7 +50466,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         setting = {
                             'cols': response.data.setting.cols != undefined ? response.data.setting.cols : [],
                             'rows': response.data.setting.rows != undefined ? response.data.setting.rows : [],
-                            'count': response.data.setting.count != undefined ? response.data.setting.count : 1
+                            'count': response.data.setting.count != undefined ? response.data.setting.count : 1,
+                            'type': response.data.setting.type != undefined ? response.data.setting.type : 'n'
                         };
                         setting.cols.push({ value: '' });
                         setting.rows.push({ value: '' });
@@ -50707,6 +50708,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ElementsControls_ImagesGallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ElementsControls_ImagesGallery_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElementsControls_Conditions_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElementsControls_Conditions_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ElementsControls_Conditions_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51844,6 +51854,48 @@ var render = function() {
       _vm._m(1),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-9 clearfix" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.setting.type,
+                expression: "setting.type"
+              }
+            ],
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.setting,
+                  "type",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "d" } }, [_vm._v("Цифровой")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "n" } }, [_vm._v("Номинальный")])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-9 clearfix" }, [
         _c("div", { staticClass: "table-container" }, [
           _c(
             "table",
@@ -51854,53 +51906,57 @@ var render = function() {
                   _c("td", { staticClass: "row-item" }),
                   _vm._v(" "),
                   _vm._l(_vm.setting.cols, function(col, i) {
-                    return _c("td", { staticClass: "element-table" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: col.value,
-                            expression: "col.value"
-                          }
-                        ],
-                        attrs: {
-                          type: "text",
-                          placeholder: "введите значение"
-                        },
-                        domProps: { value: col.value },
-                        on: {
-                          keyup: _vm.columnUpdate,
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(col, "value", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      i < _vm.setting.cols.length - 1
-                        ? _c(
-                            "button",
+                    return _c(
+                      "td",
+                      { key: "column_" + i, staticClass: "element-table" },
+                      [
+                        _c("input", {
+                          directives: [
                             {
-                              staticClass: "btn btn-default",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  _vm.columnRemove(i)
-                                }
+                              name: "model",
+                              rawName: "v-model",
+                              value: col.value,
+                              expression: "col.value"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            placeholder: "введите значение"
+                          },
+                          domProps: { value: col.value },
+                          on: {
+                            keyup: _vm.columnUpdate,
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            },
-                            [
-                              _c("span", {
-                                staticClass:
-                                  "glyphicon glyphicon glyphicon-trash"
-                              })
-                            ]
-                          )
-                        : _vm._e()
-                    ])
+                              _vm.$set(col, "value", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        i < _vm.setting.cols.length - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.columnRemove(i)
+                                  }
+                                }
+                              },
+                              [
+                                _c("span", {
+                                  staticClass:
+                                    "glyphicon glyphicon glyphicon-trash"
+                                })
+                              ]
+                            )
+                          : _vm._e()
+                      ]
+                    )
                   })
                 ],
                 2
@@ -51909,6 +51965,7 @@ var render = function() {
               _vm._l(_vm.setting.rows, function(row, i) {
                 return _c(
                   "tr",
+                  { key: "row_" + i },
                   [
                     _c("td", { staticClass: "row-item element-table" }, [
                       _c("textarea", {
@@ -51955,8 +52012,8 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.setting.cols, function(col) {
-                      return _c("td")
+                    _vm._l(_vm.setting.cols, function(col, j) {
+                      return _c("td", { key: "cell_" + i + "-" + j })
                     })
                   ],
                   2
@@ -51970,7 +52027,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm._m(2),
+      _vm._m(3),
       _vm._v(" "),
       _c(
         "div",
@@ -51991,7 +52048,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm._m(3),
+      _vm._m(4),
       _vm._v(" "),
       _c(
         "div",
@@ -52023,6 +52080,14 @@ var staticRenderFns = [
       _c("label", { staticClass: "input-title" }, [
         _vm._v("Максимум можно выбрать:")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3 clearfix" }, [
+      _c("label", { staticClass: "input-title" }, [_vm._v("Тип таблицы:")])
     ])
   },
   function() {

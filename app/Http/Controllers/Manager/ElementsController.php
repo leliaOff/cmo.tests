@@ -204,6 +204,7 @@ class ElementsController extends Controller
                     ['element_id' => $id, 'key' => 'cols', 'value' => json_encode($cols)],
                     ['element_id' => $id, 'key' => 'rows', 'value' => json_encode($rows)],
                     ['element_id' => $id, 'key' => 'count', 'value' => $data['count']],
+                    ['element_id' => $id, 'key' => 'type', 'value' => $data['type']],
                 ];
 
                 break;
