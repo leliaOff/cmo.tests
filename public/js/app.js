@@ -51884,9 +51884,9 @@ var render = function() {
             }
           },
           [
-            _c("option", { attrs: { value: "d" } }, [_vm._v("Цифровой")]),
+            _c("option", { attrs: { value: "d" } }, [_vm._v("Цифровая")]),
             _vm._v(" "),
-            _c("option", { attrs: { value: "n" } }, [_vm._v("Номинальный")])
+            _c("option", { attrs: { value: "n" } }, [_vm._v("Номинальная")])
           ]
         )
       ])
@@ -52087,7 +52087,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-3 clearfix" }, [
-      _c("label", { staticClass: "input-title" }, [_vm._v("Тип таблицы:")])
+      _c("label", { staticClass: "input-title" }, [
+        _vm._v("Тип шкалы таблицы:")
+      ])
     ])
   },
   function() {

@@ -5,11 +5,11 @@
             <div class="col-sm-9 clearfix"><input type="text" placeholder="2" v-model="setting.count" /></div>
         </div>
         <div class="row">
-            <div class="col-sm-3 clearfix"><label class="input-title">Тип таблицы:</label></div>
+            <div class="col-sm-3 clearfix"><label class="input-title">Тип шкалы таблицы:</label></div>
             <div class="col-sm-9 clearfix">
                 <select v-model="setting.type">
-                    <option value="d">Цифровой</option>
-                    <option value="n">Номинальный</option>
+                    <option value="d">Цифровая</option>
+                    <option value="n">Номинальная</option>
                 </select>
             </div>
         </div>

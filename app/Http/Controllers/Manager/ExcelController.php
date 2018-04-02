@@ -122,6 +122,8 @@ class ExcelController extends Controller
             }
         }
 
+        
+
         /* Формируем данные */
         $body = [];
         $i = 0;
@@ -180,7 +182,7 @@ class ExcelController extends Controller
                 
                 if($type == 'checkbox') {
 
-                    $elementsData = Cache::remember('excel_element_data_' . $elementId, 60, function() use($elementId) {
+                    $elementsData = Cache::remember('excel_element_data_' . $elementId, 1440, function() use($elementId) {
                         return DB::table('elements_data')->where('element_id', $elementId)->get()->keyBy('key');
                     });
                     $arbitrary = (int)($elementsData["arbitrary"]->value);
@@ -199,17 +201,28 @@ class ExcelController extends Controller
                     }
     
                 } elseif($type == 'table') {
+
+                    $elementsData = Cache::remember('excel_element_data_' . $elementId, 1440, function() use($elementId) {
+                        return DB::table('elements_data')->where('element_id', $elementId)->get()->keyBy('key');
+                    });
+                    $tableType = isset($elementsData["type"]) ? $elementsData["type"]->value : 'n';
+                    $tableCols = json_decode($elementsData["cols"]->value);
     
                     $result = json_decode($data);
                     
                     for($n = 0; $n < count($result); $n++) {
 
                         $j = 0;
-                        for($k = 0; $k < count($result[$n]); $k++) {
-                            $j++;
+                        for($k = 0; $k < count($result[$n]); $k++) {                            
                             if($result[$n][$k] === true) break;
+                            $j++;
                         }
-                        $body[$i][] = $j;
+                        
+                        if($tableType == 'n') {
+                            $body[$i][] = ($j + 1);
+                        } else {
+                            $body[$i][] = $tableCols[$j];
+                        }
                     }
     
                 } elseif($type == 'radio') {
@@ -245,9 +258,9 @@ class ExcelController extends Controller
                         $results = DB::table('results')->where('user_key', $userKey)->first();
                         if(empty($results)) return false;
                         return $results->item_id;
-                    }); 
+                    });
                     
-                    if($resultItemId === false) {
+                    if($resultItemId == false) {
                         $body[$i][] = '';
                         continue;
                     }
@@ -271,7 +284,7 @@ class ExcelController extends Controller
 
         /* Формируем файл */
         header('Content-Type: text/csv; charset=windows-1251');
-        $filename = 'test_' . $id . '_' . time() . '.csv';
+        $filename = 'public/export/test_' . $id . '_' . time() . '.csv';
         $file = fopen($filename, 'a');
         
         //header
