@@ -42,7 +42,8 @@ class ExcelController extends Controller
             if($itemId === false) {
             
                 $results = Cache::remember('excel_results_' . $elementId, 10, function() use($elementId) {
-                    return DB::table('results')->where('element_id', $elementId)->get()->keyBy('user_key');
+                    return DB::table('results')
+                        ->where('element_id', $elementId)->get()->keyBy('user_key');
                 });
 
             } else {
@@ -122,8 +123,6 @@ class ExcelController extends Controller
             }
         }
 
-        
-
         /* Формируем данные */
         $body = [];
         $i = 0;
@@ -164,7 +163,7 @@ class ExcelController extends Controller
                         $rows = $elementsData["rows"]->value;
                         $rows = json_decode($rows);
         
-                        foreach($rows as $row) {
+                        foreach($rows as $r) {
                             $body[$i][] = '';
                         }
         
