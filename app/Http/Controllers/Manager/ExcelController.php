@@ -23,6 +23,15 @@ class ExcelController extends Controller
     {
         
     }
+
+    /**
+     * Получить Q-отчет
+     */
+    public function getReport($id)
+    {
+        if(!Auth::check()) return ['status' => 'relogin'];
+        
+    }
     
     public function getExclude() {
         

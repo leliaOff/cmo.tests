@@ -320,24 +320,6 @@ class ResultsController extends Controller
         return $matrix;
 
     }
-    
-    function cleanResults() {
-        
-        $results = DB::table('results')
-            ->select('results.user_key as key')
-            ->groupBy('user_key')
-            ->havingRaw("count(user_key) < 11")
-            ->limit(10000)
-            ->get();
-            
-        foreach($results as $value) {
-            echo $value->key . '<br>';
-            DB::table('results')->where([
-                ['user_key', '=', $value->key],
-                ['datetime', '<', '2017-09-14 14:00:00']
-            ])->delete();
-        }
-    }
 
     /**
      * Статистика по ссылкам

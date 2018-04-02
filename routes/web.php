@@ -42,7 +42,6 @@ Route::post('/elementsFileUpload',                      'Manager\ElementsControl
 Route::post('/resultsList',                             'Manager\ResultsController@select');
 Route::post('/resultsByAnswer',                         'Manager\ResultsController@getResultStat');
 Route::get('/getExcel/{id}',                            'Manager\ExcelController@get');
-Route::get('/cleanResults',                             'Manager\ResultsController@cleanResults');
 Route::get('/getLinksResult/{id}',                      'Manager\ResultsController@getLinksResult');
 
 /* Directories */ 
