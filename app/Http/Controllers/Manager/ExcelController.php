@@ -128,7 +128,7 @@ class ExcelController extends Controller
         $i = 0;
         foreach($matrix as $userKey => $row) {
             
-            $body[$i] = [ ($i + 1) ];
+            $body[$i] = [ ($userKey) ];
             
             foreach($elements as $elementId => $element) {
 

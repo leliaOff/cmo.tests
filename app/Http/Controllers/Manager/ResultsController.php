@@ -138,15 +138,16 @@ class ResultsController extends Controller
     public function getElementStat($element, $countPeople, $incisions)
     {
         //Количество ответов
-        $query = DB::table('results')->where('element_id', $element->id);
+        $query = DB::table('results')->select('user_key')->distinct()->where('element_id', $element->id);
         
         if($incisions !== false) {
             foreach($incisions as $alias => $itemId) {
                 $query->where('alias', $alias)->where('item_id', $itemId);
             }
-        }            
+        }
         
-        $countResult = $query->count();
+        $result = $query->get();        
+        $countResult = count($result);
 
         return ['count' => $countResult];
     }
@@ -155,7 +156,6 @@ class ResultsController extends Controller
      * Получить статистику для каждого варианта ответа: количество и процент
      *
      */
-
     public function getResultStat(Request $request)
     {
         
@@ -191,7 +191,7 @@ class ResultsController extends Controller
             $allCount = 0;
 
             foreach($data['rows'] as $i => $row) {
-                $matrix[$i] = ['count' => 0];
+                $matrix[$i] = [ 'count' => 0 ];
             }
 
         } elseif($element['type'] == 'directory') {
@@ -212,7 +212,7 @@ class ResultsController extends Controller
         }
 
         //Результаты
-        $query = DB::table('results')->where('element_id', $element['id']);
+        $query = DB::table('results')->select('user_key, result')->distinct()->where('element_id', $element['id']);
         if($incisions !== false) {
             foreach($incisions as $alias => $itemId) {
                 $query->where('alias', $alias)->where('item_id', $itemId);
