@@ -45709,6 +45709,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -45852,6 +45856,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.is_MoveOn() == false) return;
             this.updateRusult();
             this.saveResult();
+            this.isFinish = true;
         },
         exit: function exit() {
             this.$router.push('/tests');
@@ -45890,8 +45895,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
 
                 if (isTrue === true) {
-                    _this3.current = -1;
-                    location.reload();
+                    //this.current = -1;
+                    //location.reload();
+                    _this3.finishResult = '';
                 } else {
                     _this3.finishResult = 'Не удалось сохранить один или несколько ответов';
                 }
@@ -46064,12 +46070,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         closeWindowDialog: function closeWindowDialog() {
-            var self = this;
+            var _this4 = this;
+
             window.onbeforeunload = function () {
-                if (self.current > 0) {
+                if (_this4.current > 0) {
                     return "Вы еще не закончили тест. Уверены, что хотите закрыть вкладку? Данные тестирования не сохранятся!";
                 }
             };
+        },
+        reload: function reload() {
+            this.current = -1;
+            location.reload();
         }
     },
 
@@ -47364,9 +47375,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-success"
   }, [_vm._v(_vm._s(_vm.item.description))]) : _vm._e(), _vm._v(" "), (_vm.isFinish && _vm.finishResult == '') ? _c('div', {
     staticClass: "alert alert-success"
-  }, [_vm._v(_vm._s(_vm.item.after))]) : _vm._e(), _vm._v(" "), (_vm.finishResult != '') ? _c('div', {
+  }, [_vm._v("\n            " + _vm._s(_vm.item.after) + "\n            "), _c('hr'), _vm._v(" "), _c('p', {
+    staticClass: "right"
+  }, [_c('button', {
+    staticClass: "btn btn-success btn-turn",
+    on: {
+      "click": _vm.reload
+    }
+  }, [_vm._v("Пройти новый тест")])])]) : _vm._e(), _vm._v(" "), (_vm.finishResult != '') ? _c('div', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.finishResult))]) : _vm._e(), _vm._v(" "), (_vm.current != -1) ? _c('div', {
+  }, [_vm._v(_vm._s(_vm.finishResult))]) : _vm._e(), _vm._v(" "), (_vm.current != -1 && !_vm.isFinish) ? _c('div', {
     staticClass: "elements-content"
   }, [_vm._l((_vm.elements), function(element, i) {
     return (_vm.current == i) ? _c('div', {

@@ -12,11 +12,15 @@
             <h3 v-if="directoryTitle!= ''">{{ directoryTitle }}</h3>
 
             <div class="alert alert-success" v-if="!isFinish">{{ item.description }}</div>
-            <div class="alert alert-success" v-if="isFinish && finishResult == ''">{{ item.after }}</div>
+            <div class="alert alert-success" v-if="isFinish && finishResult == ''">
+                {{ item.after }}
+                <hr/>
+                <p class="right"><button class="btn btn-success btn-turn" @click="reload">Пройти новый тест</button></p>
+            </div>
             <div class="alert alert-danger" v-if="finishResult != ''">{{ finishResult }}</div>
             
             <!-- Контент -->
-            <div class="elements-content" v-if="current != -1">
+            <div class="elements-content" v-if="current != -1 && !isFinish">
                 
                 <!-- Список элементов -->
                 <div class="element-item" v-for="(element, i) in elements" :key="element.id" v-if="current == i">
@@ -263,6 +267,7 @@
                 if(this.is_MoveOn() == false) return;
                 this.updateRusult();
                 this.saveResult();
+                this.isFinish = true;
             },
 
             exit() {
@@ -304,8 +309,9 @@
                     });
 
                     if(isTrue === true) {
-                        this.current = -1;
+                        //this.current = -1;
                         //location.reload();
+                        this.finishResult = '';
                     } else {
                         this.finishResult = 'Не удалось сохранить один или несколько ответов';
                     }
@@ -488,12 +494,16 @@
             },
 
             closeWindowDialog() {
-                let self = this;
-                window.onbeforeunload = function() {
-                    if(self.current > 0) {
+                window.onbeforeunload = () => {
+                    if(this.current > 0) {
                         return "Вы еще не закончили тест. Уверены, что хотите закрыть вкладку? Данные тестирования не сохранятся!";
                     }
                 };
+            },
+
+            reload() {
+                this.current = -1;
+                location.reload();
             }
 
         },
