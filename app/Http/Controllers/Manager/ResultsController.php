@@ -96,11 +96,18 @@ class ResultsController extends Controller
             return $result;
         });
 
+        $links = $this->testsLinksRepository->all($test_id)->get()->keyBy('directory.alias');
+        $isLinks = (count($links) > 0);
+
         /* Запрос количества */
         $query = DB::table('results')
                 ->select('user_key')
                 ->distinct()
                 ->whereIn('element_id', $elementsIds);
+
+        if($isLinks) {
+            $query->whereNotNull('item_id');
+        }
 
         /* Если есть разрезы */
         if($incisions !== false) {

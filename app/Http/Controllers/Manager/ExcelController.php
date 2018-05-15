@@ -37,13 +37,21 @@ class ExcelController extends Controller
         /* Для кажого элемента получаем результаты */
         $matrix = [];
 
+        /* Определяем, по ссылкам ли тест */
+        $links = $this->testsLinksRepository->all($id)->get()->keyBy('directory.alias');
+
         foreach($elements as $elementId => $element) {
             
             if($itemId === false) {
+
+                $isLinks = (count($links) > 0);
             
-                $results = Cache::remember('excel_results_' . $elementId, 10, function() use($elementId) {
-                    return DB::table('results')
-                        ->where('element_id', $elementId)->get()->keyBy('user_key');
+                $results = Cache::remember('excel_results_' . $elementId, 10, function() use($elementId, $isLinks) {
+                    $query = DB::table('results')->where('element_id', $elementId);
+                    if($isLinks) {
+                        $query->whereNotNull('item_id');
+                    }
+                    return $query->get()->keyBy('user_key');
                 });
 
             } else {
@@ -65,8 +73,7 @@ class ExcelController extends Controller
 
         }
 
-        /* Определяем, по ссылкам ли тест */
-        $links = $this->testsLinksRepository->all($id)->get()->keyBy('directory.alias');
+        
 
         /* Формируем заголовок */
         $header = [ iconv("utf-8", "windows-1251", '№') ];
@@ -128,7 +135,7 @@ class ExcelController extends Controller
         $i = 0;
         foreach($matrix as $userKey => $row) {
             
-            $body[$i] = [ ($userKey) ];
+            $body[$i] = [ ($i + 1) ];
             
             foreach($elements as $elementId => $element) {
 
