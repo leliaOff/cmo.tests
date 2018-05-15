@@ -244,7 +244,7 @@ class ExcelController extends Controller
                     
                 } else {
 
-                    $body[$i][]  = $data;
+                    $body[$i][]  = iconv("utf-8", "windows-1251", $data);
 
                 }
             }            
